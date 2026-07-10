@@ -95,7 +95,6 @@ function ReservationsPage() {
     <SiteShell>
       <section className="pt-36 pb-8 sm:pt-44">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Reservations</p>
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             Reserve your <span className="italic text-gold">perfect evening.</span>
           </h1>

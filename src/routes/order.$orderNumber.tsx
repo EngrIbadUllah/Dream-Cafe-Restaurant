@@ -63,7 +63,6 @@ function OrderTrackPage() {
   return (
     <SiteShell>
       <section className="container-page pt-28 pb-16">
-        <p className="eyebrow">Order Tracking</p>
         <h1 className="mt-3 font-display text-4xl md:text-5xl">Order {orderNumber}</h1>
 
         {!order && (

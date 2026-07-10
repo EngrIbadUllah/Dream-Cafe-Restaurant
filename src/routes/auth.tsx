@@ -98,7 +98,6 @@ function AuthPage() {
           </div>
         </Link>
         <div className="relative z-10 space-y-4">
-          <p className="eyebrow">Shakargarh · Since 2019</p>
           <h1 className="font-display text-4xl leading-tight">
             Where every bite feels like home.
           </h1>
