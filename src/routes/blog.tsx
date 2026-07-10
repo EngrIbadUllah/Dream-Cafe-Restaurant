@@ -34,7 +34,6 @@ function BlogListPage() {
     <SiteShell>
       <section className="pt-36 pb-8 sm:pt-44">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Stories</p>
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             From our <span className="italic text-gold">kitchen journal.</span>
           </h1>

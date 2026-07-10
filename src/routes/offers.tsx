@@ -38,7 +38,6 @@ function OffersPage() {
     <SiteShell>
       <section className="pt-36 pb-8 sm:pt-44">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Offers</p>
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             Tasty deals, <span className="italic text-gold">every day.</span>
           </h1>

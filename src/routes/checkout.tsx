@@ -50,7 +50,6 @@ function CheckoutPage() {
     return (
       <SiteShell>
         <section className="container-page pt-32 pb-24 text-center">
-          <p className="eyebrow">Checkout</p>
           <h1 className="mt-3 font-display text-4xl">Your cart is empty</h1>
           <p className="mt-2 text-muted-foreground">Add some dishes before checking out.</p>
           <Link to="/menu" className="mt-6 inline-flex rounded-full gradient-gold px-6 py-3 text-sm font-semibold text-primary-foreground">
@@ -90,7 +89,6 @@ function CheckoutPage() {
   return (
     <SiteShell>
       <section className="container-page pt-28 pb-16">
-        <p className="eyebrow">Checkout</p>
         <h1 className="mt-3 font-display text-4xl md:text-5xl">Complete your order</h1>
 
         <form onSubmit={handleSubmit} className="mt-8 grid gap-6 lg:grid-cols-[1fr_380px]">

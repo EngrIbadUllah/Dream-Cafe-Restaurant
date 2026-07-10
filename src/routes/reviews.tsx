@@ -81,7 +81,6 @@ function ReviewsPage() {
     <SiteShell>
       <section className="pt-36 pb-10 sm:pt-44">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Reviews</p>
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             Loved by <span className="italic text-gold">our guests.</span>
           </h1>

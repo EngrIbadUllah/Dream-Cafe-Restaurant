@@ -58,7 +58,6 @@ function Contact() {
     <SiteShell>
       <section className="pt-36 pb-10 sm:pt-44">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Get in touch</p>
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             We'd love to <span className="italic text-gold">hear from you.</span>
           </h1>
@@ -79,7 +78,6 @@ function Contact() {
         <div className="container-page mt-10 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <form onSubmit={handleSubmit} className="rounded-[2rem] border border-border bg-card p-8 space-y-4">
             <div>
-              <p className="eyebrow"><Send size={12} /> Send a message</p>
               <h2 className="mt-2 font-display text-3xl">Drop us a line</h2>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">

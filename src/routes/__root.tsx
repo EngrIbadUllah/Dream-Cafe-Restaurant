@@ -23,7 +23,6 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <p className="eyebrow">404 · Off the menu</p>
         <h1 className="mt-4 font-display text-5xl text-foreground">
           This page isn't on the menu
         </h1>
@@ -53,7 +52,6 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <p className="eyebrow">Something burned in the kitchen</p>
         <h1 className="mt-4 font-display text-4xl text-foreground">
           This page didn't load
         </h1>

@@ -40,7 +40,6 @@ function GalleryPage() {
     <SiteShell>
       <section className="pt-36 pb-8 sm:pt-44">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Gallery</p>
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             A taste of our <span className="italic text-gold">world.</span>
           </h1>

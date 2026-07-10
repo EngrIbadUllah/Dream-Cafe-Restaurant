@@ -71,7 +71,6 @@ function ProfilePage() {
         <div className="container-page max-w-3xl">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="eyebrow">My account</p>
               <h1 className="mt-2 font-display text-4xl text-foreground">Profile</h1>
               <p className="mt-1 text-sm text-muted-foreground">{user.email}</p>
             </div>

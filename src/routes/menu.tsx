@@ -81,7 +81,6 @@ function MenuPage() {
     <SiteShell>
       <section className="border-b border-border bg-gradient-to-b from-black/60 to-transparent pt-28 pb-10">
         <div className="container-page">
-          <p className="eyebrow">Our Menu</p>
           <h1 className="mt-3 font-display text-4xl md:text-5xl">Freshly cooked, ready to order</h1>
           <p className="mt-2 max-w-2xl text-muted-foreground">
             BBQ, handi, biryani, pizzas and more. Add your favourites to the cart and check out for delivery or takeaway.
