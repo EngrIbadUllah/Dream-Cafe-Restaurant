@@ -6,8 +6,9 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="relative bg-ink text-cream">
-      <div className="container-page pt-20 pb-10">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <div className="container-page pt-16 pb-10">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
+
           <div>
             <div className="flex items-center gap-2.5">
               <span className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">
