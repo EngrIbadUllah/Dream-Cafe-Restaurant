@@ -134,8 +134,8 @@ export const placeOrder = createServerFn({ method: "POST" })
 export const trackOrder = createServerFn({ method: "POST" })
   .inputValidator((d: { order_number: string; phone: string }) => d)
   .handler(async ({ data }) => {
-    const supabase = serverClient();
-    const { data: order, error } = await supabase
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: order, error } = await supabaseAdmin
       .from("orders")
       .select(
         "id, order_number, status, payment_status, payment_method, order_type, customer_name, customer_phone, delivery_address, delivery_city, subtotal, discount, delivery_fee, tax, total, notes, created_at",
@@ -149,7 +149,7 @@ export const trackOrder = createServerFn({ method: "POST" })
     if (normPhone(order.customer_phone) !== normPhone(data.phone))
       return { order: null, items: [] };
 
-    const { data: items } = await supabase
+    const { data: items } = await supabaseAdmin
       .from("order_items")
       .select("food_name, quantity, unit_price, subtotal")
       .eq("order_id", order.id);
