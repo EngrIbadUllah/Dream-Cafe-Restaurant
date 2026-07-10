@@ -138,30 +138,46 @@ function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="mt-14 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
+          className="mt-16 max-w-4xl"
         >
-          <Stat kpi="4.1★" label="365+ reviews" />
-          <Stat kpi="30+" label="Buffet dishes" />
-          <Stat kpi="30 min" label="Avg delivery" />
-          <Stat kpi="12+" label="Cuisines" />
+          <div className="rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md p-1.5 shadow-2xl shadow-black/40">
+            <div className="grid grid-cols-2 divide-x divide-white/10 sm:grid-cols-4">
+              <Stat kpi="4.1" suffix="★" label="365+ reviews" />
+              <Stat kpi="30+" label="Buffet dishes" />
+              <Stat kpi="30" suffix=" min" label="Avg delivery" />
+              <Stat kpi="12+" label="Cuisines" />
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-cream/50">
-        Scroll to explore
-      </div>
+      <button
+        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+        className="group pointer-events-auto absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-cream/60 hover:text-gold transition"
+        aria-label="Scroll to explore"
+      >
+        <span>Scroll</span>
+        <span className="relative h-8 w-px bg-cream/30 overflow-hidden">
+          <span className="absolute inset-x-0 top-0 h-3 bg-gold animate-[slideDown_1.8s_ease-in-out_infinite]" />
+        </span>
+      </button>
     </section>
   );
 }
 
-function Stat({ kpi, label }: { kpi: string; label: string }) {
+function Stat({ kpi, suffix, label }: { kpi: string; suffix?: string; label: string }) {
   return (
-    <div className="border-l border-white/15 pl-4">
-      <div className="font-display text-2xl text-cream">{kpi}</div>
-      <div className="mt-1 text-xs uppercase tracking-widest text-cream/60">{label}</div>
+    <div className="px-5 py-4 sm:px-6 sm:py-5 text-center sm:text-left">
+      <div className="font-display text-3xl sm:text-4xl text-cream leading-none tracking-tight">
+        {kpi}
+        {suffix && <span className="text-gold">{suffix}</span>}
+      </div>
+      <div className="mt-2 text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-cream/55">
+        {label}
+      </div>
     </div>
   );
 }
@@ -170,30 +186,34 @@ function Stat({ kpi, label }: { kpi: string; label: string }) {
 
 function Marquee() {
   const items = [
-    "Live BBQ",
-    "Handi Specialists",
-    "Wood-Fired Pizza",
-    "Continental Classics",
-    "Chinese Wok",
-    "All-You-Can-Eat Buffet",
-    "Dine-in · Takeaway · Delivery",
+    { text: "Live BBQ", icon: "🔥" },
+    { text: "Handi Specialists", icon: "🍲" },
+    { text: "Wood-Fired Pizza", icon: "🍕" },
+    { text: "Continental Classics", icon: "🍽️" },
+    { text: "Chinese Wok", icon: "🥢" },
+    { text: "All-You-Can-Eat Buffet", icon: "✨" },
+    { text: "Dine-in · Takeaway · Delivery", icon: "🛵" },
   ];
   return (
-    <div className="border-y border-border/60 bg-secondary/50 py-4">
-      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 px-4">
-        {items.map((t) => (
+    <div className="relative border-y border-border/60 bg-gradient-to-r from-secondary/40 via-secondary/70 to-secondary/40 py-5 overflow-hidden">
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
+      <div className="flex gap-10 animate-[marquee_38s_linear_infinite] whitespace-nowrap">
+        {[...items, ...items].map((t, i) => (
           <span
-            key={t}
-            className="flex items-center gap-2 font-display text-sm italic text-muted-foreground"
+            key={i}
+            className="inline-flex items-center gap-3 font-display text-base italic text-foreground/70"
           >
-            <span className="h-1 w-1 rounded-full bg-gold" />
-            {t}
+            <span className="text-gold not-italic">{t.icon}</span>
+            {t.text}
+            <span className="ml-10 h-1 w-1 rounded-full bg-gold/60" />
           </span>
         ))}
       </div>
     </div>
   );
 }
+
 
 /* -------------------------------------------------------------------------- */
 
