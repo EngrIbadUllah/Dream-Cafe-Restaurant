@@ -1,10 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { listSettings, upsertSetting, deleteSetting } from "@/lib/admin.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Plus, Save, Trash2, Settings as SettingsIcon } from "lucide-react";
+import { Plus, Save, Trash2, Settings as SettingsIcon, Upload, Loader2, Image as ImageIcon } from "lucide-react";
+
+const LOGO_SIGN_TTL = 60 * 60 * 24 * 365 * 10;
 
 export const Route = createFileRoute("/_authenticated/admin/settings")({
   component: SettingsPage,
