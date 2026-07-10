@@ -32,7 +32,7 @@ function BlogListPage() {
 
   return (
     <SiteShell>
-      <section className="pt-36 pb-8 sm:pt-44">
+      <section className="pt-28 pb-6 sm:pt-32">
         <div className="container-page text-center">
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             From our <span className="italic text-gold">kitchen journal.</span>
@@ -43,7 +43,7 @@ function BlogListPage() {
         </div>
       </section>
 
-      <section className="container-page pb-24">
+      <section className="container-page pb-16">
         {isLoading ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
