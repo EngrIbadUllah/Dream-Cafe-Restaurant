@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /_authenticated
+Disallow: /auth
+Disallow: /checkout
+Disallow: /order/
