@@ -69,9 +69,9 @@ export function Navbar() {
             <span className="grid h-10 w-10 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold shadow-lg shadow-black/30">
               D
             </span>
-            <span className="hidden sm:flex flex-col leading-none">
-              <span className="font-display text-lg tracking-tight">Dream Cafe</span>
-              <span className="text-[10px] uppercase tracking-[0.28em] text-gold">
+            <span className="flex flex-col leading-none">
+              <span className="font-display text-base sm:text-lg tracking-tight">Dream Cafe</span>
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-gold">
                 & Restaurant
               </span>
             </span>
