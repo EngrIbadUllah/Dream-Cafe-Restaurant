@@ -87,7 +87,7 @@ function Hero() {
       <div className="absolute inset-0 gradient-hero" />
       <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_40%,transparent_0%,rgba(0,0,0,0.55)_70%)]" />
 
-      <div className="container-page relative flex min-h-[100svh] flex-col justify-end pb-16 pt-40 sm:pt-44">
+      <div className="container-page relative flex min-h-[100svh] flex-col justify-center pt-28 pb-20 sm:pt-32">
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
