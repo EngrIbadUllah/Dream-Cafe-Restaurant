@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowRight,
   Award,
@@ -22,6 +23,9 @@ import interiorImg from "@/assets/interior.jpg";
 import chefImg from "@/assets/chef.jpg";
 import { SiteShell } from "@/components/site/site-shell";
 import { site, whatsappLink } from "@/lib/site-config";
+import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/hooks/use-cart";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
