@@ -26,6 +26,7 @@ import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminReservationsRouteImport } from './routes/_authenticated/admin/reservations'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin/messages'
+import { Route as AuthenticatedAdminFoodsRouteImport } from './routes/_authenticated/admin/foods'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 
 const ReservationsRoute = ReservationsRouteImport.update({
@@ -116,6 +117,11 @@ const AuthenticatedAdminMessagesRoute =
     path: '/messages',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminFoodsRoute = AuthenticatedAdminFoodsRouteImport.update({
+  id: '/foods',
+  path: '/foods',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
 const AuthenticatedAdminCategoriesRoute =
   AuthenticatedAdminCategoriesRouteImport.update({
     id: '/categories',
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/foods': typeof AuthenticatedAdminFoodsRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/reservations': typeof AuthenticatedAdminReservationsRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/foods': typeof AuthenticatedAdminFoodsRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/reservations': typeof AuthenticatedAdminReservationsRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin/foods': typeof AuthenticatedAdminFoodsRoute
   '/_authenticated/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/admin/reservations': typeof AuthenticatedAdminReservationsRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/auth/reset'
     | '/admin/categories'
+    | '/admin/foods'
     | '/admin/messages'
     | '/admin/orders'
     | '/admin/reservations'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/auth/reset'
     | '/admin/categories'
+    | '/admin/foods'
     | '/admin/messages'
     | '/admin/orders'
     | '/admin/reservations'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/auth/reset'
     | '/_authenticated/admin/categories'
+    | '/_authenticated/admin/foods'
     | '/_authenticated/admin/messages'
     | '/_authenticated/admin/orders'
     | '/_authenticated/admin/reservations'
@@ -374,6 +386,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMessagesRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/foods': {
+      id: '/_authenticated/admin/foods'
+      path: '/foods'
+      fullPath: '/admin/foods'
+      preLoaderRoute: typeof AuthenticatedAdminFoodsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/categories': {
       id: '/_authenticated/admin/categories'
       path: '/categories'
@@ -386,6 +405,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminFoodsRoute: typeof AuthenticatedAdminFoodsRoute
   AuthenticatedAdminMessagesRoute: typeof AuthenticatedAdminMessagesRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
   AuthenticatedAdminReservationsRoute: typeof AuthenticatedAdminReservationsRoute
@@ -396,6 +416,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
     AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+    AuthenticatedAdminFoodsRoute: AuthenticatedAdminFoodsRoute,
     AuthenticatedAdminMessagesRoute: AuthenticatedAdminMessagesRoute,
     AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
     AuthenticatedAdminReservationsRoute: AuthenticatedAdminReservationsRoute,
