@@ -79,7 +79,7 @@ function ReviewsPage() {
 
   return (
     <SiteShell>
-      <section className="pt-36 pb-10 sm:pt-44">
+      <section className="pt-28 pb-8 sm:pt-32">
         <div className="container-page text-center">
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             Loved by <span className="italic text-gold">our guests.</span>
@@ -118,7 +118,7 @@ function ReviewsPage() {
         )}
       </section>
 
-      <section className="container-page pb-24">
+      <section className="container-page pb-16">
         <div className="rounded-[2rem] border border-border bg-card p-8 max-w-2xl mx-auto">
           <h2 className="font-display text-3xl">Share your experience</h2>
           <p className="mt-1 text-sm text-muted-foreground">Your review helps other guests. It appears once we approve it.</p>

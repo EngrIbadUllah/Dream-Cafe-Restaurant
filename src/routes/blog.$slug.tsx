@@ -14,7 +14,7 @@ export const Route = createFileRoute("/blog/$slug")({
   component: BlogPost,
   errorComponent: () => (
     <SiteShell>
-      <div className="container-page pt-36 pb-24 text-center">
+      <div className="container-page pt-28 pb-16 text-center">
         <h1 className="font-display text-4xl">Post not found</h1>
         <Link to="/blog" className="mt-6 inline-flex rounded-full border border-border px-6 py-3 text-sm font-semibold">Back to blog</Link>
       </div>
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/blog/$slug")({
   ),
   notFoundComponent: () => (
     <SiteShell>
-      <div className="container-page pt-36 pb-24 text-center">
+      <div className="container-page pt-28 pb-16 text-center">
         <h1 className="font-display text-4xl">Post not found</h1>
         <Link to="/blog" className="mt-6 inline-flex rounded-full border border-border px-6 py-3 text-sm font-semibold">Back to blog</Link>
       </div>
@@ -47,12 +47,12 @@ function BlogPost() {
     },
   });
 
-  if (isLoading) return <SiteShell><div className="container-page pt-36 pb-24"><div className="h-8 w-64 animate-pulse rounded bg-muted" /></div></SiteShell>;
+  if (isLoading) return <SiteShell><div className="container-page pt-28 pb-16"><div className="h-8 w-64 animate-pulse rounded bg-muted" /></div></SiteShell>;
   if (error || !data) return null;
 
   return (
     <SiteShell>
-      <article className="container-page pt-36 pb-24 max-w-3xl">
+      <article className="container-page pt-28 pb-16 max-w-3xl">
         <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-gold">
           <ArrowLeft size={14} /> All posts
         </Link>

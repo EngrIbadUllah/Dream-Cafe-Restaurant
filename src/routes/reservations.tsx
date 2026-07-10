@@ -75,7 +75,7 @@ function ReservationsPage() {
   if (done) {
     return (
       <SiteShell>
-        <section className="container-page pt-36 pb-24 text-center">
+        <section className="container-page pt-28 pb-16 text-center">
           <div className="mx-auto grid h-16 w-16 place-items-center rounded-full gradient-gold text-primary-foreground">
             <CalendarCheck size={28} />
           </div>
@@ -93,7 +93,7 @@ function ReservationsPage() {
 
   return (
     <SiteShell>
-      <section className="pt-36 pb-8 sm:pt-44">
+      <section className="pt-28 pb-6 sm:pt-32">
         <div className="container-page text-center">
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             Reserve your <span className="italic text-gold">perfect evening.</span>

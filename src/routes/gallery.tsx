@@ -38,7 +38,7 @@ function GalleryPage() {
 
   return (
     <SiteShell>
-      <section className="pt-36 pb-8 sm:pt-44">
+      <section className="pt-28 pb-6 sm:pt-32">
         <div className="container-page text-center">
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             A taste of our <span className="italic text-gold">world.</span>
@@ -58,7 +58,7 @@ function GalleryPage() {
         </div>
       )}
 
-      <section className="container-page pb-24">
+      <section className="container-page pb-16">
         {isLoading ? (
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (

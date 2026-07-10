@@ -56,7 +56,7 @@ function Contact() {
 
   return (
     <SiteShell>
-      <section className="pt-36 pb-10 sm:pt-44">
+      <section className="pt-28 pb-8 sm:pt-32">
         <div className="container-page text-center">
           <h1 className="mt-4 font-display text-5xl sm:text-6xl">
             We'd love to <span className="italic text-gold">hear from you.</span>
