@@ -97,7 +97,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 max-w-4xl font-display text-[clamp(2.5rem,7vw,5.5rem)] font-500 leading-[1.02] tracking-tight"
+          className="mt-5 max-w-4xl font-display text-[clamp(2.5rem,7vw,5.5rem)] font-medium leading-[1.02] tracking-tight"
         >
           A taste of home,
           <br />
