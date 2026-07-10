@@ -97,7 +97,7 @@ function AdminLayout() {
         >
           <nav className="p-3 space-y-0.5">
             {nav.map((item) => {
-              const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
+              const active = "exact" in item && item.exact ? pathname === item.to : pathname === item.to || pathname.startsWith(item.to + "/");
               const Icon = item.icon;
               return (
                 <Link

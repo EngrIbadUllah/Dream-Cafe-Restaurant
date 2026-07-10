@@ -20,6 +20,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthResetRouteImport } from './routes/auth.reset'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 
 const ReservationsRoute = ReservationsRouteImport.update({
   id: '/reservations',
@@ -75,6 +76,11 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
   '/reservations': typeof ReservationsRoute
+  '/admin': typeof AuthenticatedAdminRouteRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
 }
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
   '/reservations': typeof ReservationsRoute
+  '/admin': typeof AuthenticatedAdminRouteRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
 }
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
   '/reservations': typeof ReservationsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
 }
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/offers'
     | '/reservations'
+    | '/admin'
     | '/profile'
     | '/auth/reset'
   fileRoutesByTo: FileRoutesByTo
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/offers'
     | '/reservations'
+    | '/admin'
     | '/profile'
     | '/auth/reset'
   id:
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/offers'
     | '/reservations'
+    | '/_authenticated/admin'
     | '/_authenticated/profile'
     | '/auth/reset'
   fileRoutesById: FileRoutesById
@@ -245,14 +257,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
 }
 
