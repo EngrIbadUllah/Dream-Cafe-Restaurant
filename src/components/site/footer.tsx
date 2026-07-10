@@ -107,7 +107,15 @@ export function Footer() {
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-cream/50 md:flex-row">
           <p>© {year} Dream Cafe & Restaurant. All rights reserved.</p>
           <p>
-            Crafted with care in Shakargarh · {site.priceRangeLabel}
+            Made by{" "}
+            <a
+              href="https://ibadullah.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold hover:underline"
+            >
+              ibadullah.tech
+            </a>
           </p>
         </div>
       </div>
