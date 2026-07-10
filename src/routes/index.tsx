@@ -219,7 +219,6 @@ function Categories() {
     <section className="section-y">
       <div className="container-page">
         <SectionHeader
-          eyebrow="Explore the menu"
           title="Six kitchens, one address."
           subtitle="From slow-cooked handi to wood-fired pizza — every craving has its counter."
         />
@@ -296,7 +295,6 @@ function FeaturedFoods() {
       <div className="container-page">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader
-            eyebrow="Featured this week"
             title="Handpicked by our chefs."
             subtitle="Dishes our regulars can't stop reordering — straight from tonight's menu."
             align="left"
@@ -454,7 +452,6 @@ function TodaysSpecial() {
 
           <div className="relative grid gap-10 p-8 sm:p-12 lg:grid-cols-2 lg:p-16">
             <div>
-              <p className="eyebrow">Today's special</p>
               <h2 className="mt-4 font-display text-4xl sm:text-5xl">
                 Buffet Night —<br />
                 <span className="italic text-gold">30+ dishes till 8 PM</span>
@@ -544,7 +541,6 @@ function WhyChooseUs() {
     <section className="section-y bg-secondary/40">
       <div className="container-page">
         <SectionHeader
-          eyebrow="Why guests keep returning"
           title="A restaurant, cafe and BBQ house — done properly."
         />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -609,7 +605,6 @@ function ChefSection() {
         </motion.div>
 
         <div>
-          <p className="eyebrow">Meet the kitchen</p>
           <h2 className="mt-4 font-display text-4xl sm:text-5xl">
             Recipes shaped by memory,
             <br />
@@ -673,7 +668,6 @@ function Reviews() {
     <section className="section-y bg-secondary/40">
       <div className="container-page">
         <SectionHeader
-          eyebrow="What our guests say"
           title="Trusted by 3,800+ followers and counting."
         />
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -722,7 +716,6 @@ function ReservationCTA() {
           <div className="absolute inset-0 opacity-20 [background:radial-gradient(60%_60%_at_20%_20%,var(--color-gold),transparent_60%),radial-gradient(50%_50%_at_80%_80%,var(--color-burgundy),transparent_60%)]" />
           <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
             <div>
-              <p className="eyebrow">Reserve a table</p>
               <h2 className="mt-3 max-w-xl font-display text-4xl sm:text-5xl">
                 Your table at Dream Cafe,
                 <br />
@@ -761,7 +754,6 @@ function ContactStrip() {
     <section className="section-y">
       <div className="container-page grid gap-8 lg:grid-cols-[1.05fr_1fr]">
         <div className="rounded-[2rem] border border-border bg-card p-8 sm:p-10">
-          <p className="eyebrow">Find us</p>
           <h2 className="mt-3 font-display text-3xl sm:text-4xl">
             {site.address.line1}
           </h2>

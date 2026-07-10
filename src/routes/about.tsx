@@ -35,7 +35,6 @@ function About() {
         />
         <div className="absolute inset-0 gradient-hero" />
         <div className="container-page relative flex min-h-[70svh] flex-col justify-end pb-16 pt-40">
-          <p className="eyebrow">Our story</p>
           <h1 className="mt-4 max-w-3xl font-display text-5xl sm:text-6xl md:text-7xl">
             From a family kitchen to
             <br />
@@ -55,7 +54,6 @@ function About() {
             <img src={chefImg} alt="Head chef" className="h-full w-full object-cover" />
           </div>
           <div>
-            <p className="eyebrow">Our mission</p>
             <h2 className="mt-3 font-display text-4xl">
               Real ingredients. Patient cooking.{" "}
               <span className="italic text-gold">Plated with pride.</span>
@@ -95,7 +93,6 @@ function About() {
 
       <section className="section-y bg-secondary/40">
         <div className="container-page text-center">
-          <p className="eyebrow justify-center">Our vision</p>
           <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl sm:text-5xl">
             To be the place Shakargarh chooses for{" "}
             <span className="italic text-gold">every celebration.</span>
