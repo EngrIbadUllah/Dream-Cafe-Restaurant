@@ -26,6 +26,7 @@ import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminReservationsRouteImport } from './routes/_authenticated/admin/reservations'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin/messages'
+import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin/gallery'
 import { Route as AuthenticatedAdminFoodsRouteImport } from './routes/_authenticated/admin/foods'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 
@@ -117,6 +118,12 @@ const AuthenticatedAdminMessagesRoute =
     path: '/messages',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminGalleryRoute =
+  AuthenticatedAdminGalleryRouteImport.update({
+    id: '/gallery',
+    path: '/gallery',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminFoodsRoute = AuthenticatedAdminFoodsRouteImport.update({
   id: '/foods',
   path: '/foods',
@@ -143,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/auth/reset': typeof AuthResetRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/foods': typeof AuthenticatedAdminFoodsRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/reservations': typeof AuthenticatedAdminReservationsRoute
@@ -162,6 +170,7 @@ export interface FileRoutesByTo {
   '/auth/reset': typeof AuthResetRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/foods': typeof AuthenticatedAdminFoodsRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/reservations': typeof AuthenticatedAdminReservationsRoute
@@ -184,6 +193,7 @@ export interface FileRoutesById {
   '/auth/reset': typeof AuthResetRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/foods': typeof AuthenticatedAdminFoodsRoute
+  '/_authenticated/admin/gallery': typeof AuthenticatedAdminGalleryRoute
   '/_authenticated/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/admin/reservations': typeof AuthenticatedAdminReservationsRoute
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/auth/reset'
     | '/admin/categories'
     | '/admin/foods'
+    | '/admin/gallery'
     | '/admin/messages'
     | '/admin/orders'
     | '/admin/reservations'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/auth/reset'
     | '/admin/categories'
     | '/admin/foods'
+    | '/admin/gallery'
     | '/admin/messages'
     | '/admin/orders'
     | '/admin/reservations'
@@ -246,6 +258,7 @@ export interface FileRouteTypes {
     | '/auth/reset'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/foods'
+    | '/_authenticated/admin/gallery'
     | '/_authenticated/admin/messages'
     | '/_authenticated/admin/orders'
     | '/_authenticated/admin/reservations'
@@ -386,6 +399,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMessagesRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/gallery': {
+      id: '/_authenticated/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AuthenticatedAdminGalleryRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/foods': {
       id: '/_authenticated/admin/foods'
       path: '/foods'
@@ -406,6 +426,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminFoodsRoute: typeof AuthenticatedAdminFoodsRoute
+  AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
   AuthenticatedAdminMessagesRoute: typeof AuthenticatedAdminMessagesRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
   AuthenticatedAdminReservationsRoute: typeof AuthenticatedAdminReservationsRoute
@@ -417,6 +438,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
   {
     AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
     AuthenticatedAdminFoodsRoute: AuthenticatedAdminFoodsRoute,
+    AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
     AuthenticatedAdminMessagesRoute: AuthenticatedAdminMessagesRoute,
     AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
     AuthenticatedAdminReservationsRoute: AuthenticatedAdminReservationsRoute,
