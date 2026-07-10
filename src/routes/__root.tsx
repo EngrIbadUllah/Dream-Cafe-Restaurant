@@ -8,10 +8,13 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { site } from "../lib/site-config";
+import { CartProvider } from "../hooks/use-cart";
+import { CartDrawer } from "../components/site/cart-drawer";
 
 const SITE_TITLE = `${site.name} — Shakargarh · BBQ · Chinese · Continental · Pakistani`;
 const SITE_DESC = site.description;
