@@ -835,14 +835,14 @@ function SectionHeader({
   subtitle,
   align = "center",
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   subtitle?: string;
   align?: "left" | "center";
 }) {
   return (
     <div className={align === "center" ? "text-center" : "text-left"}>
-      <p className="eyebrow">{eyebrow}</p>
+      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
       <h2
         className={`mt-4 font-display text-3xl sm:text-4xl md:text-5xl ${
           align === "center" ? "mx-auto max-w-3xl" : "max-w-2xl"
