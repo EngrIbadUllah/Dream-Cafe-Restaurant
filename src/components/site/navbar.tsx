@@ -224,11 +224,11 @@ export function Navbar() {
                 {user ? "My profile" : "Sign in / Sign up"}
               </Link>
               <a
-                href={`tel:${site.phone}`}
+                href={`tel:${site.phones[0]}`}
                 className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-muted"
               >
                 <Phone size={16} className="text-gold" />
-                {site.phone}
+                {site.phones[0]}
               </a>
               <button
                 onClick={() => {
