@@ -114,28 +114,29 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.25 }}
-          className="mt-9 flex flex-wrap items-center gap-3"
+          className="mt-10 grid w-full max-w-xl grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-4"
         >
           <Link
             to="/menu"
-            className="group inline-flex items-center gap-2 rounded-full gradient-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-xl shadow-black/30 hover:brightness-110 transition"
+            className="group inline-flex w-full items-center justify-center gap-2 rounded-full gradient-gold px-7 py-4 text-base font-semibold text-primary-foreground shadow-xl shadow-black/30 hover:brightness-110 transition sm:w-auto"
           >
-            <ShoppingBag size={16} /> Order Now
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+            <ShoppingBag size={18} /> Order Now
+            <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link
             to="/reservations"
-            className="inline-flex items-center gap-2 rounded-full glass-dark px-6 py-3.5 text-sm font-semibold text-cream hover:border-gold/50 transition"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full glass-dark px-7 py-4 text-base font-semibold text-cream hover:border-gold/50 transition sm:w-auto"
           >
-            <CalendarDays size={16} /> Reserve a Table
+            <CalendarDays size={18} /> Reserve a Table
           </Link>
           <Link
             to="/menu"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-cream hover:bg-white/5 transition"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-4 text-base font-semibold text-cream hover:bg-white/5 transition sm:w-auto"
           >
-            <UtensilsCrossed size={16} /> View Menu
+            <UtensilsCrossed size={18} /> View Menu
           </Link>
         </motion.div>
+
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
