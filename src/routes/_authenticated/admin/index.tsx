@@ -14,7 +14,7 @@ function AdminDashboard() {
   const fn = useServerFn(getAdminStats);
   const { data, isLoading } = useQuery({ queryKey: ["admin", "stats"], queryFn: () => fn() });
 
-  const stats = [
+  const stats: Array<{ label: string; value: string | number; icon: typeof DollarSign; tone: "gold" | "cream"; badge?: string }> = [
     { label: "Total Revenue", value: `PKR ${Math.round(data?.revenue ?? 0).toLocaleString()}`, icon: DollarSign, tone: "gold" },
     { label: "Total Orders", value: data?.ordersCount ?? 0, icon: ShoppingBag, tone: "cream", badge: data?.pendingOrders ? `${data.pendingOrders} pending` : undefined },
     { label: "Reservations", value: data?.reservationsCount ?? 0, icon: CalendarCheck, tone: "cream", badge: data?.pendingReservations ? `${data.pendingReservations} pending` : undefined },
@@ -23,7 +23,7 @@ function AdminDashboard() {
     { label: "Menu Items", value: data?.foodsCount ?? 0, icon: UtensilsCrossed, tone: "cream" },
     { label: "Customers", value: data?.customersCount ?? 0, icon: Users, tone: "cream" },
     { label: "Now", value: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }), icon: Clock, tone: "cream" },
-  ] as const;
+  ];
 
   return (
     <div className="space-y-8">
