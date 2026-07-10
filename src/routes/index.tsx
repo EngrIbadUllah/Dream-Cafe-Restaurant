@@ -88,14 +88,6 @@ function Hero() {
       <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_40%,transparent_0%,rgba(0,0,0,0.55)_70%)]" />
 
       <div className="container-page relative flex min-h-[100svh] flex-col justify-end pb-16 pt-40 sm:pt-44">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="eyebrow"
-        >
-          <Sparkles size={12} /> Shakargarh's premium dining destination
-        </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
