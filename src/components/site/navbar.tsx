@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/site-config";
 import { useTheme } from "./theme-provider";
 import { useAuth } from "@/hooks/use-auth";
+import { useCart } from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -11,6 +12,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggle } = useTheme();
   const { user } = useAuth();
+  const { count, open: openCart } = useCart();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -88,11 +90,23 @@ export function Navbar() {
           >
             <User size={16} />
           </Link>
+          <button
+            onClick={openCart}
+            aria-label="Open cart"
+            className="relative grid h-10 w-10 place-items-center rounded-full border border-white/15 text-cream/80 hover:text-gold hover:border-gold/50 transition"
+          >
+            <ShoppingBag size={16} />
+            {count > 0 && (
+              <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full gradient-gold px-1 text-[10px] font-bold text-primary-foreground">
+                {count}
+              </span>
+            )}
+          </button>
           <Link
             to="/menu"
             className="hidden md:inline-flex items-center gap-2 rounded-full gradient-gold px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-black/25 hover:brightness-110 transition"
           >
-            <ShoppingBag size={16} /> Order Now
+            Order Now
           </Link>
           <button
             onClick={() => setOpen((v) => !v)}
