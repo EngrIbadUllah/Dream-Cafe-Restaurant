@@ -106,17 +106,14 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-cream/50 md:flex-row">
           <p>© {year} Dream Cafe & Restaurant. All rights reserved.</p>
-          <p>
-            Made by{" "}
-            <a
-              href="https://ibadullah.tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold hover:underline"
-            >
-              ibadullah.tech
-            </a>
-          </p>
+          <a
+            href="https://ibadullah.tech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cream/60 hover:text-cream transition-colors no-underline"
+          >
+            Crafted by <span className="font-display tracking-wide text-cream/80">Ibad Ullah</span>
+          </a>
         </div>
       </div>
     </footer>
