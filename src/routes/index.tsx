@@ -42,12 +42,12 @@ export const Route = createFileRoute("/")({
       {
         property: "og:title",
         content:
-          "Dream Cafe & Restaurant — Shakargarh's premium dining destination",
+          "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh",
       },
       {
         property: "og:description",
         content:
-          "BBQ · Handi · Pizza · Chinese · Continental. Dine-in, takeaway and delivery on Noor Kot Road, Shakargarh.",
+          "Fine-dining flavour on Noor Kot Road, Shakargarh. Order online, reserve a table, or explore our all-day menu of BBQ, handi, pizza, burgers and continental favourites.",
       },
     ],
   }),

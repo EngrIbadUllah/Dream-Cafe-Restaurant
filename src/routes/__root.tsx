@@ -96,10 +96,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: SITE_TITLE },
       { name: "twitter:description", content: SITE_DESC },
+      { title: "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh" },
+      { property: "og:title", content: "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh" },
+      { name: "twitter:title", content: "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh" },
+      { name: "description", content: "Fine-dining flavour on Noor Kot Road, Shakargarh. Order online, reserve a table, or explore our all-day menu of BBQ, handi, pizza, burgers and continental favourites." },
+      { property: "og:description", content: "Fine-dining flavour on Noor Kot Road, Shakargarh. Order online, reserve a table, or explore our all-day menu of BBQ, handi, pizza, burgers and continental favourites." },
+      { name: "twitter:description", content: "Fine-dining flavour on Noor Kot Road, Shakargarh. Order online, reserve a table, or explore our all-day menu of BBQ, handi, pizza, burgers and continental favourites." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/917de20b-210c-42bc-bc96-7f463bd5dee9/id-preview-0baa304a--4ed2787d-b5c4-431b-a659-e124db6891b3.lovable.app-1783706163014.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/917de20b-210c-42bc-bc96-7f463bd5dee9/id-preview-0baa304a--4ed2787d-b5c4-431b-a659-e124db6891b3.lovable.app-1783706163014.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "manifest", href: "/manifest.webmanifest" },
 
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
