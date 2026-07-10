@@ -68,10 +68,10 @@ function ReservationsPage() {
             <tbody className="divide-y divide-white/5">
               {data.map((r) => (
                 <tr key={r.id} className="hover:bg-white/5">
-                  <td className="px-4 py-3 text-cream">{r.guest_name}</td>
+                  <td className="px-4 py-3 text-cream">{r.customer_name}</td>
                   <td className="px-4 py-3 text-cream/70 text-xs">
-                    <div>{r.guest_phone}</div>
-                    <div>{r.guest_email}</div>
+                    <div>{r.customer_phone}</div>
+                    <div>{r.customer_email}</div>
                   </td>
                   <td className="px-4 py-3 text-cream/70">{r.reservation_date}</td>
                   <td className="px-4 py-3 text-cream/70">{r.reservation_time}</td>
