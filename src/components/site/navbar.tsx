@@ -82,6 +82,13 @@ export function Navbar() {
             {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <Link
+            to={user ? "/profile" : "/auth"}
+            aria-label={user ? "Profile" : "Sign in"}
+            className="hidden sm:grid h-10 w-10 place-items-center rounded-full border border-white/15 text-cream/80 hover:text-gold hover:border-gold/50 transition"
+          >
+            <User size={16} />
+          </Link>
+          <Link
             to="/menu"
             className="hidden md:inline-flex items-center gap-2 rounded-full gradient-gold px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-black/25 hover:brightness-110 transition"
           >
