@@ -14,10 +14,12 @@ import { Route as OffersRouteImport } from './routes/offers'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrderOrderNumberRouteImport } from './routes/order.$orderNumber'
 import { Route as AuthResetRouteImport } from './routes/auth.reset'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
@@ -59,6 +61,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -76,6 +83,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderOrderNumberRoute = OrderOrderNumberRouteImport.update({
+  id: '/order/$orderNumber',
+  path: '/order/$orderNumber',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthResetRoute = AuthResetRouteImport.update({
@@ -167,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
@@ -175,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
+  '/order/$orderNumber': typeof OrderOrderNumberRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersRoute
@@ -192,6 +206,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
@@ -199,6 +214,7 @@ export interface FileRoutesByTo {
   '/reservations': typeof ReservationsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
+  '/order/$orderNumber': typeof OrderOrderNumberRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersRoute
@@ -218,6 +234,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRouteWithChildren
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
@@ -226,6 +243,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
+  '/order/$orderNumber': typeof OrderOrderNumberRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/customers': typeof AuthenticatedAdminCustomersRoute
@@ -245,6 +263,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/checkout'
     | '/contact'
     | '/gallery'
     | '/menu'
@@ -253,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/profile'
     | '/auth/reset'
+    | '/order/$orderNumber'
     | '/admin/blog'
     | '/admin/categories'
     | '/admin/customers'
@@ -270,6 +290,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/checkout'
     | '/contact'
     | '/gallery'
     | '/menu'
@@ -277,6 +298,7 @@ export interface FileRouteTypes {
     | '/reservations'
     | '/profile'
     | '/auth/reset'
+    | '/order/$orderNumber'
     | '/admin/blog'
     | '/admin/categories'
     | '/admin/customers'
@@ -295,6 +317,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/checkout'
     | '/contact'
     | '/gallery'
     | '/menu'
@@ -303,6 +326,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/profile'
     | '/auth/reset'
+    | '/order/$orderNumber'
     | '/_authenticated/admin/blog'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/customers'
@@ -322,11 +346,13 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRouteWithChildren
+  CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   MenuRoute: typeof MenuRoute
   OffersRoute: typeof OffersRoute
   ReservationsRoute: typeof ReservationsRoute
+  OrderOrderNumberRoute: typeof OrderOrderNumberRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -366,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -392,6 +425,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order/$orderNumber': {
+      id: '/order/$orderNumber'
+      path: '/order/$orderNumber'
+      fullPath: '/order/$orderNumber'
+      preLoaderRoute: typeof OrderOrderNumberRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/reset': {
@@ -566,11 +606,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRouteWithChildren,
+  CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   MenuRoute: MenuRoute,
   OffersRoute: OffersRoute,
   ReservationsRoute: ReservationsRoute,
+  OrderOrderNumberRoute: OrderOrderNumberRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
