@@ -1,8 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, Moon, ShoppingBag, Sun, X } from "lucide-react";
+import { Menu, Moon, ShoppingBag, Sun, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/site-config";
 import { useTheme } from "./theme-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
