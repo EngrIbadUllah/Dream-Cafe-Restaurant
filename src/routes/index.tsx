@@ -1,24 +1,785 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Award,
+  CalendarDays,
+  ChefHat,
+  Clock,
+  Flame,
+  Leaf,
+  MapPin,
+  Phone,
+  Quote,
+  ShoppingBag,
+  Sparkles,
+  Star,
+  Truck,
+  UtensilsCrossed,
+} from "lucide-react";
+import heroImg from "@/assets/hero-platter.jpg";
+import interiorImg from "@/assets/interior.jpg";
+import chefImg from "@/assets/chef.jpg";
+import { SiteShell } from "@/components/site/site-shell";
+import { site, whatsappLink } from "@/lib/site-config";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      {
+        title:
+          "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh",
+      },
+      {
+        name: "description",
+        content:
+          "Fine-dining flavour on Noor Kot Road, Shakargarh. Order online, reserve a table, or explore our all-day menu of BBQ, handi, pizza, burgers and continental favourites.",
+      },
+      {
+        property: "og:title",
+        content:
+          "Dream Cafe & Restaurant — Shakargarh's premium dining destination",
+      },
+      {
+        property: "og:description",
+        content:
+          "BBQ · Handi · Pizza · Chinese · Continental. Dine-in, takeaway and delivery on Noor Kot Road, Shakargarh.",
+      },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
+    <SiteShell>
+      <Hero />
+      <Marquee />
+      <Categories />
+      <FeaturedFoods />
+      <TodaysSpecial />
+      <WhyChooseUs />
+      <ChefSection />
+      <Reviews />
+      <ReservationCTA />
+      <ContactStrip />
+    </SiteShell>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function Hero() {
+  return (
+    <section className="relative isolate min-h-[100svh] overflow-hidden bg-ink text-cream">
       <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
+        src={heroImg}
+        alt=""
+        width={1920}
+        height={1280}
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover object-center opacity-70"
       />
+      <div className="absolute inset-0 gradient-hero" />
+      <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_40%,transparent_0%,rgba(0,0,0,0.55)_70%)]" />
+
+      <div className="container-page relative flex min-h-[100svh] flex-col justify-end pb-16 pt-40 sm:pt-44">
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="eyebrow"
+        >
+          <Sparkles size={12} /> Shakargarh's premium dining destination
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-5 max-w-4xl font-display text-[clamp(2.5rem,7vw,5.5rem)] font-medium leading-[1.02] tracking-tight"
+        >
+          A taste of home,
+          <br />
+          <span className="italic text-gold">plated beautifully.</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.15 }}
+          className="mt-6 max-w-xl text-base text-cream/80 sm:text-lg"
+        >
+          Slow-cooked handi, live BBQ, wood-fired pizza and continental
+          classics — served the way Shakargarh remembers, elevated for today.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.25 }}
+          className="mt-9 flex flex-wrap items-center gap-3"
+        >
+          <Link
+            to="/menu"
+            className="group inline-flex items-center gap-2 rounded-full gradient-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-xl shadow-black/30 hover:brightness-110 transition"
+          >
+            <ShoppingBag size={16} /> Order Now
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
+          <Link
+            to="/reservations"
+            className="inline-flex items-center gap-2 rounded-full glass-dark px-6 py-3.5 text-sm font-semibold text-cream hover:border-gold/50 transition"
+          >
+            <CalendarDays size={16} /> Reserve a Table
+          </Link>
+          <Link
+            to="/menu"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold text-cream hover:bg-white/5 transition"
+          >
+            <UtensilsCrossed size={16} /> View Menu
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-14 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
+        >
+          <Stat kpi="4.1★" label="365+ reviews" />
+          <Stat kpi="30+" label="Buffet dishes" />
+          <Stat kpi="30 min" label="Avg delivery" />
+          <Stat kpi="12+" label="Cuisines" />
+        </motion.div>
+      </div>
+
+      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-cream/50">
+        Scroll to explore
+      </div>
+    </section>
+  );
+}
+
+function Stat({ kpi, label }: { kpi: string; label: string }) {
+  return (
+    <div className="border-l border-white/15 pl-4">
+      <div className="font-display text-2xl text-cream">{kpi}</div>
+      <div className="mt-1 text-xs uppercase tracking-widest text-cream/60">{label}</div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function Marquee() {
+  const items = [
+    "Live BBQ",
+    "Handi Specialists",
+    "Wood-Fired Pizza",
+    "Continental Classics",
+    "Chinese Wok",
+    "All-You-Can-Eat Buffet",
+    "Dine-in · Takeaway · Delivery",
+  ];
+  return (
+    <div className="border-y border-border/60 bg-secondary/50 py-4">
+      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 px-4">
+        {items.map((t) => (
+          <span
+            key={t}
+            className="flex items-center gap-2 font-display text-sm italic text-muted-foreground"
+          >
+            <span className="h-1 w-1 rounded-full bg-gold" />
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+const categories = [
+  { name: "Pakistani", desc: "Handi, karahi & desi favourites", icon: Flame },
+  { name: "BBQ", desc: "Live grill, seekh & tikka", icon: Flame },
+  { name: "Chinese", desc: "Wok-tossed & saucy", icon: UtensilsCrossed },
+  { name: "Continental", desc: "Steaks, pasta, breakfasts", icon: ChefHat },
+  { name: "Pizza", desc: "Hand-stretched, wood-fired", icon: UtensilsCrossed },
+  { name: "Burgers", desc: "Smash, zinger & signature", icon: UtensilsCrossed },
+];
+
+function Categories() {
+  return (
+    <section className="section-y">
+      <div className="container-page">
+        <SectionHeader
+          eyebrow="Explore the menu"
+          title="Six kitchens, one address."
+          subtitle="From slow-cooked handi to wood-fired pizza — every craving has its counter."
+        />
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((c, i) => (
+            <motion.div
+              key={c.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: i * 0.05 }}
+            >
+              <Link
+                to="/menu"
+                className="group flex items-start justify-between gap-4 rounded-3xl border border-border bg-card p-6 transition-all hover:border-gold/50 hover:shadow-xl hover:shadow-black/5"
+              >
+                <div>
+                  <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gold/10 text-gold">
+                    <c.icon size={20} />
+                  </div>
+                  <h3 className="mt-4 font-display text-xl">{c.name}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{c.desc}</p>
+                </div>
+                <ArrowRight
+                  size={18}
+                  className="text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-gold"
+                />
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+const featured = [
+  {
+    name: "Chicken Handi",
+    desc: "Slow-cooked chicken in creamy tomato masala with fresh coriander.",
+    price: "Rs 1,450",
+    badge: "Signature",
+    tag: "Pakistani",
+  },
+  {
+    name: "Chickiza Platter",
+    desc: "Two chickizas, wings, fries and dips — perfect for sharing.",
+    price: "Rs 1,350",
+    badge: "New",
+    tag: "Fast Food",
+  },
+  {
+    name: "Pulled Beef Benedict",
+    desc: "Slow-braised beef, poached eggs, hollandaise on toasted brioche.",
+    price: "Rs 1,890",
+    badge: "Chef's pick",
+    tag: "Continental",
+  },
+  {
+    name: "Seekh Kebab Platter",
+    desc: "Charcoal-grilled seekh, chicken malai boti, naan and chutneys.",
+    price: "Rs 1,690",
+    badge: "Popular",
+    tag: "BBQ",
+  },
+];
+
+function FeaturedFoods() {
+  return (
+    <section className="section-y bg-secondary/40">
+      <div className="container-page">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeader
+            eyebrow="Featured this week"
+            title="Handpicked by our chefs."
+            subtitle="Dishes our regulars can't stop reordering."
+            align="left"
+          />
+          <Link
+            to="/menu"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-gold hover:underline"
+          >
+            View full menu <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((f, i) => (
+            <motion.article
+              key={f.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: i * 0.06 }}
+              className="group overflow-hidden rounded-3xl border border-border bg-card"
+            >
+              <div className="relative aspect-[5/4] overflow-hidden bg-ink">
+                <img
+                  src={heroImg}
+                  alt={f.name}
+                  loading="lazy"
+                  width={800}
+                  height={640}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold backdrop-blur">
+                  {f.badge}
+                </span>
+              </div>
+              <div className="p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    {f.tag}
+                  </p>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Star size={12} className="fill-gold text-gold" /> 4.8
+                  </div>
+                </div>
+                <h3 className="mt-2 font-display text-xl">{f.name}</h3>
+                <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                  {f.desc}
+                </p>
+                <div className="mt-4 flex items-center justify-between">
+                  <div className="font-display text-lg text-gold">{f.price}</div>
+                  <button
+                    className="rounded-full border border-border px-3 py-1.5 text-xs font-semibold hover:bg-gold hover:text-primary-foreground hover:border-gold transition"
+                    type="button"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function TodaysSpecial() {
+  return (
+    <section className="section-y">
+      <div className="container-page">
+        <div className="relative overflow-hidden rounded-[2rem] border border-border bg-ink text-cream">
+          <img
+            src={interiorImg}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" />
+
+          <div className="relative grid gap-10 p-8 sm:p-12 lg:grid-cols-2 lg:p-16">
+            <div>
+              <p className="eyebrow">Today's special</p>
+              <h2 className="mt-4 font-display text-4xl sm:text-5xl">
+                Buffet Night —<br />
+                <span className="italic text-gold">30+ dishes till 8 PM</span>
+              </h2>
+              <p className="mt-4 max-w-md text-cream/80">
+                Every evening, our chefs plate a live buffet of BBQ, handi,
+                Chinese, continental and dessert. All-you-can-eat, one price.
+              </p>
+
+              <div className="mt-6 flex items-baseline gap-3">
+                <span className="font-display text-5xl text-gold">Rs 1,499</span>
+                <span className="text-cream/50 line-through">Rs 1,899</span>
+                <span className="rounded-full bg-gold/20 px-2.5 py-1 text-xs font-semibold text-gold">
+                  Save 20%
+                </span>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  to="/reservations"
+                  className="inline-flex items-center gap-2 rounded-full gradient-gold px-5 py-3 text-sm font-semibold text-primary-foreground"
+                >
+                  <CalendarDays size={16} /> Reserve for tonight
+                </Link>
+                <a
+                  href={whatsappLink("Hi, I'd like details about tonight's buffet.")}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-cream hover:bg-white/5"
+                >
+                  Ask on WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <ul className="grid grid-cols-2 gap-3 self-center">
+              {[
+                "Live BBQ",
+                "Handi Corner",
+                "Chinese Wok",
+                "Continental",
+                "Dessert Bar",
+                "Fresh Salads",
+              ].map((t) => (
+                <li
+                  key={t}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm backdrop-blur"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+const perks = [
+  {
+    icon: ChefHat,
+    title: "Chef-led kitchen",
+    text: "Every recipe overseen by our head chef — consistent, plated with care.",
+  },
+  {
+    icon: Leaf,
+    title: "Fresh, sourced daily",
+    text: "Local produce, real spices, no shortcuts. Halal-certified through and through.",
+  },
+  {
+    icon: Truck,
+    title: "30-min delivery",
+    text: "Insulated bags, live tracking on WhatsApp, hot every single time.",
+  },
+  {
+    icon: Award,
+    title: "Loved in Shakargarh",
+    text: "4.1★ from 365+ Google reviews and counting. That trust powers us.",
+  },
+];
+
+function WhyChooseUs() {
+  return (
+    <section className="section-y bg-secondary/40">
+      <div className="container-page">
+        <SectionHeader
+          eyebrow="Why guests keep returning"
+          title="A restaurant, cafe and BBQ house — done properly."
+        />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {perks.map((p, i) => (
+            <motion.div
+              key={p.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.06 }}
+              className="rounded-3xl border border-border bg-card p-6"
+            >
+              <div className="grid h-12 w-12 place-items-center rounded-2xl gradient-gold text-primary-foreground shadow-md">
+                <p.icon size={20} />
+              </div>
+              <h3 className="mt-5 font-display text-lg">{p.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function ChefSection() {
+  return (
+    <section className="section-y">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          <div className="overflow-hidden rounded-[2rem] border border-border">
+            <img
+              src={chefImg}
+              alt="Head chef plating a dish"
+              loading="lazy"
+              width={1200}
+              height={1500}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="absolute -bottom-6 -right-4 hidden rounded-2xl border border-border bg-card p-5 shadow-xl sm:block">
+            <div className="flex items-center gap-3">
+              <div className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground">
+                <ChefHat size={18} />
+              </div>
+              <div>
+                <div className="font-display text-lg leading-none">12+ years</div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  Kitchen experience
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <div>
+          <p className="eyebrow">Meet the kitchen</p>
+          <h2 className="mt-4 font-display text-4xl sm:text-5xl">
+            Recipes shaped by memory,
+            <br />
+            <span className="italic text-gold">served with pride.</span>
+          </h2>
+          <p className="mt-5 text-muted-foreground">
+            Our head chef trained across Lahore and Islamabad before coming home to
+            Shakargarh. His philosophy is simple — real ingredients, patient
+            cooking, and a plate that makes you want to text your friends.
+          </p>
+
+          <ul className="mt-8 space-y-4">
+            {[
+              "Handi & karahi cooked over slow charcoal.",
+              "Fresh dough proofed daily for pizza and naan.",
+              "House-made chutneys, sauces and marinades.",
+            ].map((t) => (
+              <li key={t} className="flex gap-3 text-sm">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-8">
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-semibold hover:bg-accent transition"
+            >
+              Read our story <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+const reviews = [
+  {
+    name: "Ameer H.",
+    role: "TikTok · 147K views",
+    text: "New Shakargarh branch is stunning. Buffet is a full experience — 30+ dishes and everything was fresh.",
+  },
+  {
+    name: "Hadi R.",
+    role: "Instagram",
+    text: "Handi and seekh kebab hit exactly like home. Service was quick even on a full evening.",
+  },
+  {
+    name: "Sufyan B.",
+    role: "Google review",
+    text: "Grand opening was packed — and the food matched the hype. Pulled beef benedict is unreal.",
+  },
+];
+
+function Reviews() {
+  return (
+    <section className="section-y bg-secondary/40">
+      <div className="container-page">
+        <SectionHeader
+          eyebrow="What our guests say"
+          title="Trusted by 3,800+ followers and counting."
+        />
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {reviews.map((r, i) => (
+            <motion.blockquote
+              key={r.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
+              className="rounded-3xl border border-border bg-card p-7"
+            >
+              <Quote size={22} className="text-gold" />
+              <p className="mt-4 text-sm leading-relaxed text-foreground/90">
+                "{r.text}"
+              </p>
+              <footer className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-gold/15 font-display text-gold">
+                  {r.name[0]}
+                </div>
+                <div>
+                  <div className="text-sm font-semibold">{r.name}</div>
+                  <div className="text-xs text-muted-foreground">{r.role}</div>
+                </div>
+                <div className="ml-auto flex items-center gap-0.5">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} size={12} className="fill-gold text-gold" />
+                  ))}
+                </div>
+              </footer>
+            </motion.blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function ReservationCTA() {
+  return (
+    <section className="section-y">
+      <div className="container-page">
+        <div className="relative overflow-hidden rounded-[2rem] bg-ink p-10 text-cream sm:p-16">
+          <div className="absolute inset-0 opacity-20 [background:radial-gradient(60%_60%_at_20%_20%,var(--color-gold),transparent_60%),radial-gradient(50%_50%_at_80%_80%,var(--color-burgundy),transparent_60%)]" />
+          <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+            <div>
+              <p className="eyebrow">Reserve a table</p>
+              <h2 className="mt-3 max-w-xl font-display text-4xl sm:text-5xl">
+                Your table at Dream Cafe,
+                <br />
+                <span className="italic text-gold">held with a tap.</span>
+              </h2>
+              <p className="mt-4 max-w-lg text-cream/75">
+                Book online, get instant confirmation on WhatsApp, and skip the
+                wait on busy nights.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/reservations"
+                className="inline-flex items-center gap-2 rounded-full gradient-gold px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lg"
+              >
+                <CalendarDays size={16} /> Reserve now
+              </Link>
+              <a
+                href={`tel:${site.phones[0].tel}`}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm font-semibold hover:bg-white/5"
+              >
+                <Phone size={16} /> {site.phones[0].number}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function ContactStrip() {
+  return (
+    <section className="section-y">
+      <div className="container-page grid gap-8 lg:grid-cols-[1.05fr_1fr]">
+        <div className="rounded-[2rem] border border-border bg-card p-8 sm:p-10">
+          <p className="eyebrow">Find us</p>
+          <h2 className="mt-3 font-display text-3xl sm:text-4xl">
+            {site.address.line1}
+          </h2>
+          <p className="mt-2 text-muted-foreground">
+            {site.address.city}, {site.address.postalCode}, {site.address.country}
+          </p>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <InfoRow icon={Phone} label="Call us">
+              {site.phones.slice(0, 2).map((p) => (
+                <a key={p.tel} href={`tel:${p.tel}`} className="block hover:text-gold">
+                  {p.number}
+                </a>
+              ))}
+            </InfoRow>
+            <InfoRow icon={Clock} label="Hours">
+              {site.hours.map((h) => (
+                <div key={h.day} className="text-sm">
+                  <span className="text-muted-foreground">{h.day}: </span>
+                  <span>{h.time}</span>
+                </div>
+              ))}
+            </InfoRow>
+            <InfoRow icon={MapPin} label="Location">
+              Noor Kot Road, near Gamtala Chowk
+            </InfoRow>
+            <InfoRow icon={UtensilsCrossed} label="Service">
+              Dine-in · Takeaway · Delivery
+            </InfoRow>
+          </div>
+        </div>
+
+        <div className="min-h-[360px] overflow-hidden rounded-[2rem] border border-border">
+          <iframe
+            title="Dream Cafe & Restaurant on Google Maps"
+            src={site.mapEmbed}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="h-full w-full"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InfoRow({
+  icon: Icon,
+  label,
+  children,
+}: {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-2xl border border-border bg-background p-4">
+      <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
+        <Icon size={14} className="text-gold" /> {label}
+      </div>
+      <div className="mt-2 text-sm text-foreground">{children}</div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+function SectionHeader({
+  eyebrow,
+  title,
+  subtitle,
+  align = "center",
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  align?: "left" | "center";
+}) {
+  return (
+    <div className={align === "center" ? "text-center" : "text-left"}>
+      <p className="eyebrow">{eyebrow}</p>
+      <h2
+        className={`mt-4 font-display text-3xl sm:text-4xl md:text-5xl ${
+          align === "center" ? "mx-auto max-w-3xl" : "max-w-2xl"
+        }`}
+      >
+        {title}
+      </h2>
+      {subtitle && (
+        <p
+          className={`mt-4 text-muted-foreground ${
+            align === "center" ? "mx-auto max-w-2xl" : "max-w-xl"
+          }`}
+        >
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }
