@@ -16,8 +16,8 @@ export const site = {
   },
   phones: [
     { label: "Reservations", number: "0300 1212790", tel: "+923001212790" },
-    { label: "Orders", number: "0300 1212 283", tel: "+923001212283" },
-    { label: "Orders", number: "0300 1212 928", tel: "+923001212928" },
+    { label: "Orders", number: "0300 1212283", tel: "+923001212283" },
+    { label: "Orders", number: "0300 1212928", tel: "+923001212928" },
   ],
   whatsapp: "+923001212790",
   email: "hello@dreamcafeskg.com",
