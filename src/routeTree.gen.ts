@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ReservationsRouteImport } from './routes/reservations'
 import { Route as OffersRouteImport } from './routes/offers'
 import { Route as MenuRouteImport } from './routes/menu'
@@ -38,6 +39,11 @@ import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin/blog'
 
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReservationsRoute = ReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
   '/reservations': typeof ReservationsRoute
+  '/reviews': typeof ReviewsRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
   '/reservations': typeof ReservationsRoute
+  '/reviews': typeof ReviewsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -257,6 +265,7 @@ export interface FileRoutesById {
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
   '/reservations': typeof ReservationsRoute
+  '/reviews': typeof ReviewsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
@@ -288,6 +297,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/offers'
     | '/reservations'
+    | '/reviews'
     | '/admin'
     | '/profile'
     | '/auth/reset'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/offers'
     | '/reservations'
+    | '/reviews'
     | '/profile'
     | '/auth/reset'
     | '/blog/$slug'
@@ -346,6 +357,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/offers'
     | '/reservations'
+    | '/reviews'
     | '/_authenticated/admin'
     | '/_authenticated/profile'
     | '/auth/reset'
@@ -377,11 +389,19 @@ export interface RootRouteChildren {
   MenuRoute: typeof MenuRoute
   OffersRoute: typeof OffersRoute
   ReservationsRoute: typeof ReservationsRoute
+  ReviewsRoute: typeof ReviewsRoute
   OrderOrderNumberRoute: typeof OrderOrderNumberRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reservations': {
       id: '/reservations'
       path: '/reservations'
@@ -662,6 +682,7 @@ const rootRouteChildren: RootRouteChildren = {
   MenuRoute: MenuRoute,
   OffersRoute: OffersRoute,
   ReservationsRoute: ReservationsRoute,
+  ReviewsRoute: ReviewsRoute,
   OrderOrderNumberRoute: OrderOrderNumberRoute,
 }
 export const routeTree = rootRouteImport
