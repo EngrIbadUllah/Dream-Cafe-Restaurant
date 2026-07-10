@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowRight,
   Award,
@@ -22,6 +23,9 @@ import interiorImg from "@/assets/interior.jpg";
 import chefImg from "@/assets/chef.jpg";
 import { SiteShell } from "@/components/site/site-shell";
 import { site, whatsappLink } from "@/lib/site-config";
+import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/hooks/use-cart";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -254,38 +258,39 @@ function Categories() {
 
 /* -------------------------------------------------------------------------- */
 
-const featured = [
-  {
-    name: "Chicken Handi",
-    desc: "Slow-cooked chicken in creamy tomato masala with fresh coriander.",
-    price: "Rs 1,450",
-    badge: "Signature",
-    tag: "Pakistani",
-  },
-  {
-    name: "Chickiza Platter",
-    desc: "Two chickizas, wings, fries and dips — perfect for sharing.",
-    price: "Rs 1,350",
-    badge: "New",
-    tag: "Fast Food",
-  },
-  {
-    name: "Pulled Beef Benedict",
-    desc: "Slow-braised beef, poached eggs, hollandaise on toasted brioche.",
-    price: "Rs 1,890",
-    badge: "Chef's pick",
-    tag: "Continental",
-  },
-  {
-    name: "Seekh Kebab Platter",
-    desc: "Charcoal-grilled seekh, chicken malai boti, naan and chutneys.",
-    price: "Rs 1,690",
-    badge: "Popular",
-    tag: "BBQ",
-  },
-];
+type FeaturedFood = {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  discount_price: number | null;
+  image_url: string | null;
+  is_featured: boolean;
+  category: { name: string } | null;
+};
 
 function FeaturedFoods() {
+  const { add, open } = useCart();
+  const { data, isLoading } = useQuery({
+    queryKey: ["home-featured-foods"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("foods")
+        .select(
+          "id,name,description,price,discount_price,image_url,is_featured,category:categories(name)",
+        )
+        .eq("is_available", true)
+        .order("is_featured", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(8);
+      if (error) throw error;
+      return (data ?? []) as unknown as FeaturedFood[];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const items = (data ?? []).slice(0, 8);
+
   return (
     <section className="section-y bg-secondary/40">
       <div className="container-page">
@@ -293,7 +298,7 @@ function FeaturedFoods() {
           <SectionHeader
             eyebrow="Featured this week"
             title="Handpicked by our chefs."
-            subtitle="Dishes our regulars can't stop reordering."
+            subtitle="Dishes our regulars can't stop reordering — straight from tonight's menu."
             align="left"
           />
           <Link
@@ -305,58 +310,132 @@ function FeaturedFoods() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featured.map((f, i) => (
-            <motion.article
-              key={f.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: i * 0.06 }}
-              className="group overflow-hidden rounded-3xl border border-border bg-card"
-            >
-              <div className="relative aspect-[5/4] overflow-hidden bg-ink">
-                <img
-                  src={heroImg}
-                  alt={f.name}
-                  loading="lazy"
-                  width={800}
-                  height={640}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <span className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold backdrop-blur">
-                  {f.badge}
-                </span>
+          {isLoading &&
+            Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse overflow-hidden rounded-3xl border border-border bg-card"
+              >
+                <div className="aspect-[5/4] w-full bg-ink/60" />
+                <div className="space-y-3 p-5">
+                  <div className="h-3 w-1/3 rounded bg-muted" />
+                  <div className="h-5 w-3/4 rounded bg-muted" />
+                  <div className="h-3 w-full rounded bg-muted" />
+                  <div className="h-8 w-full rounded bg-muted" />
+                </div>
               </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-                    {f.tag}
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Star size={12} className="fill-gold text-gold" /> 4.8
+            ))}
+
+          {!isLoading && items.length === 0 && (
+            <div className="col-span-full rounded-3xl border border-dashed border-border bg-card/60 p-10 text-center text-muted-foreground">
+              Our chefs are updating tonight's specials. Check the{" "}
+              <Link to="/menu" className="text-gold underline">
+                full menu
+              </Link>
+              .
+            </div>
+          )}
+
+          {items.map((f, i) => {
+            const hasDiscount =
+              f.discount_price != null && f.discount_price < f.price;
+            const shownPrice = hasDiscount ? f.discount_price! : f.price;
+            const off = hasDiscount
+              ? Math.round(((f.price - f.discount_price!) / f.price) * 100)
+              : 0;
+            return (
+              <motion.article
+                key={f.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+                className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:border-gold/40 hover:shadow-xl"
+              >
+                <div className="relative aspect-[5/4] overflow-hidden bg-ink">
+                  {f.image_url ? (
+                    <img
+                      src={f.image_url}
+                      alt={f.name}
+                      loading="lazy"
+                      width={800}
+                      height={640}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-cream/40">
+                      <UtensilsCrossed size={40} />
+                    </div>
+                  )}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
+
+                  {f.is_featured && (
+                    <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-gold backdrop-blur">
+                      <Sparkles size={10} /> Chef's pick
+                    </span>
+                  )}
+                  {hasDiscount && (
+                    <span className="absolute right-3 top-3 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary-foreground">
+                      -{off}%
+                    </span>
+                  )}
+                  {f.category?.name && (
+                    <span className="absolute bottom-3 left-3 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-cream backdrop-blur">
+                      {f.category.name}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-display text-lg leading-tight">
+                    {f.name}
+                  </h3>
+                  {f.description && (
+                    <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                      {f.description}
+                    </p>
+                  )}
+                  <div className="mt-auto flex items-end justify-between pt-4">
+                    <div className="flex flex-col">
+                      <span className="font-display text-xl leading-none text-gold">
+                        Rs {shownPrice.toLocaleString("en-PK")}
+                      </span>
+                      {hasDiscount && (
+                        <span className="mt-1 text-xs text-muted-foreground line-through">
+                          Rs {f.price.toLocaleString("en-PK")}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => {
+                        add(
+                          {
+                            id: f.id,
+                            name: f.name,
+                            price: shownPrice,
+                            image_url: f.image_url,
+                          },
+                          1,
+                        );
+                        open();
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-full gradient-gold px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition hover:brightness-110"
+                      type="button"
+                      aria-label={`Add ${f.name} to cart`}
+                    >
+                      <ShoppingBag size={13} /> Add
+                    </button>
                   </div>
                 </div>
-                <h3 className="mt-2 font-display text-xl">{f.name}</h3>
-                <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
-                  {f.desc}
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="font-display text-lg text-gold">{f.price}</div>
-                  <button
-                    className="rounded-full border border-border px-3 py-1.5 text-xs font-semibold hover:bg-gold hover:text-primary-foreground hover:border-gold transition"
-                    type="button"
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-            </motion.article>
-          ))}
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
+
 
 /* -------------------------------------------------------------------------- */
 
