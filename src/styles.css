@@ -304,6 +304,16 @@
   animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes slideDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+
+
 html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
