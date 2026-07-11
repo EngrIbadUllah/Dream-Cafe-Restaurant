@@ -267,7 +267,7 @@ export function Navbar() {
                 className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-muted"
               >
                 <Phone size={16} className="text-gold" />
-                {site.phones[0].number}
+                {s.phones[0].number}
               </a>
               <button
                 onClick={() => {
