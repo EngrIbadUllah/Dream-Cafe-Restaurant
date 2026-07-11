@@ -47,8 +47,8 @@ export function BusinessInfoEditor({
   function setAddress<K extends keyof BusinessInfo["address"]>(k: K, v: string) {
     setForm((f) => ({ ...f, address: { ...f.address, [k]: v } }));
   }
-  function setSocial<K extends keyof BusinessInfo["social"]>(k: K, v: string) {
-    setForm((f) => ({ ...f, social: { ...f.social, [k]: v } }));
+  function setSocial(k: keyof BusinessInfo["social"], patch: Partial<{ url: string; enabled: boolean }>) {
+    setForm((f) => ({ ...f, social: { ...f.social, [k]: { ...f.social[k], ...patch } } }));
   }
   function updatePhone(idx: number, patch: Partial<Phone>) {
     setForm((f) => ({
@@ -193,20 +193,39 @@ export function BusinessInfoEditor({
       </div>
 
       <h3 className="mt-6 mb-2 text-sm font-semibold text-cream/80">Social links</h3>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Facebook URL">
-          <input className="input-base" value={form.social.facebook}
-            onChange={(e) => setSocial("facebook", e.target.value)} />
-        </Field>
-        <Field label="Instagram URL">
-          <input className="input-base" value={form.social.instagram}
-            onChange={(e) => setSocial("instagram", e.target.value)} />
-        </Field>
-        <Field label="TikTok URL" full>
-          <input className="input-base" value={form.social.tiktok}
-            onChange={(e) => setSocial("tiktok", e.target.value)} />
-        </Field>
+      <p className="mb-3 text-xs text-cream/50">Toggle each platform on to show its icon in the footer. Leave off to hide.</p>
+      <div className="space-y-2">
+        {(["facebook", "instagram", "tiktok", "youtube"] as const).map((key) => {
+          const labels: Record<typeof key, string> = {
+            facebook: "Facebook",
+            instagram: "Instagram",
+            tiktok: "TikTok",
+            youtube: "YouTube",
+          };
+          const s = form.social[key];
+          return (
+            <div key={key} className="grid gap-2 sm:grid-cols-[130px_1fr_auto] items-center">
+              <span className="text-sm text-cream/80">{labels[key]}</span>
+              <input
+                className="input-base"
+                placeholder={`https://…`}
+                value={s.url}
+                onChange={(e) => setSocial(key, { url: e.target.value })}
+              />
+              <label className="inline-flex items-center gap-2 text-xs text-cream/70 select-none">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 accent-gold"
+                  checked={s.enabled}
+                  onChange={(e) => setSocial(key, { enabled: e.target.checked })}
+                />
+                Show
+              </label>
+            </div>
+          );
+        })}
       </div>
+
 
       <div className="mt-6 flex justify-end">
         <button

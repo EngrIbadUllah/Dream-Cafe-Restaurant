@@ -28,9 +28,10 @@ export const site = {
     { day: "Saturday – Sunday", time: "11:00 AM – 1:00 AM" },
   ],
   social: {
-    facebook: "https://facebook.com/dreamcafeskg",
-    instagram: "https://instagram.com/dreamcafeskg",
-    tiktok: "https://tiktok.com/@dreamcafeskg",
+    facebook: { url: "https://facebook.com/dreamcafeskg", enabled: true },
+    instagram: { url: "https://instagram.com/dreamcafeskg", enabled: true },
+    tiktok: { url: "https://tiktok.com/@dreamcafeskg", enabled: false },
+    youtube: { url: "", enabled: false },
   },
   mapEmbed:
     "https://www.google.com/maps?q=Dream+Cafe+%26+Restaurant+Noor+Kot+Road+Shakargarh&output=embed",
