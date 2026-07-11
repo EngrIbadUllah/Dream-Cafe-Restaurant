@@ -14,6 +14,7 @@ export function Navbar() {
   const { theme, toggle } = useTheme();
   const { user } = useAuth();
   const { count, open: openCart } = useCart();
+  const logo = useCafeLogo();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
