@@ -99,7 +99,7 @@ export async function sendPushToAdmins(payload: {
         };
         try {
           const req = await buildPushPayload(message, subscription, vapid);
-          const res = await fetch(sub.endpoint, req);
+          const res = await fetch(sub.endpoint, req as unknown as RequestInit);
           // 404 / 410 → subscription no longer valid → clean up
           if (res.status === 404 || res.status === 410) {
             await supabaseAdmin
