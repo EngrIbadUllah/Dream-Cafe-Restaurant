@@ -1,13 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Plus, Trash2, Pencil } from "lucide-react";
+import { Plus, Trash2, Pencil, Upload, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/foods")({
   component: FoodsPage,
 });
+
+const SIGN_TTL = 60 * 60 * 24 * 365 * 10; // 10 years
+
+async function uploadFoodImage(file: File): Promise<string> {
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `items/${crypto.randomUUID()}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from("food-images")
+    .upload(path, file, { cacheControl: "31536000", upsert: false, contentType: file.type });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage.from("food-images").createSignedUrl(path, SIGN_TTL);
+  if (error || !data?.signedUrl) throw error ?? new Error("Signed URL failed");
+  return data.signedUrl;
+}
 
 type FoodDraft = {
   id?: string;
