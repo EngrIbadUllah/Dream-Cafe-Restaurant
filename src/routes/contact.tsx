@@ -30,8 +30,10 @@ const schema = z.object({
 });
 
 function Contact() {
+  const s = useBusinessInfo();
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
