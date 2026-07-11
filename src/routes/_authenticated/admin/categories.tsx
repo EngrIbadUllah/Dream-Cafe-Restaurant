@@ -20,7 +20,7 @@ function CategoriesPage() {
       const { data, error } = await supabase
         .from("categories")
         .select("*, foods(count)")
-        .order("display_order")
+        .order("sort_order")
         .order("name");
       if (error) throw error;
       return data ?? [];
