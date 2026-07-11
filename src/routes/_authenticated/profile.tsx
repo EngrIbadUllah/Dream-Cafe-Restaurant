@@ -1,7 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Loader2, LogOut, User as UserIcon } from "lucide-react";
+import { ClipboardList, Loader2, LogOut, User as UserIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { site } from "@/lib/site-config";
 import { SiteShell } from "@/components/site/site-shell";
