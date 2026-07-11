@@ -50,7 +50,8 @@ export const nav = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export function whatsappLink(message = "Hi Dream Cafe, I'd like to place an order.") {
-  const num = site.whatsapp.replace(/[^\d]/g, "");
-  return `https://wa.me/${num}?text=${encodeURIComponent(message)}`;
+export function whatsappLink(message?: string, number?: string) {
+  const num = (number ?? site.whatsapp).replace(/[^\d]/g, "");
+  const text = message ?? site.whatsappMessage;
+  return `https://wa.me/${num}?text=${encodeURIComponent(text)}`;
 }
