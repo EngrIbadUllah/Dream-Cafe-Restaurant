@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { nav, site } from "@/lib/site-config";
+import { useCafeLogo } from "@/hooks/use-cafe-logo";
 
 export function Footer() {
+  const logo = useCafeLogo();
   const year = new Date().getFullYear();
   return (
     <footer className="relative bg-ink text-cream">
