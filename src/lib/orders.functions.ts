@@ -14,8 +14,10 @@ type PlaceOrderInput = {
   table_number?: string;
   notes?: string;
   coupon_code?: string;
+  user_id?: string | null;
   items: { food_id: string; food_name: string; unit_price: number; quantity: number; notes?: string }[];
 };
+
 
 const DELIVERY_FEE = 150;
 
