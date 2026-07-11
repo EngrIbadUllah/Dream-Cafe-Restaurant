@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrackRouteImport } from './routes/track'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ReservationsRouteImport } from './routes/reservations'
@@ -41,6 +42,11 @@ import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin/blog'
 
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/reservations': typeof ReservationsRoute
   '/reviews': typeof ReviewsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/track': typeof TrackRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/orders': typeof AuthenticatedOrdersRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/reservations': typeof ReservationsRoute
   '/reviews': typeof ReviewsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/track': typeof TrackRoute
   '/orders': typeof AuthenticatedOrdersRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/auth/reset': typeof AuthResetRoute
@@ -283,6 +291,7 @@ export interface FileRoutesById {
   '/reservations': typeof ReservationsRoute
   '/reviews': typeof ReviewsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/track': typeof TrackRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/orders': typeof AuthenticatedOrdersRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
@@ -317,6 +326,7 @@ export interface FileRouteTypes {
     | '/reservations'
     | '/reviews'
     | '/sitemap.xml'
+    | '/track'
     | '/admin'
     | '/orders'
     | '/profile'
@@ -349,6 +359,7 @@ export interface FileRouteTypes {
     | '/reservations'
     | '/reviews'
     | '/sitemap.xml'
+    | '/track'
     | '/orders'
     | '/profile'
     | '/auth/reset'
@@ -381,6 +392,7 @@ export interface FileRouteTypes {
     | '/reservations'
     | '/reviews'
     | '/sitemap.xml'
+    | '/track'
     | '/_authenticated/admin'
     | '/_authenticated/orders'
     | '/_authenticated/profile'
@@ -415,11 +427,19 @@ export interface RootRouteChildren {
   ReservationsRoute: typeof ReservationsRoute
   ReviewsRoute: typeof ReviewsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TrackRoute: typeof TrackRoute
   OrderOrderNumberRoute: typeof OrderOrderNumberRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -725,6 +745,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReservationsRoute: ReservationsRoute,
   ReviewsRoute: ReviewsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TrackRoute: TrackRoute,
   OrderOrderNumberRoute: OrderOrderNumberRoute,
 }
 export const routeTree = rootRouteImport
