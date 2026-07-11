@@ -166,3 +166,26 @@ export const trackOrder = createServerFn({ method: "POST" })
 
     return { order, items: items ?? [] };
   });
+
+export const findOrdersByPhone = createServerFn({ method: "POST" })
+  .inputValidator((d: { phone: string }) => {
+    const digits = (d.phone || "").replace(/[^\d]/g, "");
+    if (digits.length < 7) throw new Error("Enter a valid phone number");
+    return { phone: d.phone };
+  })
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const last10 = data.phone.replace(/[^\d]/g, "").slice(-10);
+    const sinceIso = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
+    const { data: rows, error } = await supabaseAdmin
+      .from("orders")
+      .select("order_number, status, order_type, customer_name, customer_phone, total, created_at")
+      .gte("created_at", sinceIso)
+      .order("created_at", { ascending: false })
+      .limit(200);
+    if (error) throw error;
+    const matches = (rows ?? []).filter(
+      (r) => r.customer_phone.replace(/[^\d]/g, "").slice(-10) === last10,
+    );
+    return { orders: matches.slice(0, 25) };
+  });
