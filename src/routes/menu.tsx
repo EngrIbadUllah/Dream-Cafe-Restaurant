@@ -62,9 +62,11 @@ function MenuPage() {
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
     return data.foods.filter((f) => {
+      if (term) {
+        return f.name.toLowerCase().includes(term) || (f.description ?? "").toLowerCase().includes(term);
+      }
       if (activeCat !== "all" && f.category_id !== activeCat) return false;
-      if (!term) return true;
-      return f.name.toLowerCase().includes(term) || (f.description ?? "").toLowerCase().includes(term);
+      return true;
     });
   }, [data.foods, activeCat, q]);
 
