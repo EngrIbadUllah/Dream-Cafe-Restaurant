@@ -2,11 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
-import { Bell, BellOff, BellRing } from "lucide-react";
+import { Bell, BellOff, BellRing, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { updateOrderStatus } from "@/lib/admin.functions";
+import { deleteOrder } from "@/lib/orders.functions";
 import { useAdminPush } from "@/hooks/use-admin-push";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/_authenticated/admin/orders")({
   component: OrdersPage,
@@ -135,6 +137,20 @@ function OrdersPage() {
     }
   };
 
+  const removeFn = useServerFn(deleteOrder);
+  const remove = async (id: string, num: string) => {
+    if (!confirm(`Delete order ${num}? This cannot be undone.`)) return;
+    try {
+      await removeFn({ data: { id } });
+      toast.success(`Order ${num} deleted`);
+      qc.invalidateQueries({ queryKey: ["admin", "orders"] });
+      qc.invalidateQueries({ queryKey: ["admin", "stats"] });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Delete failed");
+    }
+  };
+
+
   return (
     <div className="space-y-6">
       <header className="flex items-start justify-between gap-4 flex-wrap">
@@ -193,6 +209,7 @@ function OrdersPage() {
                 <th className="px-4 py-3 text-left">Type</th>
                 <th className="px-4 py-3 text-left">Placed</th>
                 <th className="px-4 py-3 text-left">Status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -218,6 +235,16 @@ function OrdersPage() {
                       ))}
                     </select>
                   </td>
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => remove(o.id, o.order_number)}
+                      className="inline-flex items-center gap-1 rounded-md border border-destructive/30 bg-destructive/10 px-2 py-1 text-xs text-destructive hover:bg-destructive/20 transition"
+                      aria-label={`Delete order ${o.order_number}`}
+                      title="Delete order"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -227,3 +254,4 @@ function OrdersPage() {
     </div>
   );
 }
+

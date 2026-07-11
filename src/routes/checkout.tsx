@@ -70,11 +70,13 @@ function CheckoutPage() {
       const res = await submit({
         data: {
           ...form,
+          user_id: user?.id ?? null,
           items: items.map((i) => ({
             food_id: i.id, food_name: i.name, unit_price: i.price, quantity: i.quantity,
           })),
         },
       });
+
       toast.success(`Order placed! ${res.order_number}`);
       clear();
       navigate({ to: "/order/$orderNumber", params: { orderNumber: res.order_number }, search: { phone: form.customer_phone } });

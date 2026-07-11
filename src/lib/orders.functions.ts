@@ -14,8 +14,10 @@ type PlaceOrderInput = {
   table_number?: string;
   notes?: string;
   coupon_code?: string;
+  user_id?: string | null;
   items: { food_id: string; food_name: string; unit_price: number; quantity: number; notes?: string }[];
 };
+
 
 const DELIVERY_FEE = 150;
 
@@ -73,6 +75,8 @@ export const placeOrder = createServerFn({ method: "POST" })
       .from("orders")
       .insert({
         order_number,
+        user_id: data.user_id || null,
+
         customer_name: data.customer_name.trim(),
         customer_phone: data.customer_phone.trim(),
         customer_email: data.customer_email?.trim() || null,
@@ -188,4 +192,17 @@ export const findOrdersByPhone = createServerFn({ method: "POST" })
       (r) => r.customer_phone.replace(/[^\d]/g, "").slice(-10) === last10,
     );
     return { orders: matches.slice(0, 25) };
+  });
+
+export const deleteOrder = createServerFn({ method: "POST" })
+  .inputValidator((d: { id: string }) => {
+    if (!d?.id) throw new Error("Order id required");
+    return d;
+  })
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin.from("order_items").delete().eq("order_id", data.id);
+    const { error } = await supabaseAdmin.from("orders").delete().eq("id", data.id);
+    if (error) throw error;
+    return { ok: true };
   });
