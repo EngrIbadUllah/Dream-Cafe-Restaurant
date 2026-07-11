@@ -58,9 +58,9 @@ export function Navbar() {
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-          scrolled
-            ? "bg-background/85 backdrop-blur-xl border-b border-border py-2 shadow-sm"
-            : "bg-transparent py-4",
+          overHero
+            ? "bg-transparent py-4"
+            : "bg-background/85 backdrop-blur-xl border-b border-border py-2 shadow-sm",
         )}
       >
         <div className="container-page flex items-center justify-between gap-4">
