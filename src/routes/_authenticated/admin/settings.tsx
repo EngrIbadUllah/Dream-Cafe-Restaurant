@@ -6,6 +6,8 @@ import { listSettings, upsertSetting, deleteSetting } from "@/lib/admin.function
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Plus, Save, Trash2, Settings as SettingsIcon, Upload, Loader2, Image as ImageIcon } from "lucide-react";
+import { BusinessInfoEditor } from "@/components/admin/business-info-editor";
+
 
 const LOGO_SIGN_TTL = 60 * 60 * 24 * 365 * 10;
 
@@ -39,9 +41,12 @@ function SettingsPage() {
     onSuccess: () => {
       toast.success("Setting saved");
       qc.invalidateQueries({ queryKey: ["admin", "settings"] });
+      qc.invalidateQueries({ queryKey: ["business-info"] });
+      qc.invalidateQueries({ queryKey: ["cafe-logo"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
 
   const remove = useMutation({
     mutationFn: (key: string) => delFn({ data: { key } }),
@@ -86,11 +91,17 @@ function SettingsPage() {
         </div>
       )}
 
+      <BusinessInfoEditor
+        current={(data ?? []).find((s) => s.key === "business_info")?.value}
+        upsert={(value) => save.mutateAsync({ key: "business_info", value })}
+      />
+
       <LogoUploader
         current={(data ?? []).find((s) => s.key === "cafe_logo")?.value}
         onSaved={() => qc.invalidateQueries({ queryKey: ["admin", "settings"] })}
         upsert={(value) => save.mutateAsync({ key: "cafe_logo", value })}
       />
+
 
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
         <h2 className="font-serif text-xl text-cream mb-4 flex items-center gap-2">

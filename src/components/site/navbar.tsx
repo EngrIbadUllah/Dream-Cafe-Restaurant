@@ -6,6 +6,7 @@ import { useTheme } from "./theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
 import { useCafeLogo } from "@/hooks/use-cafe-logo";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -15,6 +16,8 @@ export function Navbar() {
   const { user } = useAuth();
   const { count, open: openCart } = useCart();
   const logo = useCafeLogo();
+  const s = useBusinessInfo();
+
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -260,11 +263,11 @@ export function Navbar() {
                 {user ? "My profile" : "Sign in / Sign up"}
               </Link>
               <a
-                href={`tel:${site.phones[0].tel}`}
+                href={`tel:${s.phones[0].tel}`}
                 className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-muted"
               >
                 <Phone size={16} className="text-gold" />
-                {site.phones[0].number}
+                {s.phones[0].number}
               </a>
               <button
                 onClick={() => {

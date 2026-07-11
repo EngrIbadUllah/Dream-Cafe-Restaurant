@@ -2,10 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { nav, site } from "@/lib/site-config";
 import { useCafeLogo } from "@/hooks/use-cafe-logo";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 
 export function Footer() {
   const logo = useCafeLogo();
+  const s = useBusinessInfo();
   const year = new Date().getFullYear();
+
   return (
     <footer className="relative bg-ink text-cream">
       <div className="container-page pt-16 pb-10">
@@ -28,7 +31,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-5 max-w-xs text-sm text-cream/70">
-              {site.description}
+              {s.description}
             </p>
           </div>
 
@@ -54,14 +57,14 @@ export function Footer() {
               <li className="flex gap-3">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-gold" />
                 <span>
-                  {site.address.line1}
+                  {s.address.line1}
                   <br />
-                  {site.address.city}, {site.address.postalCode}
+                  {s.address.city}, {s.address.postalCode}
                   <br />
-                  {site.address.country}
+                  {s.address.country}
                 </span>
               </li>
-              {site.phones.slice(0, 2).map((p) => (
+              {s.phones.slice(0, 2).map((p) => (
                 <li key={p.tel} className="flex gap-3">
                   <Phone size={16} className="mt-0.5 shrink-0 text-gold" />
                   <a href={`tel:${p.tel}`} className="hover:text-gold">
@@ -71,8 +74,8 @@ export function Footer() {
               ))}
               <li className="flex gap-3">
                 <Mail size={16} className="mt-0.5 shrink-0 text-gold" />
-                <a href={`mailto:${site.email}`} className="hover:text-gold">
-                  {site.email}
+                <a href={`mailto:${s.email}`} className="hover:text-gold">
+                  {s.email}
                 </a>
               </li>
             </ul>
@@ -81,7 +84,7 @@ export function Footer() {
           <div>
             <h4 className="eyebrow">Hours</h4>
             <ul className="mt-5 space-y-2 text-sm text-cream/80">
-              {site.hours.map((h) => (
+              {s.hours.map((h) => (
                 <li key={h.day} className="flex justify-between gap-4">
                   <span className="text-cream/60">{h.day}</span>
                   <span>{h.time}</span>
@@ -90,7 +93,7 @@ export function Footer() {
             </ul>
             <div className="mt-6 flex items-center gap-3">
               <a
-                href={site.social.facebook}
+                href={s.social.facebook}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
@@ -99,7 +102,7 @@ export function Footer() {
                 <Facebook size={15} />
               </a>
               <a
-                href={site.social.instagram}
+                href={s.social.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"

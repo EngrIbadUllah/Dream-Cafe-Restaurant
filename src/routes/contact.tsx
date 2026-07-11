@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { SiteShell } from "@/components/site/site-shell";
 import { site, whatsappLink } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
+
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -28,8 +30,10 @@ const schema = z.object({
 });
 
 function Contact() {
+  const s = useBusinessInfo();
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -69,11 +73,12 @@ function Contact() {
 
       <section className="section-y pt-4">
         <div className="container-page grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <ContactCard icon={Phone} title="Call us" action={{ href: `tel:${site.phones[0].tel}`, label: site.phones[0].number }}>Reservations & general</ContactCard>
+          <ContactCard icon={Phone} title="Call us" action={{ href: `tel:${s.phones[0].tel}`, label: s.phones[0].number }}>Reservations & general</ContactCard>
           <ContactCard icon={MessageCircle} title="WhatsApp" action={{ href: whatsappLink(), label: "Open chat" }}>Fastest for orders</ContactCard>
-          <ContactCard icon={Mail} title="Email" action={{ href: `mailto:${site.email}`, label: site.email }}>Partnerships & press</ContactCard>
-          <ContactCard icon={MapPin} title="Visit" action={{ href: "https://maps.google.com/?q=Dream+Cafe+Restaurant+Noor+Kot+Road+Shakargarh", label: "Open in Maps" }}>{site.address.line1}, {site.address.city}</ContactCard>
+          <ContactCard icon={Mail} title="Email" action={{ href: `mailto:${s.email}`, label: s.email }}>Partnerships & press</ContactCard>
+          <ContactCard icon={MapPin} title="Visit" action={{ href: "https://maps.google.com/?q=Dream+Cafe+Restaurant+Noor+Kot+Road+Shakargarh", label: "Open in Maps" }}>{s.address.line1}, {s.address.city}</ContactCard>
         </div>
+
 
         <div className="container-page mt-10 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <form onSubmit={handleSubmit} className="rounded-[2rem] border border-border bg-card p-8 space-y-4">
@@ -100,7 +105,7 @@ function Contact() {
                 <Clock size={14} className="text-gold" /> Hours
               </div>
               <ul className="mt-4 divide-y divide-border">
-                {site.hours.map((h) => (
+                {s.hours.map((h) => (
                   <li key={h.day} className="flex justify-between py-3">
                     <span className="text-muted-foreground">{h.day}</span>
                     <span className="font-medium">{h.time}</span>
@@ -109,11 +114,12 @@ function Contact() {
               </ul>
               <div className="mt-6 rounded-2xl border border-border bg-background p-4">
                 <p className="text-xs uppercase tracking-widest text-muted-foreground">Address</p>
-                <p className="mt-2 text-foreground">{site.address.line1}, {site.address.city}, {site.address.postalCode}, {site.address.country}</p>
+                <p className="mt-2 text-foreground">{s.address.line1}, {s.address.city}, {s.address.postalCode}, {s.address.country}</p>
               </div>
             </div>
             <div className="min-h-[320px] overflow-hidden rounded-[2rem] border border-border">
               <iframe title="Dream Cafe & Restaurant on Google Maps" src={site.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full w-full" />
+
             </div>
           </div>
         </div>
