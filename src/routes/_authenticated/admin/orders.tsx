@@ -209,6 +209,7 @@ function OrdersPage() {
                 <th className="px-4 py-3 text-left">Type</th>
                 <th className="px-4 py-3 text-left">Placed</th>
                 <th className="px-4 py-3 text-left">Status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -234,6 +235,16 @@ function OrdersPage() {
                       ))}
                     </select>
                   </td>
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => remove(o.id, o.order_number)}
+                      className="inline-flex items-center gap-1 rounded-md border border-destructive/30 bg-destructive/10 px-2 py-1 text-xs text-destructive hover:bg-destructive/20 transition"
+                      aria-label={`Delete order ${o.order_number}`}
+                      title="Delete order"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -243,3 +254,4 @@ function OrdersPage() {
     </div>
   );
 }
+
