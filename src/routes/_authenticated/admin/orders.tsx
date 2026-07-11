@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useRef, useState } from "react";
+import { Bell, BellOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { updateOrderStatus } from "@/lib/admin.functions";
 import { toast } from "sonner";
@@ -11,9 +13,63 @@ export const Route = createFileRoute("/_authenticated/admin/orders")({
 
 const STATUSES = ["pending", "confirmed", "preparing", "out_for_delivery", "delivered", "cancelled"] as const;
 
+// Play a pleasant chime using WebAudio (no asset needed)
+function playChime() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    const ctx = new AC();
+    const notes = [880, 1175, 1568]; // A5, D6, G6
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      const start = ctx.currentTime + i * 0.18;
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(0.25, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.35);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.4);
+    });
+    setTimeout(() => ctx.close(), 1500);
+  } catch {
+    /* ignore */
+  }
+}
+
 function OrdersPage() {
   const qc = useQueryClient();
   const update = useServerFn(updateOrderStatus);
+  const [soundOn, setSoundOn] = useState(true);
+  const soundRef = useRef(true);
+  useEffect(() => { soundRef.current = soundOn; }, [soundOn]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("admin-orders-realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "orders" },
+        (payload) => {
+          const o = payload.new as { order_number?: string; customer_name?: string; total?: number };
+          qc.invalidateQueries({ queryKey: ["admin", "orders"] });
+          qc.invalidateQueries({ queryKey: ["admin", "stats"] });
+          if (soundRef.current) playChime();
+          toast.success(`New order ${o.order_number ?? ""}`, {
+            description: `${o.customer_name ?? "Guest"} · PKR ${Number(o.total ?? 0).toLocaleString()}`,
+            duration: 8000,
+          });
+          if (typeof document !== "undefined") {
+            const original = document.title;
+            document.title = `🔔 New order · ${original}`;
+            setTimeout(() => { document.title = original; }, 6000);
+          }
+        }
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [qc]);
   const { data, isLoading } = useQuery({
     queryKey: ["admin", "orders"],
     queryFn: async () => {
@@ -40,9 +96,24 @@ function OrdersPage() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="font-serif text-3xl text-cream">Orders</h1>
-        <p className="text-cream/60 mt-1">Manage incoming orders and update their status.</p>
+      <header className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="font-serif text-3xl text-cream">Orders</h1>
+          <p className="text-cream/60 mt-1">Live · new orders alert you instantly with a sound.</p>
+        </div>
+        <button
+          onClick={() => {
+            const next = !soundOn;
+            setSoundOn(next);
+            if (next) playChime(); // also unlocks audio on user gesture
+            toast.success(next ? "Sound alerts on" : "Sound alerts muted");
+          }}
+          className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-cream hover:bg-white/10 transition"
+          aria-label={soundOn ? "Mute new-order sound" : "Enable new-order sound"}
+        >
+          {soundOn ? <Bell className="h-4 w-4 text-gold" /> : <BellOff className="h-4 w-4 text-cream/50" />}
+          {soundOn ? "Alerts on" : "Muted"}
+        </button>
       </header>
 
       {isLoading ? (
