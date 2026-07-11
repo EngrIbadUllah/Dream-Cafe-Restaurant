@@ -5,6 +5,7 @@ import { nav, site } from "@/lib/site-config";
 import { useTheme } from "./theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
+import { useCafeLogo } from "@/hooks/use-cafe-logo";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -13,6 +14,7 @@ export function Navbar() {
   const { theme, toggle } = useTheme();
   const { user } = useAuth();
   const { count, open: openCart } = useCart();
+  const logo = useCafeLogo();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -66,8 +68,12 @@ export function Navbar() {
             )}
             aria-label={site.name}
           >
-            <span className="grid h-10 w-10 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold shadow-lg shadow-black/30">
-              D
+            <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold shadow-lg shadow-black/30">
+              {logo ? (
+                <img src={logo} alt={site.name} className="h-full w-full object-cover" />
+              ) : (
+                "D"
+              )}
             </span>
             <span className="flex flex-col leading-none">
               <span className="font-display text-base sm:text-lg tracking-tight">Dream Cafe</span>
@@ -171,8 +177,12 @@ export function Navbar() {
         >
           <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-border">
             <Link to="/" className="flex items-center gap-2.5 text-foreground">
-              <span className="grid h-9 w-9 place-items-center rounded-full gradient-gold text-primary-foreground font-display font-bold">
-                D
+              <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-full gradient-gold text-primary-foreground font-display font-bold">
+                {logo ? (
+                  <img src={logo} alt={site.name} className="h-full w-full object-cover" />
+                ) : (
+                  "D"
+                )}
               </span>
               <span className="flex flex-col leading-none">
                 <span className="font-display text-base">Dream Cafe</span>

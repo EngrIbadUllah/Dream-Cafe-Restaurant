@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { nav, site } from "@/lib/site-config";
+import { useCafeLogo } from "@/hooks/use-cafe-logo";
 
 export function Footer() {
+  const logo = useCafeLogo();
   const year = new Date().getFullYear();
   return (
     <footer className="relative bg-ink text-cream">
@@ -11,8 +13,12 @@ export function Footer() {
 
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">
-                D
+              <span className="grid h-11 w-11 place-items-center overflow-hidden rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">
+                {logo ? (
+                  <img src={logo} alt={site.name} className="h-full w-full object-cover" />
+                ) : (
+                  "D"
+                )}
               </span>
               <div className="leading-tight">
                 <div className="font-display text-xl">Dream Cafe</div>
