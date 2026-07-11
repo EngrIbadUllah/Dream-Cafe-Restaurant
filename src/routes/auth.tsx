@@ -88,8 +88,15 @@ function AuthPage() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
       {/* Left — brand panel */}
-      <div className="relative hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-charcoal via-charcoal to-black text-cream overflow-hidden">
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_20%_20%,_var(--color-gold)_0%,_transparent_50%)]" />
+      <div
+        className="relative hidden lg:flex flex-col justify-between p-12 overflow-hidden text-[#f5ecd7]"
+        style={{
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(201,168,76,0.35) 0%, transparent 55%), linear-gradient(135deg, #1a1207 0%, #0f0a04 55%, #050403 100%)",
+        }}
+      >
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_90%,rgba(201,168,76,0.18),transparent_60%)]" />
+
         <Link to="/" className="relative flex items-center gap-3 z-10">
           <span className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">D</span>
           <div className="leading-tight">
