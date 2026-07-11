@@ -326,6 +326,108 @@
   100% { transform: translateY(400%); }
 }
 
+.dream-toaster {
+  z-index: 9999 !important;
+  --width: min(24rem, calc(100vw - 1.5rem)) !important;
+}
+
+.dream-toaster [data-sonner-toast] {
+  --toast-accent: var(--color-gold);
+  width: min(24rem, calc(100vw - 1.5rem)) !important;
+  min-height: 4rem !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 0.75rem !important;
+  padding: 0.9rem 2.5rem 0.9rem 1rem !important;
+  border-radius: 0.95rem !important;
+  border: 1px solid color-mix(in oklab, var(--toast-accent) 34%, var(--color-border)) !important;
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--toast-accent) 18%, transparent), transparent 52%),
+    linear-gradient(180deg, color-mix(in oklab, var(--color-card) 92%, var(--color-ink)), var(--color-card)) !important;
+  color: var(--color-card-foreground) !important;
+  box-shadow:
+    0 22px 55px color-mix(in oklab, var(--color-ink) 44%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--toast-accent) 18%, transparent) inset !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+}
+
+.dream-toaster [data-sonner-toast]::before {
+  content: "" !important;
+  position: absolute !important;
+  inset-block: 0 !important;
+  left: 0 !important;
+  width: 0.28rem !important;
+  background: var(--toast-accent) !important;
+  box-shadow: 0 0 24px color-mix(in oklab, var(--toast-accent) 70%, transparent) !important;
+}
+
+.dream-toaster [data-sonner-toast][data-type="success"] { --toast-accent: var(--toast-success); }
+.dream-toaster [data-sonner-toast][data-type="error"] { --toast-accent: var(--toast-error); }
+.dream-toaster [data-sonner-toast][data-type="warning"] { --toast-accent: var(--toast-warning); }
+.dream-toaster [data-sonner-toast][data-type="info"] { --toast-accent: var(--toast-info); }
+.dream-toaster [data-sonner-toast][data-type="loading"] { --toast-accent: var(--color-gold); }
+
+.dream-toaster [data-icon] {
+  width: 2rem !important;
+  height: 2rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  background: color-mix(in oklab, var(--toast-accent) 14%, var(--color-background)) !important;
+  color: var(--toast-accent) !important;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--toast-accent) 28%, transparent) inset !important;
+}
+
+.dream-toaster [data-content] {
+  min-width: 0 !important;
+  padding-top: 0.1rem !important;
+}
+
+.dream-toaster [data-title] {
+  color: var(--color-card-foreground) !important;
+  font-size: 0.9rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+.dream-toaster [data-description] {
+  margin-top: 0.25rem !important;
+  color: var(--color-muted-foreground) !important;
+  font-size: 0.8rem !important;
+  line-height: 1.45 !important;
+}
+
+.dream-toaster [data-close-button] {
+  position: absolute !important;
+  top: 0.55rem !important;
+  right: 0.55rem !important;
+  left: auto !important;
+  transform: none !important;
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+  border: 0 !important;
+  border-radius: 0.5rem !important;
+  background: color-mix(in oklab, var(--color-muted) 72%, transparent) !important;
+  color: var(--color-muted-foreground) !important;
+}
+
+.dream-toaster [data-close-button]:hover {
+  background: color-mix(in oklab, var(--toast-accent) 20%, var(--color-muted)) !important;
+  color: var(--color-card-foreground) !important;
+}
+
+.dream-toaster [data-button] {
+  border: 0 !important;
+  border-radius: 0.7rem !important;
+  background: var(--color-gold) !important;
+  color: var(--color-primary-foreground) !important;
+  font-weight: 800 !important;
+}
+
 
 html { scroll-behavior: smooth; }
 

@@ -11,6 +11,7 @@ const Toaster = ({
 }: ToasterProps) => {
   return (
     <Sonner
+      theme="dark"
       position={position}
       expand
       closeButton
@@ -27,6 +28,7 @@ const Toaster = ({
         loading: <Loader2 className="h-5 w-5 animate-spin text-gold" strokeWidth={2.5} />,
       }}
       toastOptions={{
+        unstyled: true,
         classNames: {
           toast: [
             "group toast dream-toast pointer-events-auto relative flex w-[calc(100vw-1.5rem)] max-w-[24rem] items-start gap-3",
