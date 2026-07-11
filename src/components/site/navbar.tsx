@@ -6,6 +6,7 @@ import { useTheme } from "./theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
 import { useCafeLogo } from "@/hooks/use-cafe-logo";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -15,6 +16,8 @@ export function Navbar() {
   const { user } = useAuth();
   const { count, open: openCart } = useCart();
   const logo = useCafeLogo();
+  const s = useBusinessInfo();
+
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
