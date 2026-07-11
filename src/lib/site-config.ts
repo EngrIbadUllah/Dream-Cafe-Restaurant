@@ -20,6 +20,7 @@ export const site = {
     { label: "Orders", number: "0300 1212928", tel: "+923001212928" },
   ],
   whatsapp: "+923001212790",
+  whatsappMessage: "Hi Dream Cafe, I'd like to place an order.",
   email: "hello@dreamcafeskg.com",
   hours: [
     { day: "Monday – Thursday", time: "11:00 AM – 12:00 AM" },
@@ -49,7 +50,8 @@ export const nav = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export function whatsappLink(message = "Hi Dream Cafe, I'd like to place an order.") {
-  const num = site.whatsapp.replace(/[^\d]/g, "");
-  return `https://wa.me/${num}?text=${encodeURIComponent(message)}`;
+export function whatsappLink(message?: string, number?: string) {
+  const num = (number ?? site.whatsapp).replace(/[^\d]/g, "");
+  const text = message ?? site.whatsappMessage;
+  return `https://wa.me/${num}?text=${encodeURIComponent(text)}`;
 }

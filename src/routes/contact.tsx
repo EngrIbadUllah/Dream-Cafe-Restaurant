@@ -74,7 +74,7 @@ function Contact() {
       <section className="section-y pt-4">
         <div className="container-page grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <ContactCard icon={Phone} title="Call us" action={{ href: `tel:${s.phones[0].tel}`, label: s.phones[0].number }}>Reservations & general</ContactCard>
-          <ContactCard icon={MessageCircle} title="WhatsApp" action={{ href: whatsappLink(), label: "Open chat" }}>Fastest for orders</ContactCard>
+          <ContactCard icon={MessageCircle} title="WhatsApp" action={{ href: whatsappLink(s.whatsappMessage, s.whatsapp), label: "Open chat" }}>Fastest for orders</ContactCard>
           <ContactCard icon={Mail} title="Email" action={{ href: `mailto:${s.email}`, label: s.email }}>Partnerships & press</ContactCard>
           <ContactCard icon={MapPin} title="Visit" action={{ href: "https://maps.google.com/?q=Dream+Cafe+Restaurant+Noor+Kot+Road+Shakargarh", label: "Open in Maps" }}>{s.address.line1}, {s.address.city}</ContactCard>
         </div>
