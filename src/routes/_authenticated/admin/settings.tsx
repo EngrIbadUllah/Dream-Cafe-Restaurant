@@ -6,6 +6,8 @@ import { listSettings, upsertSetting, deleteSetting } from "@/lib/admin.function
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Plus, Save, Trash2, Settings as SettingsIcon, Upload, Loader2, Image as ImageIcon } from "lucide-react";
+import { BusinessInfoEditor } from "@/components/admin/business-info-editor";
+
 
 const LOGO_SIGN_TTL = 60 * 60 * 24 * 365 * 10;
 
