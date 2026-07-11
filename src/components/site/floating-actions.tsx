@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { ArrowUp, MessageCircle, Phone } from "lucide-react";
 import { site, whatsappLink } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { cn } from "@/lib/utils";
 
 export function FloatingActions() {
+  const s = useBusinessInfo();
   const [showTop, setShowTop] = useState(false);
+
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 500);
