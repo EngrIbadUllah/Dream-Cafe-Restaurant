@@ -26,7 +26,7 @@ export function FloatingActions() {
         <ArrowUp size={16} />
       </button>
       <a
-        href={`tel:${site.phones[0].tel}`}
+        href={`tel:${s.phones[0].tel}`}
         aria-label="Call restaurant"
         className="grid h-12 w-12 place-items-center rounded-full bg-white text-ink shadow-xl shadow-black/25 hover:scale-105 transition"
       >
