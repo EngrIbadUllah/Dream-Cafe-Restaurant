@@ -20,6 +20,7 @@ export const site = {
     { label: "Orders", number: "0300 1212928", tel: "+923001212928" },
   ],
   whatsapp: "+923001212790",
+  whatsappMessage: "Hi Dream Cafe, I'd like to place an order.",
   email: "hello@dreamcafeskg.com",
   hours: [
     { day: "Monday – Thursday", time: "11:00 AM – 12:00 AM" },
