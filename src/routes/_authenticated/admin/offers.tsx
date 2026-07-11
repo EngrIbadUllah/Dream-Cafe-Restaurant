@@ -66,8 +66,8 @@ function AdminOffers() {
         <textarea placeholder="Description" rows={2} className="input-base md:col-span-2" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
         <input placeholder="Link URL (optional)" className="input-base" value={draft.link_url} onChange={(e) => setDraft({ ...draft, link_url: e.target.value })} />
         <input type="number" placeholder="Sort order" className="input-base" value={draft.sort_order} onChange={(e) => setDraft({ ...draft, sort_order: Number(e.target.value) })} />
-        <label className="text-xs text-muted-foreground">Starts at<input type="datetime-local" className="input-base mt-1" value={draft.starts_at} onChange={(e) => setDraft({ ...draft, starts_at: e.target.value })} /></label>
-        <label className="text-xs text-muted-foreground">Ends at<input type="datetime-local" className="input-base mt-1" value={draft.ends_at} onChange={(e) => setDraft({ ...draft, ends_at: e.target.value })} /></label>
+        <label className="text-xs text-muted-foreground">Starts at<input type="datetime-local" className="input-base mt-1 cursor-pointer [color-scheme:dark]" value={draft.starts_at} onFocus={(e) => e.currentTarget.showPicker?.()} onClick={(e) => e.currentTarget.showPicker?.()} onChange={(e) => setDraft({ ...draft, starts_at: e.target.value })} /></label>
+        <label className="text-xs text-muted-foreground">Ends at<input type="datetime-local" className="input-base mt-1 cursor-pointer [color-scheme:dark]" value={draft.ends_at} onFocus={(e) => e.currentTarget.showPicker?.()} onClick={(e) => e.currentTarget.showPicker?.()} onChange={(e) => setDraft({ ...draft, ends_at: e.target.value })} /></label>
         <button className="inline-flex items-center gap-1 justify-center rounded-full gradient-gold px-4 py-2.5 text-xs font-semibold text-primary-foreground md:col-span-2"><Plus size={14} /> Add offer</button>
       </form>
 
