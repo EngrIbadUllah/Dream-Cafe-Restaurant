@@ -5,6 +5,7 @@ import { nav, site } from "@/lib/site-config";
 import { useTheme } from "./theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
+import { useCafeLogo } from "@/hooks/use-cafe-logo";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
