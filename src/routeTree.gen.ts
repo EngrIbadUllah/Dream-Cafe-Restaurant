@@ -10,12 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackRouteImport } from './routes/track'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ReservationsRouteImport } from './routes/reservations'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as OffersRouteImport } from './routes/offers'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -50,6 +53,11 @@ const TrackRoute = TrackRouteImport.update({
   path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -65,6 +73,11 @@ const ReservationsRoute = ReservationsRouteImport.update({
   path: '/reservations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OffersRoute = OffersRouteImport.update({
   id: '/offers',
   path: '/offers',
@@ -78,6 +91,11 @@ const MenuRoute = MenuRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -239,12 +257,15 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
+  '/privacy': typeof PrivacyRoute
   '/reservations': typeof ReservationsRoute
   '/reviews': typeof ReviewsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/orders': typeof AuthenticatedOrdersRoute
@@ -275,12 +296,15 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
+  '/privacy': typeof PrivacyRoute
   '/reservations': typeof ReservationsRoute
   '/reviews': typeof ReviewsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/orders': typeof AuthenticatedOrdersRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -312,12 +336,15 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/menu': typeof MenuRoute
   '/offers': typeof OffersRoute
+  '/privacy': typeof PrivacyRoute
   '/reservations': typeof ReservationsRoute
   '/reviews': typeof ReviewsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/track': typeof TrackRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/orders': typeof AuthenticatedOrdersRoute
@@ -350,12 +377,15 @@ export interface FileRouteTypes {
     | '/blog'
     | '/checkout'
     | '/contact'
+    | '/faq'
     | '/gallery'
     | '/menu'
     | '/offers'
+    | '/privacy'
     | '/reservations'
     | '/reviews'
     | '/sitemap.xml'
+    | '/terms'
     | '/track'
     | '/admin'
     | '/orders'
@@ -386,12 +416,15 @@ export interface FileRouteTypes {
     | '/blog'
     | '/checkout'
     | '/contact'
+    | '/faq'
     | '/gallery'
     | '/menu'
     | '/offers'
+    | '/privacy'
     | '/reservations'
     | '/reviews'
     | '/sitemap.xml'
+    | '/terms'
     | '/track'
     | '/orders'
     | '/profile'
@@ -422,12 +455,15 @@ export interface FileRouteTypes {
     | '/blog'
     | '/checkout'
     | '/contact'
+    | '/faq'
     | '/gallery'
     | '/menu'
     | '/offers'
+    | '/privacy'
     | '/reservations'
     | '/reviews'
     | '/sitemap.xml'
+    | '/terms'
     | '/track'
     | '/_authenticated/admin'
     | '/_authenticated/orders'
@@ -460,12 +496,15 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
   MenuRoute: typeof MenuRoute
   OffersRoute: typeof OffersRoute
+  PrivacyRoute: typeof PrivacyRoute
   ReservationsRoute: typeof ReservationsRoute
   ReviewsRoute: typeof ReviewsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
   TrackRoute: typeof TrackRoute
   OrderOrderNumberRoute: typeof OrderOrderNumberRoute
 }
@@ -477,6 +516,13 @@ declare module '@tanstack/react-router' {
       path: '/track'
       fullPath: '/track'
       preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -500,6 +546,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReservationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/offers': {
       id: '/offers'
       path: '/offers'
@@ -519,6 +572,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -805,12 +865,15 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
   MenuRoute: MenuRoute,
   OffersRoute: OffersRoute,
+  PrivacyRoute: PrivacyRoute,
   ReservationsRoute: ReservationsRoute,
   ReviewsRoute: ReviewsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
   TrackRoute: TrackRoute,
   OrderOrderNumberRoute: OrderOrderNumberRoute,
 }
