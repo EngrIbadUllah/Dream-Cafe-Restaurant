@@ -38,9 +38,11 @@ const nav = [
   { to: "/admin/reviews", label: "Reviews", icon: Star },
   { to: "/admin/messages", label: "Messages", icon: MessageSquare },
   { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
-  { to: "/admin/offers", label: "Offers & Coupons", icon: Tag },
+  { to: "/admin/offers", label: "Offers", icon: Tag },
+  { to: "/admin/coupons", label: "Coupons", icon: Ticket },
   { to: "/admin/blog", label: "Blog", icon: BookOpen },
-  { to: "/admin/customers", label: "Customers", icon: Users },
+  { to: "/admin/customers", label: "Customers & Staff", icon: Users },
+  { to: "/admin/activity", label: "Activity Log", icon: Activity },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;
 
