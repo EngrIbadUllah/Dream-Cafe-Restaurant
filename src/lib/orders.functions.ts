@@ -75,6 +75,8 @@ export const placeOrder = createServerFn({ method: "POST" })
       .from("orders")
       .insert({
         order_number,
+        user_id: data.user_id || null,
+
         customer_name: data.customer_name.trim(),
         customer_phone: data.customer_phone.trim(),
         customer_email: data.customer_email?.trim() || null,
