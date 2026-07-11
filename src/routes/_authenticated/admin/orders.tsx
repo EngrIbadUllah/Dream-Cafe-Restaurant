@@ -14,26 +14,65 @@ export const Route = createFileRoute("/_authenticated/admin/orders")({
 
 const STATUSES = ["pending", "confirmed", "preparing", "out_for_delivery", "delivered", "cancelled"] as const;
 
-// Play a pleasant chime using WebAudio (no asset needed)
+// Rich "fantastic" arrival chime — bell arpeggio + shimmer via WebAudio (no asset).
 function playChime() {
   try {
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new AC();
-    const notes = [880, 1175, 1568]; // A5, D6, G6
-    notes.forEach((freq, i) => {
+    const master = ctx.createGain();
+    master.gain.value = 0.9;
+    const lp = ctx.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.value = 6000;
+    const delay = ctx.createDelay();
+    delay.delayTime.value = 0.18;
+    const fb = ctx.createGain();
+    fb.gain.value = 0.28;
+    master.connect(lp).connect(ctx.destination);
+    lp.connect(delay).connect(fb).connect(delay);
+    delay.connect(ctx.destination);
+
+    const bell = (freq: number, when: number, dur = 1.5, vel = 0.38) => {
+      const partials = [
+        { m: 1, g: 1.0 }, { m: 2.01, g: 0.5 }, { m: 3.01, g: 0.28 },
+        { m: 4.7, g: 0.18 }, { m: 6.2, g: 0.1 },
+      ];
+      partials.forEach((p) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq * p.m;
+        const t = ctx.currentTime + when;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(vel * p.g, t + 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        osc.connect(g).connect(master);
+        osc.start(t);
+        osc.stop(t + dur + 0.05);
+      });
+    };
+    const sparkle = (freq: number, when: number) => {
       const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "sine";
+      const g = ctx.createGain();
+      osc.type = "triangle";
       osc.frequency.value = freq;
-      const start = ctx.currentTime + i * 0.18;
-      gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(0.25, start + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.35);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(start);
-      osc.stop(start + 0.4);
-    });
-    setTimeout(() => ctx.close(), 1500);
+      const t = ctx.currentTime + when;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.12, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
+      osc.connect(g).connect(master);
+      osc.start(t);
+      osc.stop(t + 0.3);
+    };
+    // Uplifting C major arpeggio + high shimmer
+    const C5 = 523.25, E5 = 659.25, G5 = 783.99, C6 = 1046.5, C7 = 2093;
+    bell(C5, 0.00, 1.6, 0.4);
+    bell(E5, 0.14, 1.5, 0.38);
+    bell(G5, 0.28, 1.5, 0.38);
+    bell(C6, 0.44, 1.9, 0.5);
+    sparkle(C7, 0.46);
+    sparkle(C7 * 1.5, 0.6);
+    setTimeout(() => ctx.close(), 3200);
   } catch {
     /* ignore */
   }
