@@ -105,7 +105,7 @@ function Contact() {
                 <Clock size={14} className="text-gold" /> Hours
               </div>
               <ul className="mt-4 divide-y divide-border">
-                {site.hours.map((h) => (
+                {s.hours.map((h) => (
                   <li key={h.day} className="flex justify-between py-3">
                     <span className="text-muted-foreground">{h.day}</span>
                     <span className="font-medium">{h.time}</span>
@@ -114,11 +114,12 @@ function Contact() {
               </ul>
               <div className="mt-6 rounded-2xl border border-border bg-background p-4">
                 <p className="text-xs uppercase tracking-widest text-muted-foreground">Address</p>
-                <p className="mt-2 text-foreground">{site.address.line1}, {site.address.city}, {site.address.postalCode}, {site.address.country}</p>
+                <p className="mt-2 text-foreground">{s.address.line1}, {s.address.city}, {s.address.postalCode}, {s.address.country}</p>
               </div>
             </div>
             <div className="min-h-[320px] overflow-hidden rounded-[2rem] border border-border">
               <iframe title="Dream Cafe & Restaurant on Google Maps" src={site.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full w-full" />
+
             </div>
           </div>
         </div>
