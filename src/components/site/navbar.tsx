@@ -42,9 +42,10 @@ export function Navbar() {
     }
   }, [open]);
 
-  // When at top of page, header sits over the dark hero → always light text.
-  // Once scrolled, adopt theme-aware surface + foreground.
-  const overHero = !scrolled;
+  // Only the home page has a dark hero the navbar sits over. On every
+  // other route (light backgrounds in light mode), always use the
+  // theme-aware surface so text stays readable.
+  const overHero = pathname === "/" && !scrolled;
   const iconBtn = cn(
     "grid h-10 w-10 place-items-center rounded-full border transition",
     overHero
@@ -57,9 +58,9 @@ export function Navbar() {
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-          scrolled
-            ? "bg-background/85 backdrop-blur-xl border-b border-border py-2 shadow-sm"
-            : "bg-transparent py-4",
+          overHero
+            ? "bg-transparent py-4"
+            : "bg-background/85 backdrop-blur-xl border-b border-border py-2 shadow-sm",
         )}
       >
         <div className="container-page flex items-center justify-between gap-4">
