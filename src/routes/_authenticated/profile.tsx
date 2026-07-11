@@ -1,7 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Loader2, LogOut, User as UserIcon } from "lucide-react";
+import { ClipboardList, Loader2, LogOut, User as UserIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { site } from "@/lib/site-config";
 import { SiteShell } from "@/components/site/site-shell";
@@ -74,12 +74,20 @@ function ProfilePage() {
               <h1 className="mt-2 font-display text-4xl text-foreground">Profile</h1>
               <p className="mt-1 text-sm text-muted-foreground">{user.email}</p>
             </div>
-            <button
-              onClick={onSignOut}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-foreground hover:bg-accent"
-            >
-              <LogOut size={14} /> Sign out
-            </button>
+            <div className="flex items-center gap-2">
+              <Link
+                to="/orders"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-foreground hover:bg-accent"
+              >
+                <ClipboardList size={14} /> Order history
+              </Link>
+              <button
+                onClick={onSignOut}
+                className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-foreground hover:bg-accent"
+              >
+                <LogOut size={14} /> Sign out
+              </button>
+            </div>
           </div>
 
           {loading ? (
