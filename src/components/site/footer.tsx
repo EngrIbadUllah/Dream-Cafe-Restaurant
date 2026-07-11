@@ -2,10 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { nav, site } from "@/lib/site-config";
 import { useCafeLogo } from "@/hooks/use-cafe-logo";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 
 export function Footer() {
   const logo = useCafeLogo();
+  const s = useBusinessInfo();
   const year = new Date().getFullYear();
+
   return (
     <footer className="relative bg-ink text-cream">
       <div className="container-page pt-16 pb-10">
