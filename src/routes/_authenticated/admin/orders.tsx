@@ -44,6 +44,7 @@ function OrdersPage() {
   const update = useServerFn(updateOrderStatus);
   const [soundOn, setSoundOn] = useState(true);
   const soundRef = useRef(true);
+  const push = useAdminPush();
   useEffect(() => { soundRef.current = soundOn; }, [soundOn]);
 
   useEffect(() => {
