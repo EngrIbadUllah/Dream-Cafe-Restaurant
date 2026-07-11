@@ -101,25 +101,32 @@ export function Footer() {
               ))}
             </ul>
             <div className="mt-6 flex items-center gap-3">
-              <a
-                href={s.social.facebook}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition"
-              >
-                <Facebook size={15} />
-              </a>
-              <a
-                href={s.social.instagram}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-                className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition"
-              >
-                <Instagram size={15} />
-              </a>
+              {s.social.facebook.enabled && s.social.facebook.url && (
+                <a href={s.social.facebook.url} target="_blank" rel="noreferrer" aria-label="Facebook"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition">
+                  <Facebook size={15} />
+                </a>
+              )}
+              {s.social.instagram.enabled && s.social.instagram.url && (
+                <a href={s.social.instagram.url} target="_blank" rel="noreferrer" aria-label="Instagram"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition">
+                  <Instagram size={15} />
+                </a>
+              )}
+              {s.social.tiktok.enabled && s.social.tiktok.url && (
+                <a href={s.social.tiktok.url} target="_blank" rel="noreferrer" aria-label="TikTok"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition">
+                  <TikTokIcon size={15} />
+                </a>
+              )}
+              {s.social.youtube.enabled && s.social.youtube.url && (
+                <a href={s.social.youtube.url} target="_blank" rel="noreferrer" aria-label="YouTube"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/15 hover:border-gold hover:text-gold transition">
+                  <Youtube size={15} />
+                </a>
+              )}
             </div>
+
           </div>
         </div>
 
