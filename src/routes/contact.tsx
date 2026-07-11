@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { SiteShell } from "@/components/site/site-shell";
 import { site, whatsappLink } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
+
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
