@@ -226,6 +226,32 @@ export function Navbar() {
             <div className="my-4 h-px bg-border" />
 
             <div className="grid gap-2">
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  openCart();
+                }}
+                className="flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-muted text-left"
+              >
+                <span className="flex items-center gap-3">
+                  <ShoppingBag size={16} className="text-gold" />
+                  View cart
+                </span>
+                {count > 0 && (
+                  <span className="grid h-5 min-w-5 place-items-center rounded-full gradient-gold px-1.5 text-[10px] font-bold text-primary-foreground">
+                    {count}
+                  </span>
+                )}
+              </button>
+              {user && (
+                <Link
+                  to="/orders"
+                  className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-muted"
+                >
+                  <ClipboardList size={16} className="text-gold" />
+                  Order history
+                </Link>
+              )}
               <Link
                 to={user ? "/profile" : "/auth"}
                 className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 hover:bg-muted"
@@ -250,6 +276,7 @@ export function Navbar() {
                 Switch to {theme === "dark" ? "light" : "dark"} mode
               </button>
             </div>
+
           </nav>
 
           <div className="border-t border-border p-4 grid grid-cols-2 gap-2">
