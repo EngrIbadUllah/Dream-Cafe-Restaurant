@@ -193,3 +193,16 @@ export const findOrdersByPhone = createServerFn({ method: "POST" })
     );
     return { orders: matches.slice(0, 25) };
   });
+
+export const deleteOrder = createServerFn({ method: "POST" })
+  .inputValidator((d: { id: string }) => {
+    if (!d?.id) throw new Error("Order id required");
+    return d;
+  })
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin.from("order_items").delete().eq("order_id", data.id);
+    const { error } = await supabaseAdmin.from("orders").delete().eq("id", data.id);
+    if (error) throw error;
+    return { ok: true };
+  });
