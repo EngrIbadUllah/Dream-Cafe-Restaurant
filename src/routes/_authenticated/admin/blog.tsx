@@ -39,6 +39,26 @@ function AdminBlog() {
   const { user } = useAuth();
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [open, setOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Please pick an image");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Max 5 MB");
+    setUploading(true);
+    try {
+      const url = await uploadCover(file);
+      setDraft((d) => ({ ...d, cover_image: url }));
+      toast.success("Cover uploaded");
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin", "blog"],
