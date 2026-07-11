@@ -88,11 +88,17 @@ function SettingsPage() {
         </div>
       )}
 
+      <BusinessInfoEditor
+        current={(data ?? []).find((s) => s.key === "business_info")?.value}
+        upsert={(value) => save.mutateAsync({ key: "business_info", value })}
+      />
+
       <LogoUploader
         current={(data ?? []).find((s) => s.key === "cafe_logo")?.value}
         onSaved={() => qc.invalidateQueries({ queryKey: ["admin", "settings"] })}
         upsert={(value) => save.mutateAsync({ key: "cafe_logo", value })}
       />
+
 
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
         <h2 className="font-serif text-xl text-cream mb-4 flex items-center gap-2">
