@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, UtensilsCrossed, FolderTree, ShoppingBag, CalendarCheck,
   Star, MessageSquare, Image as ImageIcon, Tag, BookOpen, Users, Settings,
-  LogOut, Menu, X,
+  BarChart3, LogOut, Menu, X,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
@@ -33,6 +33,7 @@ const nav = [
   { to: "/admin/foods", label: "Menu Items", icon: UtensilsCrossed },
   { to: "/admin/categories", label: "Categories", icon: FolderTree },
   { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/admin/reservations", label: "Reservations", icon: CalendarCheck },
   { to: "/admin/reviews", label: "Reviews", icon: Star },
   { to: "/admin/messages", label: "Messages", icon: MessageSquare },
