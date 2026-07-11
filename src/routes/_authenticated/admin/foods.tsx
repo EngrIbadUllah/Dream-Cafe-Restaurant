@@ -1,13 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Plus, Trash2, Pencil } from "lucide-react";
+import { Plus, Trash2, Pencil, Upload, Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/foods")({
   component: FoodsPage,
 });
+
+const SIGN_TTL = 60 * 60 * 24 * 365 * 10; // 10 years
+
+async function uploadFoodImage(file: File): Promise<string> {
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `items/${crypto.randomUUID()}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from("food-images")
+    .upload(path, file, { cacheControl: "31536000", upsert: false, contentType: file.type });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage.from("food-images").createSignedUrl(path, SIGN_TTL);
+  if (error || !data?.signedUrl) throw error ?? new Error("Signed URL failed");
+  return data.signedUrl;
+}
 
 type FoodDraft = {
   id?: string;
@@ -26,6 +40,26 @@ function FoodsPage() {
   const qc = useQueryClient();
   const [draft, setDraft] = useState<FoodDraft>(EMPTY);
   const [editing, setEditing] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Please pick an image");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Max 5 MB");
+    setUploading(true);
+    try {
+      const url = await uploadFoodImage(file);
+      setDraft((d) => ({ ...d, image_url: url }));
+      toast.success("Image uploaded");
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const { data: cats } = useQuery({
     queryKey: ["admin", "categories", "list"],
@@ -99,8 +133,26 @@ function FoodsPage() {
             <option value="">— No category —</option>
             {cats?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
-          <input className="input-base" placeholder="Image URL (optional)" value={draft.image_url} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+          <div className="flex gap-2">
+            <input className="input-base flex-1" placeholder="Image URL or upload →" value={draft.image_url} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+            <input ref={fileRef} type="file" accept="image/*" hidden onChange={onPickFile} />
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.03] px-3 text-xs text-cream/80 hover:text-gold disabled:opacity-50"
+            >
+              {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+              {uploading ? "Uploading…" : "Upload"}
+            </button>
+          </div>
         </div>
+        {draft.image_url && (
+          <div className="flex items-center gap-3">
+            <img src={draft.image_url} alt="preview" className="h-16 w-16 rounded-lg object-cover border border-white/10" />
+            <button type="button" onClick={() => setDraft({ ...draft, image_url: "" })} className="text-xs text-cream/60 hover:text-red-400">Remove image</button>
+          </div>
+        )}
         <textarea className="input-base min-h-20" placeholder="Description" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
         <div className="flex flex-wrap items-center gap-4">
           <label className="flex items-center gap-2 text-sm text-cream/80">
