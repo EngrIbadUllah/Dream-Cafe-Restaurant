@@ -105,14 +105,15 @@ function AuthPage() {
           </div>
         </Link>
         <div className="relative z-10 space-y-4">
-          <h1 className="font-display text-4xl leading-tight">
+          <h1 className="font-display text-4xl leading-tight text-[#f5ecd7]">
             Where every bite feels like home.
           </h1>
-          <p className="text-cream/70 max-w-md">
+          <p className="text-[#f5ecd7]/70 max-w-md">
             Sign in to track orders, save your favourite dishes and reserve your table in seconds.
           </p>
         </div>
-        <div className="relative z-10 text-xs text-cream/50">
+        <div className="relative z-10 text-xs text-[#f5ecd7]/50">
+
           © {new Date().getFullYear()} {site.name}
         </div>
       </div>
