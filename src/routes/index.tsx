@@ -61,7 +61,7 @@ function Home() {
       <Marquee />
       <Categories />
       <FeaturedFoods />
-      <TodaysSpecial />
+      
       <WhyChooseUs />
       <ChefSection />
       <Reviews />
