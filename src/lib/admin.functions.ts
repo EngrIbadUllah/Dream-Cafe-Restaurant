@@ -245,3 +245,120 @@ export const deleteSetting = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+// -------- Analytics --------
+
+const analyticsSchema = z.object({
+  from: z.string(), // YYYY-MM-DD
+  to: z.string(),   // YYYY-MM-DD (inclusive)
+  granularity: z.enum(["hour", "day"]).default("day"),
+});
+
+export const getAnalytics = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) => analyticsSchema.parse(d))
+  .handler(async ({ context, data }) => {
+    const s = context.supabase;
+    const fromDate = new Date(`${data.from}T00:00:00`);
+    const toDate = new Date(`${data.to}T23:59:59.999`);
+    if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || fromDate > toDate) {
+      throw new Error("Invalid date range");
+    }
+
+    const { data: orders, error } = await s
+      .from("orders")
+      .select(
+        "id,order_number,customer_name,total,subtotal,discount,delivery_fee,status,order_type,payment_method,created_at",
+      )
+      .gte("created_at", fromDate.toISOString())
+      .lte("created_at", toDate.toISOString())
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    const rows = orders ?? [];
+    const ids = rows.map((r) => r.id);
+
+    const { data: items } = ids.length
+      ? await s
+          .from("order_items")
+          .select("order_id,food_name,quantity,subtotal")
+          .in("order_id", ids)
+      : { data: [] as { order_id: string; food_name: string; quantity: number; subtotal: number }[] };
+
+    const nonCancelled = rows.filter((o) => o.status !== "cancelled");
+    const revenue = nonCancelled.reduce((sum, o) => sum + Number(o.total ?? 0), 0);
+    const discountTotal = nonCancelled.reduce((sum, o) => sum + Number(o.discount ?? 0), 0);
+    const deliveryTotal = nonCancelled.reduce((sum, o) => sum + Number(o.delivery_fee ?? 0), 0);
+
+    // Build time series buckets
+    const buckets: { key: string; label: string; revenue: number; orders: number }[] = [];
+    const cursor = new Date(fromDate);
+    const stepMs = data.granularity === "hour" ? 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+    while (cursor <= toDate) {
+      const key =
+        data.granularity === "hour"
+          ? cursor.toISOString().slice(0, 13) // YYYY-MM-DDTHH
+          : cursor.toISOString().slice(0, 10); // YYYY-MM-DD
+      const label =
+        data.granularity === "hour"
+          ? cursor.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit" })
+          : cursor.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+      buckets.push({ key, label, revenue: 0, orders: 0 });
+      cursor.setTime(cursor.getTime() + stepMs);
+    }
+    const bucketMap = new Map(buckets.map((b) => [b.key, b]));
+    for (const o of nonCancelled) {
+      const d = new Date(o.created_at);
+      const key =
+        data.granularity === "hour" ? d.toISOString().slice(0, 13) : d.toISOString().slice(0, 10);
+      const b = bucketMap.get(key);
+      if (b) {
+        b.revenue += Number(o.total ?? 0);
+        b.orders += 1;
+      }
+    }
+
+    // Status breakdown
+    const statusCounts: Record<string, number> = {};
+    for (const o of rows) statusCounts[o.status] = (statusCounts[o.status] ?? 0) + 1;
+
+    // Order type & payment method
+    const typeCounts: Record<string, number> = {};
+    const paymentCounts: Record<string, number> = {};
+    for (const o of nonCancelled) {
+      typeCounts[o.order_type] = (typeCounts[o.order_type] ?? 0) + 1;
+      paymentCounts[o.payment_method] = (paymentCounts[o.payment_method] ?? 0) + 1;
+    }
+
+    // Top items
+    const itemAgg = new Map<string, { qty: number; revenue: number }>();
+    const nonCancelledIds = new Set(nonCancelled.map((o) => o.id));
+    for (const it of items ?? []) {
+      if (!nonCancelledIds.has(it.order_id)) continue;
+      const cur = itemAgg.get(it.food_name) ?? { qty: 0, revenue: 0 };
+      cur.qty += Number(it.quantity ?? 0);
+      cur.revenue += Number(it.subtotal ?? 0);
+      itemAgg.set(it.food_name, cur);
+    }
+    const topItems = [...itemAgg.entries()]
+      .map(([name, v]) => ({ name, ...v }))
+      .sort((a, b) => b.qty - a.qty)
+      .slice(0, 10);
+
+    return {
+      summary: {
+        revenue,
+        ordersCount: rows.length,
+        completedCount: nonCancelled.length,
+        cancelledCount: rows.length - nonCancelled.length,
+        avgOrder: nonCancelled.length ? revenue / nonCancelled.length : 0,
+        discountTotal,
+        deliveryTotal,
+      },
+      series: buckets,
+      statusCounts,
+      typeCounts,
+      paymentCounts,
+      topItems,
+      orders: rows.slice(0, 100),
+    };
+  });
