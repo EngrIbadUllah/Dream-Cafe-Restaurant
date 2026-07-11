@@ -40,6 +40,26 @@ function FoodsPage() {
   const qc = useQueryClient();
   const [draft, setDraft] = useState<FoodDraft>(EMPTY);
   const [editing, setEditing] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Please pick an image");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Max 5 MB");
+    setUploading(true);
+    try {
+      const url = await uploadFoodImage(file);
+      setDraft((d) => ({ ...d, image_url: url }));
+      toast.success("Image uploaded");
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const { data: cats } = useQuery({
     queryKey: ["admin", "categories", "list"],
