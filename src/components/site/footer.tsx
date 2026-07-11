@@ -139,7 +139,7 @@ export function Footer() {
             <Link to="/contact" className="hover:text-gold transition-colors">Contact</Link>
           </nav>
           <a
-            href={`https://wa.me/923158896730?text=${encodeURIComponent("Hi Ibad, I want to design a website for my business like this one.")}`}
+            href="https://wa.me/923158896730"
             target="_blank"
             rel="noopener noreferrer"
             className="text-cream/60 hover:text-cream transition-colors no-underline"
