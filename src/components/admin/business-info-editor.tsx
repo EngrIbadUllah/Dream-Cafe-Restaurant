@@ -47,8 +47,8 @@ export function BusinessInfoEditor({
   function setAddress<K extends keyof BusinessInfo["address"]>(k: K, v: string) {
     setForm((f) => ({ ...f, address: { ...f.address, [k]: v } }));
   }
-  function setSocial<K extends keyof BusinessInfo["social"]>(k: K, v: string) {
-    setForm((f) => ({ ...f, social: { ...f.social, [k]: v } }));
+  function setSocial(k: keyof BusinessInfo["social"], patch: Partial<{ url: string; enabled: boolean }>) {
+    setForm((f) => ({ ...f, social: { ...f.social, [k]: { ...f.social[k], ...patch } } }));
   }
   function updatePhone(idx: number, patch: Partial<Phone>) {
     setForm((f) => ({
