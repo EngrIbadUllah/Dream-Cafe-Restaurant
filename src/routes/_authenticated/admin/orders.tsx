@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
-import { Bell, BellOff } from "lucide-react";
+import { Bell, BellOff, BellRing } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { updateOrderStatus } from "@/lib/admin.functions";
+import { useAdminPush } from "@/hooks/use-admin-push";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/orders")({
@@ -43,6 +44,7 @@ function OrdersPage() {
   const update = useServerFn(updateOrderStatus);
   const [soundOn, setSoundOn] = useState(true);
   const soundRef = useRef(true);
+  const push = useAdminPush();
   useEffect(() => { soundRef.current = soundOn; }, [soundOn]);
 
   useEffect(() => {
@@ -99,21 +101,39 @@ function OrdersPage() {
       <header className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="font-serif text-3xl text-cream">Orders</h1>
-          <p className="text-cream/60 mt-1">Live · new orders alert you instantly with a sound.</p>
+          <p className="text-cream/60 mt-1">
+            Live alerts · in-app sound + background push notifications.
+          </p>
         </div>
-        <button
-          onClick={() => {
-            const next = !soundOn;
-            setSoundOn(next);
-            if (next) playChime(); // also unlocks audio on user gesture
-            toast.success(next ? "Sound alerts on" : "Sound alerts muted");
-          }}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-cream hover:bg-white/10 transition"
-          aria-label={soundOn ? "Mute new-order sound" : "Enable new-order sound"}
-        >
-          {soundOn ? <Bell className="h-4 w-4 text-gold" /> : <BellOff className="h-4 w-4 text-cream/50" />}
-          {soundOn ? "Alerts on" : "Muted"}
-        </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          {push.status !== "unsupported" && (
+            <button
+              onClick={() => (push.subscribed ? push.unsubscribe() : push.subscribe())}
+              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm transition ${
+                push.subscribed
+                  ? "border-gold/40 bg-gold/10 text-gold hover:bg-gold/15"
+                  : "border-white/10 bg-white/5 text-cream hover:bg-white/10"
+              }`}
+              title="Get notified even when the site is closed"
+            >
+              <BellRing className="h-4 w-4" />
+              {push.subscribed ? "Push on" : "Enable push"}
+            </button>
+          )}
+          <button
+            onClick={() => {
+              const next = !soundOn;
+              setSoundOn(next);
+              if (next) playChime();
+              toast.success(next ? "Sound alerts on" : "Sound alerts muted");
+            }}
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-cream hover:bg-white/10 transition"
+            aria-label={soundOn ? "Mute new-order sound" : "Enable new-order sound"}
+          >
+            {soundOn ? <Bell className="h-4 w-4 text-gold" /> : <BellOff className="h-4 w-4 text-cream/50" />}
+            {soundOn ? "Alerts on" : "Muted"}
+          </button>
+        </div>
       </header>
 
       {isLoading ? (
