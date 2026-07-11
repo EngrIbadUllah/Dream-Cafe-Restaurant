@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, UtensilsCrossed, FolderTree, ShoppingBag, CalendarCheck,
   Star, MessageSquare, Image as ImageIcon, Tag, BookOpen, Users, Settings,
-  BarChart3, LogOut, Menu, X,
+  BarChart3, LogOut, Menu, X, Ticket, Activity,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
