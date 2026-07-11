@@ -68,8 +68,12 @@ export function Navbar() {
             )}
             aria-label={site.name}
           >
-            <span className="grid h-10 w-10 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold shadow-lg shadow-black/30">
-              D
+            <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold shadow-lg shadow-black/30">
+              {logo ? (
+                <img src={logo} alt={site.name} className="h-full w-full object-cover" />
+              ) : (
+                "D"
+              )}
             </span>
             <span className="flex flex-col leading-none">
               <span className="font-display text-base sm:text-lg tracking-tight">Dream Cafe</span>
