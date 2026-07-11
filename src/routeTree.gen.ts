@@ -41,6 +41,7 @@ import { Route as AuthenticatedAdminFoodsRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminCustomersRouteImport } from './routes/_authenticated/admin/customers'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin/blog'
+import { Route as AuthenticatedAdminAnalyticsRouteImport } from './routes/_authenticated/admin/analytics'
 
 const TrackRoute = TrackRouteImport.update({
   id: '/track',
@@ -210,6 +211,12 @@ const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedAdminAnalyticsRoute =
+  AuthenticatedAdminAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -231,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/auth/reset': typeof AuthResetRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/order/$orderNumber': typeof OrderOrderNumberRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersRoute
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/auth/reset': typeof AuthResetRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/order/$orderNumber': typeof OrderOrderNumberRoute
+  '/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersRoute
@@ -298,6 +307,7 @@ export interface FileRoutesById {
   '/auth/reset': typeof AuthResetRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/order/$orderNumber': typeof OrderOrderNumberRoute
+  '/_authenticated/admin/analytics': typeof AuthenticatedAdminAnalyticsRoute
   '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/customers': typeof AuthenticatedAdminCustomersRoute
@@ -333,6 +343,7 @@ export interface FileRouteTypes {
     | '/auth/reset'
     | '/blog/$slug'
     | '/order/$orderNumber'
+    | '/admin/analytics'
     | '/admin/blog'
     | '/admin/categories'
     | '/admin/customers'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/auth/reset'
     | '/blog/$slug'
     | '/order/$orderNumber'
+    | '/admin/analytics'
     | '/admin/blog'
     | '/admin/categories'
     | '/admin/customers'
@@ -399,6 +411,7 @@ export interface FileRouteTypes {
     | '/auth/reset'
     | '/blog/$slug'
     | '/order/$orderNumber'
+    | '/_authenticated/admin/analytics'
     | '/_authenticated/admin/blog'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/customers'
@@ -657,10 +670,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBlogRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/analytics': {
+      id: '/_authenticated/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AuthenticatedAdminAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminAnalyticsRoute: typeof AuthenticatedAdminAnalyticsRoute
   AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminCustomersRoute: typeof AuthenticatedAdminCustomersRoute
@@ -677,6 +698,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminAnalyticsRoute: AuthenticatedAdminAnalyticsRoute,
     AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
     AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
     AuthenticatedAdminCustomersRoute: AuthenticatedAdminCustomersRoute,
