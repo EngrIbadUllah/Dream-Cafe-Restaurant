@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { CalendarDays, Menu, Moon, Phone, ShoppingBag, Sun, User, UtensilsCrossed, X } from "lucide-react";
+import { CalendarDays, ClipboardList, Menu, Moon, Phone, ShoppingBag, Sun, User, UtensilsCrossed, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/lib/site-config";
 import { useTheme } from "./theme-provider";
