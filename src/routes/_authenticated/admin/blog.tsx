@@ -1,10 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import { Plus, Trash2, Pencil, X } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Upload, Loader2 } from "lucide-react";
+
+const SIGN_TTL = 60 * 60 * 24 * 365 * 10;
+async function uploadCover(file: File): Promise<string> {
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `covers/${crypto.randomUUID()}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from("blog")
+    .upload(path, file, { cacheControl: "31536000", upsert: false, contentType: file.type });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage.from("blog").createSignedUrl(path, SIGN_TTL);
+  if (error || !data?.signedUrl) throw error ?? new Error("Signed URL failed");
+  return data.signedUrl;
+}
 
 export const Route = createFileRoute("/_authenticated/admin/blog")({
   component: AdminBlog,
@@ -26,6 +39,26 @@ function AdminBlog() {
   const { user } = useAuth();
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [open, setOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Please pick an image");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Max 5 MB");
+    setUploading(true);
+    try {
+      const url = await uploadCover(file);
+      setDraft((d) => ({ ...d, cover_image: url }));
+      toast.success("Cover uploaded");
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin", "blog"],
@@ -130,7 +163,20 @@ function AdminBlog() {
             </div>
             <input required placeholder="Title" className="input-base" value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value, slug: draft.slug || slugify(e.target.value) })} />
             <input placeholder="URL slug" className="input-base" value={draft.slug} onChange={(e) => setDraft({ ...draft, slug: slugify(e.target.value) })} />
-            <input placeholder="Cover image URL (optional)" className="input-base" value={draft.cover_image} onChange={(e) => setDraft({ ...draft, cover_image: e.target.value })} />
+            <div className="flex gap-2">
+              <input placeholder="Cover image URL or upload →" className="input-base flex-1" value={draft.cover_image} onChange={(e) => setDraft({ ...draft, cover_image: e.target.value })} />
+              <input ref={fileRef} type="file" accept="image/*" hidden onChange={onPickFile} />
+              <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-muted/40 px-3 text-xs hover:text-gold disabled:opacity-50">
+                {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                {uploading ? "Uploading…" : "Upload"}
+              </button>
+            </div>
+            {draft.cover_image && (
+              <div className="flex items-center gap-3">
+                <img src={draft.cover_image} alt="cover preview" className="h-20 w-32 rounded-lg object-cover border border-border" />
+                <button type="button" onClick={() => setDraft({ ...draft, cover_image: "" })} className="text-xs text-muted-foreground hover:text-destructive">Remove cover</button>
+              </div>
+            )}
             <textarea placeholder="Short excerpt" rows={2} maxLength={280} className="input-base" value={draft.excerpt} onChange={(e) => setDraft({ ...draft, excerpt: e.target.value })} />
             <textarea required placeholder="Content (plain text or markdown-lite)" rows={12} className="input-base font-mono text-xs" value={draft.content} onChange={(e) => setDraft({ ...draft, content: e.target.value })} />
             <input placeholder="Tags (comma separated)" className="input-base" value={draft.tags} onChange={(e) => setDraft({ ...draft, tags: e.target.value })} />
