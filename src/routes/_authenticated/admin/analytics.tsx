@@ -106,8 +106,10 @@ function AnalyticsPage() {
               type="date"
               value={from}
               max={to}
+              onFocus={(e) => e.currentTarget.showPicker?.()}
+              onClick={(e) => e.currentTarget.showPicker?.()}
               onChange={(e) => setFrom(e.target.value)}
-              className="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-cream"
+              className="w-full cursor-pointer rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-cream [color-scheme:dark]"
             />
           </label>
           <label className="text-xs text-cream/60">
@@ -117,8 +119,10 @@ function AnalyticsPage() {
               value={to}
               min={from}
               max={todayStr(0)}
+              onFocus={(e) => e.currentTarget.showPicker?.()}
+              onClick={(e) => e.currentTarget.showPicker?.()}
               onChange={(e) => setTo(e.target.value)}
-              className="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-cream"
+              className="w-full cursor-pointer rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-cream [color-scheme:dark]"
             />
           </label>
           <div className="inline-flex rounded-lg border border-white/15 p-1 bg-black/40">
