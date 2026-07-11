@@ -163,7 +163,20 @@ function AdminBlog() {
             </div>
             <input required placeholder="Title" className="input-base" value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value, slug: draft.slug || slugify(e.target.value) })} />
             <input placeholder="URL slug" className="input-base" value={draft.slug} onChange={(e) => setDraft({ ...draft, slug: slugify(e.target.value) })} />
-            <input placeholder="Cover image URL (optional)" className="input-base" value={draft.cover_image} onChange={(e) => setDraft({ ...draft, cover_image: e.target.value })} />
+            <div className="flex gap-2">
+              <input placeholder="Cover image URL or upload →" className="input-base flex-1" value={draft.cover_image} onChange={(e) => setDraft({ ...draft, cover_image: e.target.value })} />
+              <input ref={fileRef} type="file" accept="image/*" hidden onChange={onPickFile} />
+              <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-muted/40 px-3 text-xs hover:text-gold disabled:opacity-50">
+                {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                {uploading ? "Uploading…" : "Upload"}
+              </button>
+            </div>
+            {draft.cover_image && (
+              <div className="flex items-center gap-3">
+                <img src={draft.cover_image} alt="cover preview" className="h-20 w-32 rounded-lg object-cover border border-border" />
+                <button type="button" onClick={() => setDraft({ ...draft, cover_image: "" })} className="text-xs text-muted-foreground hover:text-destructive">Remove cover</button>
+              </div>
+            )}
             <textarea placeholder="Short excerpt" rows={2} maxLength={280} className="input-base" value={draft.excerpt} onChange={(e) => setDraft({ ...draft, excerpt: e.target.value })} />
             <textarea required placeholder="Content (plain text or markdown-lite)" rows={12} className="input-base font-mono text-xs" value={draft.content} onChange={(e) => setDraft({ ...draft, content: e.target.value })} />
             <input placeholder="Tags (comma separated)" className="input-base" value={draft.tags} onChange={(e) => setDraft({ ...draft, tags: e.target.value })} />
