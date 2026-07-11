@@ -64,7 +64,23 @@ function OrderTrackPage() {
   return (
     <SiteShell>
       <section className="container-page pt-28 pb-16">
-        <h1 className="mt-3 font-display text-4xl md:text-5xl">Order {orderNumber}</h1>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <h1 className="font-display text-4xl md:text-5xl">Order {orderNumber}</h1>
+          <button
+            type="button"
+            onClick={() => {
+              navigator.clipboard?.writeText(orderNumber);
+              toast.success("Order number copied");
+            }}
+            className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:border-gold hover:text-gold"
+          >
+            <Copy size={12} /> Copy
+          </button>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Save this number — you can look up your order anytime on the{" "}
+          <Link to="/track" className="text-gold hover:underline">Track Order</Link> page.
+        </p>
 
         {!order && (
           <form
