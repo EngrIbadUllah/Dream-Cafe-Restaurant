@@ -62,9 +62,11 @@ function MenuPage() {
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
     return data.foods.filter((f) => {
+      if (term) {
+        return f.name.toLowerCase().includes(term) || (f.description ?? "").toLowerCase().includes(term);
+      }
       if (activeCat !== "all" && f.category_id !== activeCat) return false;
-      if (!term) return true;
-      return f.name.toLowerCase().includes(term) || (f.description ?? "").toLowerCase().includes(term);
+      return true;
     });
   }, [data.foods, activeCat, q]);
 
@@ -122,6 +124,16 @@ function MenuPage() {
       <section className="container-page py-8">
         {filtered.length === 0 ? (
           <p className="py-16 text-center text-muted-foreground">No dishes match your search.</p>
+        ) : q.trim() ? (
+          <>
+            <div className="mb-3 flex items-baseline justify-between border-b border-border/60 pb-2">
+              <h2 className="font-display text-xl md:text-2xl text-gold">Search results</h2>
+              <span className="text-[11px] uppercase tracking-widest text-muted-foreground">{filtered.length} items</span>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((f) => <FoodCard key={f.id} food={f} onAdd={add} />)}
+            </div>
+          </>
         ) : activeCat === "all" ? (
           data.categories.map((c) => {
             const list = grouped.get(c.id);
