@@ -133,8 +133,26 @@ function FoodsPage() {
             <option value="">— No category —</option>
             {cats?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
-          <input className="input-base" placeholder="Image URL (optional)" value={draft.image_url} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+          <div className="flex gap-2">
+            <input className="input-base flex-1" placeholder="Image URL or upload →" value={draft.image_url} onChange={(e) => setDraft({ ...draft, image_url: e.target.value })} />
+            <input ref={fileRef} type="file" accept="image/*" hidden onChange={onPickFile} />
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.03] px-3 text-xs text-cream/80 hover:text-gold disabled:opacity-50"
+            >
+              {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+              {uploading ? "Uploading…" : "Upload"}
+            </button>
+          </div>
         </div>
+        {draft.image_url && (
+          <div className="flex items-center gap-3">
+            <img src={draft.image_url} alt="preview" className="h-16 w-16 rounded-lg object-cover border border-white/10" />
+            <button type="button" onClick={() => setDraft({ ...draft, image_url: "" })} className="text-xs text-cream/60 hover:text-red-400">Remove image</button>
+          </div>
+        )}
         <textarea className="input-base min-h-20" placeholder="Description" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
         <div className="flex flex-wrap items-center gap-4">
           <label className="flex items-center gap-2 text-sm text-cream/80">
