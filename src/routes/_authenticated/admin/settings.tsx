@@ -41,9 +41,12 @@ function SettingsPage() {
     onSuccess: () => {
       toast.success("Setting saved");
       qc.invalidateQueries({ queryKey: ["admin", "settings"] });
+      qc.invalidateQueries({ queryKey: ["business-info"] });
+      qc.invalidateQueries({ queryKey: ["cafe-logo"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
 
   const remove = useMutation({
     mutationFn: (key: string) => delFn({ data: { key } }),
