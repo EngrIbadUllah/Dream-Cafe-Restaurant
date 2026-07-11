@@ -88,8 +88,15 @@ function AuthPage() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
       {/* Left — brand panel */}
-      <div className="relative hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-charcoal via-charcoal to-black text-cream overflow-hidden">
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_20%_20%,_var(--color-gold)_0%,_transparent_50%)]" />
+      <div
+        className="relative hidden lg:flex flex-col justify-between p-12 overflow-hidden text-[#f5ecd7]"
+        style={{
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(201,168,76,0.35) 0%, transparent 55%), linear-gradient(135deg, #1a1207 0%, #0f0a04 55%, #050403 100%)",
+        }}
+      >
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_90%,rgba(201,168,76,0.18),transparent_60%)]" />
+
         <Link to="/" className="relative flex items-center gap-3 z-10">
           <span className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">D</span>
           <div className="leading-tight">
@@ -98,14 +105,15 @@ function AuthPage() {
           </div>
         </Link>
         <div className="relative z-10 space-y-4">
-          <h1 className="font-display text-4xl leading-tight">
+          <h1 className="font-display text-4xl leading-tight text-[#f5ecd7]">
             Where every bite feels like home.
           </h1>
-          <p className="text-cream/70 max-w-md">
+          <p className="text-[#f5ecd7]/70 max-w-md">
             Sign in to track orders, save your favourite dishes and reserve your table in seconds.
           </p>
         </div>
-        <div className="relative z-10 text-xs text-cream/50">
+        <div className="relative z-10 text-xs text-[#f5ecd7]/50">
+
           © {new Date().getFullYear()} {site.name}
         </div>
       </div>
