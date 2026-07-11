@@ -120,6 +120,24 @@ export const placeOrder = createServerFn({ method: "POST" })
       );
     }
 
+    // Fire-and-forget push notification to admins (never fail the order)
+    try {
+      const { sendPushToAdmins } = await import("./push.functions");
+      const itemsSummary = data.items
+        .slice(0, 3)
+        .map((i) => `${i.quantity}× ${i.food_name}`)
+        .join(", ");
+      const extra = data.items.length > 3 ? ` +${data.items.length - 3} more` : "";
+      await sendPushToAdmins({
+        title: `New order · ${order.order_number}`,
+        body: `${data.customer_name} · PKR ${total.toLocaleString()}\n${itemsSummary}${extra}`,
+        url: "/admin/orders",
+        tag: `order-${order.order_number}`,
+      });
+    } catch (e) {
+      console.error("[placeOrder] push notify failed", e);
+    }
+
     return { order_number: order.order_number, total, discount, delivery_fee };
   });
 
