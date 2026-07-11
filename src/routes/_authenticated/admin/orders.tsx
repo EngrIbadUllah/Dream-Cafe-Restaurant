@@ -137,6 +137,20 @@ function OrdersPage() {
     }
   };
 
+  const removeFn = useServerFn(deleteOrder);
+  const remove = async (id: string, num: string) => {
+    if (!confirm(`Delete order ${num}? This cannot be undone.`)) return;
+    try {
+      await removeFn({ data: { id } });
+      toast.success(`Order ${num} deleted`);
+      qc.invalidateQueries({ queryKey: ["admin", "orders"] });
+      qc.invalidateQueries({ queryKey: ["admin", "stats"] });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Delete failed");
+    }
+  };
+
+
   return (
     <div className="space-y-6">
       <header className="flex items-start justify-between gap-4 flex-wrap">
