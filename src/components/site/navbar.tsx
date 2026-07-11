@@ -177,8 +177,12 @@ export function Navbar() {
         >
           <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-border">
             <Link to="/" className="flex items-center gap-2.5 text-foreground">
-              <span className="grid h-9 w-9 place-items-center rounded-full gradient-gold text-primary-foreground font-display font-bold">
-                D
+              <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-full gradient-gold text-primary-foreground font-display font-bold">
+                {logo ? (
+                  <img src={logo} alt={site.name} className="h-full w-full object-cover" />
+                ) : (
+                  "D"
+                )}
               </span>
               <span className="flex flex-col leading-none">
                 <span className="font-display text-base">Dream Cafe</span>
