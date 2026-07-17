@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
-import { Bell, BellOff, BellRing, Trash2 } from "lucide-react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Bell, BellOff, BellRing, ChevronDown, ChevronRight, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { updateOrderStatus } from "@/lib/admin.functions";
 import { deleteOrder } from "@/lib/orders.functions";
@@ -84,6 +84,7 @@ function OrdersPage() {
   const qc = useQueryClient();
   const update = useServerFn(updateOrderStatus);
   const [soundOn, setSoundOn] = useState(true);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const soundRef = useRef(true);
   const push = useAdminPush();
   useEffect(() => { soundRef.current = soundOn; }, [soundOn]);
@@ -202,6 +203,7 @@ function OrdersPage() {
           <table className="w-full text-sm">
             <thead className="bg-white/5 text-cream/60 text-xs uppercase tracking-wider">
               <tr>
+                <th className="px-2 py-3 w-8"></th>
                 <th className="px-4 py-3 text-left">Order #</th>
                 <th className="px-4 py-3 text-left">Customer</th>
                 <th className="px-4 py-3 text-left">Items</th>
@@ -213,18 +215,25 @@ function OrdersPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {data.map((o) => (
-                <tr key={o.id} className="hover:bg-white/5">
+              {data.map((o) => {
+                const isOpen = !!expanded[o.id];
+                const items = (o.order_items ?? []) as Array<{ id: string; food_name: string; quantity: number; unit_price: number; subtotal: number; notes?: string | null }>;
+                return (
+                <Fragment key={o.id}>
+                <tr key={o.id} className="hover:bg-white/5 cursor-pointer" onClick={() => setExpanded((s) => ({ ...s, [o.id]: !s[o.id] }))}>
+                  <td className="px-2 py-3 text-cream/60">
+                    {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                  </td>
                   <td className="px-4 py-3 font-mono text-gold">{o.order_number}</td>
                   <td className="px-4 py-3 text-cream">
                     <div>{o.customer_name}</div>
                     <div className="text-cream/50 text-xs">{o.customer_phone}</div>
                   </td>
-                  <td className="px-4 py-3 text-cream/70">{o.order_items?.length ?? 0}</td>
+                  <td className="px-4 py-3 text-cream/70">{items.length}</td>
                   <td className="px-4 py-3 text-right text-cream">PKR {Number(o.total).toLocaleString()}</td>
                   <td className="px-4 py-3 text-cream/70 capitalize">{o.order_type}</td>
                   <td className="px-4 py-3 text-cream/50 text-xs">{new Date(o.created_at).toLocaleString()}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                     <select
                       value={o.status}
                       onChange={(e) => setStatus(o.id, e.target.value as (typeof STATUSES)[number])}
@@ -235,7 +244,7 @@ function OrdersPage() {
                       ))}
                     </select>
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => remove(o.id, o.order_number)}
                       className="inline-flex items-center gap-1 rounded-md border border-destructive/30 bg-destructive/10 px-2 py-1 text-xs text-destructive hover:bg-destructive/20 transition"
@@ -246,7 +255,74 @@ function OrdersPage() {
                     </button>
                   </td>
                 </tr>
-              ))}
+                {isOpen && (
+                  <tr key={o.id + "-details"} className="bg-black/30">
+                    <td></td>
+                    <td colSpan={8} className="px-4 py-4">
+                      <div className="grid gap-6 md:grid-cols-2">
+                        <div>
+                          <h4 className="text-gold text-xs uppercase tracking-wider mb-2">Items ordered</h4>
+                          {items.length === 0 ? (
+                            <p className="text-cream/50 text-sm">No items recorded.</p>
+                          ) : (
+                            <ul className="space-y-2">
+                              {items.map((it) => (
+                                <li key={it.id} className="flex justify-between gap-3 text-sm border-b border-white/5 pb-1.5">
+                                  <div className="text-cream">
+                                    <span className="text-gold font-mono mr-2">×{it.quantity}</span>
+                                    {it.food_name}
+                                    {it.notes && <div className="text-cream/50 text-xs italic mt-0.5">Note: {it.notes}</div>}
+                                  </div>
+                                  <div className="text-cream/70 whitespace-nowrap">
+                                    PKR {Number(it.unit_price).toLocaleString()} · <span className="text-cream">PKR {Number(it.subtotal).toLocaleString()}</span>
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          <div className="mt-3 space-y-1 text-sm">
+                            <div className="flex justify-between text-cream/70"><span>Subtotal</span><span>PKR {Number(o.subtotal).toLocaleString()}</span></div>
+                            {Number(o.delivery_fee) > 0 && <div className="flex justify-between text-cream/70"><span>Delivery fee</span><span>PKR {Number(o.delivery_fee).toLocaleString()}</span></div>}
+                            {Number(o.discount) > 0 && <div className="flex justify-between text-cream/70"><span>Discount{o.coupon_code ? ` (${o.coupon_code})` : ""}</span><span>− PKR {Number(o.discount).toLocaleString()}</span></div>}
+                            {Number(o.tax) > 0 && <div className="flex justify-between text-cream/70"><span>Tax</span><span>PKR {Number(o.tax).toLocaleString()}</span></div>}
+                            <div className="flex justify-between text-cream font-semibold pt-1 border-t border-white/10"><span>Total</span><span className="text-gold">PKR {Number(o.total).toLocaleString()}</span></div>
+                          </div>
+                        </div>
+                        <div className="space-y-3 text-sm">
+                          <div>
+                            <h4 className="text-gold text-xs uppercase tracking-wider mb-2">Delivery details</h4>
+                            <dl className="grid grid-cols-[110px_1fr] gap-y-1.5 text-cream/80">
+                              <dt className="text-cream/50">Type</dt><dd className="capitalize">{o.order_type}</dd>
+                              <dt className="text-cream/50">Name</dt><dd>{o.customer_name}</dd>
+                              <dt className="text-cream/50">Phone</dt><dd><a href={`tel:${o.customer_phone}`} className="text-gold hover:underline">{o.customer_phone}</a></dd>
+                              {o.customer_email && (<><dt className="text-cream/50">Email</dt><dd>{o.customer_email}</dd></>)}
+                              {o.delivery_address && (<><dt className="text-cream/50">Address</dt><dd>{o.delivery_address}</dd></>)}
+                              {o.delivery_city && (<><dt className="text-cream/50">City</dt><dd>{o.delivery_city}</dd></>)}
+                              {o.table_number && (<><dt className="text-cream/50">Table</dt><dd>{o.table_number}</dd></>)}
+                              {o.scheduled_for && (<><dt className="text-cream/50">Scheduled</dt><dd>{new Date(o.scheduled_for).toLocaleString()}</dd></>)}
+                              {o.delivery_notes && (<><dt className="text-cream/50">Notes</dt><dd className="italic">{o.delivery_notes}</dd></>)}
+                            </dl>
+                          </div>
+                          <div>
+                            <h4 className="text-gold text-xs uppercase tracking-wider mb-2">Payment</h4>
+                            <dl className="grid grid-cols-[110px_1fr] gap-y-1.5 text-cream/80">
+                              <dt className="text-cream/50">Method</dt><dd className="capitalize">{o.payment_method?.replace(/_/g, " ")}</dd>
+                              <dt className="text-cream/50">Status</dt><dd className="capitalize">{o.payment_status}</dd>
+                            </dl>
+                          </div>
+                          {o.notes && (
+                            <div>
+                              <h4 className="text-gold text-xs uppercase tracking-wider mb-2">Order note</h4>
+                              <p className="text-cream/80 italic">{o.notes}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+                </Fragment>
+              );})}
             </tbody>
           </table>
         </div>
