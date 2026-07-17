@@ -308,7 +308,23 @@ function OrdersPage() {
                             <dl className="grid grid-cols-[110px_1fr] gap-y-1.5 text-cream/80">
                               <dt className="text-cream/50">Method</dt><dd className="capitalize">{o.payment_method?.replace(/_/g, " ")}</dd>
                               <dt className="text-cream/50">Status</dt><dd className="capitalize">{o.payment_status}</dd>
+                              {(o as any).payment_transaction_id && (<><dt className="text-cream/50">Txn ID</dt><dd className="font-mono text-xs break-all">{(o as any).payment_transaction_id}</dd></>)}
                             </dl>
+                            {(o as any).payment_screenshot_url && (
+                              <a
+                                href={(o as any).payment_screenshot_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="mt-2 inline-block rounded-lg border border-white/10 bg-black/30 p-1 hover:border-gold/50 transition"
+                              >
+                                <img
+                                  src={(o as any).payment_screenshot_url}
+                                  alt="Payment proof"
+                                  className="max-h-40 rounded-md object-contain"
+                                />
+                                <p className="text-[11px] text-cream/50 mt-1 text-center">Click to open full size</p>
+                              </a>
+                            )}
                           </div>
                           {o.notes && (
                             <div>

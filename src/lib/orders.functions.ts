@@ -7,7 +7,7 @@ type PlaceOrderInput = {
   customer_phone: string;
   customer_email?: string;
   order_type: "delivery" | "takeaway" | "dine_in";
-  payment_method: "cod" | "bank_transfer";
+  payment_method: "cod" | "bank_transfer" | "easypaisa" | "jazzcash";
   delivery_address?: string;
   delivery_city?: string;
   delivery_notes?: string;
@@ -15,6 +15,8 @@ type PlaceOrderInput = {
   notes?: string;
   coupon_code?: string;
   user_id?: string | null;
+  payment_transaction_id?: string;
+  payment_proof_base64?: string; // data URL: data:image/png;base64,....
   items: { food_id: string; food_name: string; unit_price: number; quantity: number; notes?: string }[];
 };
 
@@ -28,6 +30,8 @@ export const placeOrder = createServerFn({ method: "POST" })
     if (!d.items?.length) throw new Error("Cart is empty");
     if (d.order_type === "delivery" && !d.delivery_address?.trim())
       throw new Error("Delivery address required");
+    if ((d.payment_method === "easypaisa" || d.payment_method === "jazzcash") && !d.payment_transaction_id?.trim())
+      throw new Error("Transaction ID is required for EasyPaisa / JazzCash");
     return d;
   })
   .handler(async ({ data }) => {
@@ -71,6 +75,31 @@ export const placeOrder = createServerFn({ method: "POST" })
     if (numErr) throw numErr;
     const order_number = numData as unknown as string;
 
+    // Upload payment proof (if provided) — used for bank/easypaisa/jazzcash
+    let payment_screenshot_url: string | null = null;
+    if (data.payment_proof_base64) {
+      try {
+        const match = /^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/.exec(data.payment_proof_base64);
+        if (match) {
+          const mime = match[1];
+          const ext = mime.split("/")[1]?.split("+")[0] || "png";
+          const bytes = Buffer.from(match[2], "base64");
+          const path = `${order_number}.${ext}`;
+          const { error: upErr } = await supabaseAdmin.storage
+            .from("payment-proofs")
+            .upload(path, bytes, { contentType: mime, upsert: true });
+          if (!upErr) {
+            const { data: signed } = await supabaseAdmin.storage
+              .from("payment-proofs")
+              .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+            payment_screenshot_url = signed?.signedUrl ?? null;
+          }
+        }
+      } catch (e) {
+        console.error("[placeOrder] payment proof upload failed", e);
+      }
+    }
+
     const { data: order, error: orderErr } = await supabaseAdmin
       .from("orders")
       .insert({
@@ -83,6 +112,8 @@ export const placeOrder = createServerFn({ method: "POST" })
         order_type: data.order_type,
         payment_method: data.payment_method,
         payment_status: "unpaid",
+        payment_transaction_id: data.payment_transaction_id?.trim() || null,
+        payment_screenshot_url,
         status: "pending",
         delivery_address: data.delivery_address?.trim() || null,
         delivery_city: data.delivery_city?.trim() || "Shakargarh",
@@ -95,7 +126,7 @@ export const placeOrder = createServerFn({ method: "POST" })
         delivery_fee,
         tax,
         total,
-      })
+      } as never)
       .select("id, order_number")
       .single();
     if (orderErr) throw orderErr;
@@ -152,7 +183,7 @@ export const trackOrder = createServerFn({ method: "POST" })
     const { data: order, error } = await supabaseAdmin
       .from("orders")
       .select(
-        "id, order_number, status, payment_status, payment_method, order_type, customer_name, customer_phone, delivery_address, delivery_city, subtotal, discount, delivery_fee, tax, total, notes, created_at",
+        "id, order_number, status, payment_status, payment_method, payment_transaction_id, payment_screenshot_url, order_type, customer_name, customer_phone, delivery_address, delivery_city, subtotal, discount, delivery_fee, tax, total, notes, created_at",
       )
       .eq("order_number", data.order_number.trim())
       .maybeSingle();
