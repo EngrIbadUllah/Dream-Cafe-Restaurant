@@ -75,6 +75,31 @@ export const placeOrder = createServerFn({ method: "POST" })
     if (numErr) throw numErr;
     const order_number = numData as unknown as string;
 
+    // Upload payment proof (if provided) — used for bank/easypaisa/jazzcash
+    let payment_screenshot_url: string | null = null;
+    if (data.payment_proof_base64) {
+      try {
+        const match = /^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/.exec(data.payment_proof_base64);
+        if (match) {
+          const mime = match[1];
+          const ext = mime.split("/")[1]?.split("+")[0] || "png";
+          const bytes = Buffer.from(match[2], "base64");
+          const path = `${order_number}.${ext}`;
+          const { error: upErr } = await supabaseAdmin.storage
+            .from("payment-proofs")
+            .upload(path, bytes, { contentType: mime, upsert: true });
+          if (!upErr) {
+            const { data: signed } = await supabaseAdmin.storage
+              .from("payment-proofs")
+              .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+            payment_screenshot_url = signed?.signedUrl ?? null;
+          }
+        }
+      } catch (e) {
+        console.error("[placeOrder] payment proof upload failed", e);
+      }
+    }
+
     const { data: order, error: orderErr } = await supabaseAdmin
       .from("orders")
       .insert({
@@ -87,6 +112,8 @@ export const placeOrder = createServerFn({ method: "POST" })
         order_type: data.order_type,
         payment_method: data.payment_method,
         payment_status: "unpaid",
+        payment_transaction_id: data.payment_transaction_id?.trim() || null,
+        payment_screenshot_url,
         status: "pending",
         delivery_address: data.delivery_address?.trim() || null,
         delivery_city: data.delivery_city?.trim() || "Shakargarh",
@@ -99,7 +126,7 @@ export const placeOrder = createServerFn({ method: "POST" })
         delivery_fee,
         tax,
         total,
-      })
+      } as never)
       .select("id, order_number")
       .single();
     if (orderErr) throw orderErr;
