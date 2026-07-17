@@ -139,8 +139,7 @@ function TrackPage() {
                         <Link
                           to="/order/$orderNumber"
                           params={{ orderNumber: o.order_number }}
-                          search={{}}
-                          onClick={() => { try { sessionStorage.setItem(`order-phone:${o.order_number}`, phone); } catch { /* ignore */ } }}
+                          search={{ phone }}
                           className="flex items-center justify-between gap-3 p-4 hover:bg-muted/60 transition"
                         >
                           <div className="min-w-0">
@@ -174,11 +173,10 @@ function TrackPage() {
                   const n = orderNumber.trim();
                   const p = orderPhone.trim();
                   if (!n || !p) return;
-                  try { sessionStorage.setItem(`order-phone:${n}`, p); } catch { /* ignore */ }
                   navigate({
                     to: "/order/$orderNumber",
                     params: { orderNumber: n },
-                    search: {},
+                    search: { phone: p },
                   });
                 }}
                 className="space-y-4"

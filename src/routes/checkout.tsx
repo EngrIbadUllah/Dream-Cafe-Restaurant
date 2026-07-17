@@ -79,8 +79,7 @@ function CheckoutPage() {
 
       toast.success(`Order placed! ${res.order_number}`);
       clear();
-      try { sessionStorage.setItem(`order-phone:${res.order_number}`, form.customer_phone); } catch { /* ignore */ }
-      navigate({ to: "/order/$orderNumber", params: { orderNumber: res.order_number }, search: {} });
+      navigate({ to: "/order/$orderNumber", params: { orderNumber: res.order_number }, search: { phone: form.customer_phone } });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Something went wrong";
       toast.error(msg);

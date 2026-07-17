@@ -34,8 +34,7 @@ function OrderTrackPage() {
   const search = Route.useSearch();
   const track = useServerFn(trackOrder);
 
-  const stashed = typeof window !== "undefined" ? sessionStorage.getItem(`order-phone:${orderNumber}`) : null;
-  const [phone, setPhone] = useState(stashed ?? search.phone ?? "");
+  const [phone, setPhone] = useState(search.phone ?? "");
   const [data, setData] = useState<Awaited<ReturnType<typeof trackOrder>> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,9 +46,6 @@ function OrderTrackPage() {
       const res = await track({ data: { order_number: orderNumber, phone: p } });
       setData(res);
       if (!res.order) setError("No order found with that number and phone.");
-      else {
-        try { sessionStorage.setItem(`order-phone:${orderNumber}`, p); } catch { /* ignore */ }
-      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Lookup failed");
     } finally {
@@ -58,8 +54,7 @@ function OrderTrackPage() {
   }
 
   useEffect(() => {
-    const auto = stashed ?? search.phone;
-    if (auto) lookup(auto);
+    if (search.phone) lookup(search.phone);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
