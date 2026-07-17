@@ -85,11 +85,23 @@ function CheckoutPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const needsProof = form.payment_method === "easypaisa" || form.payment_method === "jazzcash" || form.payment_method === "bank_transfer";
+    const needsTxn = form.payment_method === "easypaisa" || form.payment_method === "jazzcash";
+    if (needsTxn && !form.payment_transaction_id.trim()) {
+      toast.error("Please enter the transaction ID");
+      return;
+    }
+    if (needsProof && !proof) {
+      toast.error("Please upload a payment screenshot");
+      return;
+    }
     setSubmitting(true);
     try {
       const res = await submit({
         data: {
           ...form,
+          payment_transaction_id: form.payment_transaction_id.trim() || undefined,
+          payment_proof_base64: proof?.base64,
           user_id: user?.id ?? null,
           items: items.map((i) => ({
             food_id: i.id, food_name: i.name, unit_price: i.price, quantity: i.quantity,
