@@ -139,7 +139,8 @@ function TrackPage() {
                         <Link
                           to="/order/$orderNumber"
                           params={{ orderNumber: o.order_number }}
-                          search={{ phone }}
+                          search={{}}
+                          onClick={() => { try { sessionStorage.setItem(`order-phone:${o.order_number}`, phone); } catch { /* ignore */ } }}
                           className="flex items-center justify-between gap-3 p-4 hover:bg-muted/60 transition"
                         >
                           <div className="min-w-0">
