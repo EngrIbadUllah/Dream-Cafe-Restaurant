@@ -95,7 +95,7 @@ function OrderTrackPage() {
             <label className="text-sm text-muted-foreground">Enter the phone number used for the order</label>
             <input
               className="input-base mt-2 w-full"
-              placeholder="0300 1234567"
+              placeholder="0300 *******"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required

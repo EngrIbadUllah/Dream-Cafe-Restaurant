@@ -112,7 +112,7 @@ function ReservationsPage() {
                 <input required className="input-base" value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} placeholder="Your name" />
               </Field>
               <Field label="Phone *">
-                <input required className="input-base" value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} placeholder="0300 1234567" />
+                <input required className="input-base" value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} placeholder="0300 *******" />
               </Field>
             </div>
             <Field label="Email (optional)">

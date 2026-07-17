@@ -119,7 +119,7 @@ function CheckoutPage() {
                   <input required value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} className="input-base" />
                 </Field>
                 <Field label="Phone *">
-                  <input required type="tel" value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} placeholder="0300 1234567" className="input-base" />
+                  <input required type="tel" value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} placeholder="0300 *******" className="input-base" />
                 </Field>
                 <Field label="Email">
                   <input type="email" value={form.customer_email} onChange={(e) => setForm({ ...form, customer_email: e.target.value })} className="input-base" />

@@ -116,7 +116,7 @@ function TrackPage() {
                   <input
                     className="input-base mt-2 w-full"
                     type="tel"
-                    placeholder="0300 1234567"
+                    placeholder="0300 *******"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
@@ -200,7 +200,7 @@ function TrackPage() {
                   <input
                     className="input-base mt-2 w-full"
                     type="tel"
-                    placeholder="0300 1234567"
+                    placeholder="0300 *******"
                     value={orderPhone}
                     onChange={(e) => setOrderPhone(e.target.value)}
                     required
