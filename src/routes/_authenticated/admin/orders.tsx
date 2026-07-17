@@ -321,7 +321,7 @@ function OrdersPage() {
                     </td>
                   </tr>
                 )}
-                </>
+                </Fragment>
               );})}
             </tbody>
           </table>
