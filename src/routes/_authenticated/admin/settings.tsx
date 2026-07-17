@@ -44,6 +44,7 @@ function SettingsPage() {
       qc.invalidateQueries({ queryKey: ["admin", "settings"] });
       qc.invalidateQueries({ queryKey: ["business-info"] });
       qc.invalidateQueries({ queryKey: ["cafe-logo"] });
+      qc.invalidateQueries({ queryKey: ["payment-accounts"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
