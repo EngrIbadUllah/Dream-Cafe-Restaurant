@@ -30,6 +30,8 @@ export const placeOrder = createServerFn({ method: "POST" })
     if (!d.items?.length) throw new Error("Cart is empty");
     if (d.order_type === "delivery" && !d.delivery_address?.trim())
       throw new Error("Delivery address required");
+    if ((d.payment_method === "easypaisa" || d.payment_method === "jazzcash") && !d.payment_transaction_id?.trim())
+      throw new Error("Transaction ID is required for EasyPaisa / JazzCash");
     return d;
   })
   .handler(async ({ data }) => {
