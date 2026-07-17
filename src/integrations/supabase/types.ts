@@ -426,7 +426,9 @@ export type Database = {
           order_number: string
           order_type: Database["public"]["Enums"]["order_type"]
           payment_method: Database["public"]["Enums"]["payment_method"]
+          payment_screenshot_url: string | null
           payment_status: Database["public"]["Enums"]["payment_status"]
+          payment_transaction_id: string | null
           scheduled_for: string | null
           status: Database["public"]["Enums"]["order_status"]
           subtotal: number
@@ -452,7 +454,9 @@ export type Database = {
           order_number: string
           order_type?: Database["public"]["Enums"]["order_type"]
           payment_method?: Database["public"]["Enums"]["payment_method"]
+          payment_screenshot_url?: string | null
           payment_status?: Database["public"]["Enums"]["payment_status"]
+          payment_transaction_id?: string | null
           scheduled_for?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
@@ -478,7 +482,9 @@ export type Database = {
           order_number?: string
           order_type?: Database["public"]["Enums"]["order_type"]
           payment_method?: Database["public"]["Enums"]["payment_method"]
+          payment_screenshot_url?: string | null
           payment_status?: Database["public"]["Enums"]["payment_status"]
+          payment_transaction_id?: string | null
           scheduled_for?: string | null
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
@@ -727,7 +733,12 @@ export type Database = {
         | "completed"
         | "cancelled"
       order_type: "delivery" | "takeaway" | "dine_in"
-      payment_method: "cod" | "bank_transfer" | "card"
+      payment_method:
+        | "cod"
+        | "bank_transfer"
+        | "card"
+        | "easypaisa"
+        | "jazzcash"
       payment_status: "unpaid" | "paid" | "refunded" | "failed"
       reservation_status:
         | "pending"
@@ -877,7 +888,7 @@ export const Constants = {
         "cancelled",
       ],
       order_type: ["delivery", "takeaway", "dine_in"],
-      payment_method: ["cod", "bank_transfer", "card"],
+      payment_method: ["cod", "bank_transfer", "card", "easypaisa", "jazzcash"],
       payment_status: ["unpaid", "paid", "refunded", "failed"],
       reservation_status: [
         "pending",
