@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Plus, Save, Trash2, Settings as SettingsIcon, Upload, Loader2, Image as ImageIcon } from "lucide-react";
 import { BusinessInfoEditor } from "@/components/admin/business-info-editor";
+import { PaymentAccountsEditor } from "@/components/admin/payment-accounts-editor";
 
 
 const LOGO_SIGN_TTL = 60 * 60 * 24 * 365 * 10;
@@ -101,6 +102,12 @@ function SettingsPage() {
         onSaved={() => qc.invalidateQueries({ queryKey: ["admin", "settings"] })}
         upsert={(value) => save.mutateAsync({ key: "cafe_logo", value })}
       />
+
+      <PaymentAccountsEditor
+        current={(data ?? []).find((s) => s.key === "payment_accounts")?.value}
+        upsert={(value) => save.mutateAsync({ key: "payment_accounts", value })}
+      />
+
 
 
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
