@@ -139,7 +139,8 @@ function TrackPage() {
                         <Link
                           to="/order/$orderNumber"
                           params={{ orderNumber: o.order_number }}
-                          search={{ phone }}
+                          search={{}}
+                          onClick={() => { try { sessionStorage.setItem(`order-phone:${o.order_number}`, phone); } catch { /* ignore */ } }}
                           className="flex items-center justify-between gap-3 p-4 hover:bg-muted/60 transition"
                         >
                           <div className="min-w-0">
@@ -170,11 +171,14 @@ function TrackPage() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (!orderNumber.trim() || !orderPhone.trim()) return;
+                  const n = orderNumber.trim();
+                  const p = orderPhone.trim();
+                  if (!n || !p) return;
+                  try { sessionStorage.setItem(`order-phone:${n}`, p); } catch { /* ignore */ }
                   navigate({
                     to: "/order/$orderNumber",
-                    params: { orderNumber: orderNumber.trim() },
-                    search: { phone: orderPhone.trim() },
+                    params: { orderNumber: n },
+                    search: {},
                   });
                 }}
                 className="space-y-4"
