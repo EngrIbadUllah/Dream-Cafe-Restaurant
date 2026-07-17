@@ -28,24 +28,43 @@ function CheckoutPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const submit = useServerFn(placeOrder);
+  const accounts = usePaymentAccounts();
+
+  type PayMethod = "cod" | "bank_transfer" | "easypaisa" | "jazzcash";
 
   const [form, setForm] = useState({
     customer_name: "",
     customer_phone: "",
     customer_email: user?.email ?? "",
     order_type: "delivery" as "delivery" | "takeaway" | "dine_in",
-    payment_method: "cod" as "cod" | "bank_transfer",
+    payment_method: "cod" as PayMethod,
     delivery_address: "",
     delivery_city: "Shakargarh",
     delivery_notes: "",
     notes: "",
     coupon_code: "",
+    payment_transaction_id: "",
   });
+  const [proof, setProof] = useState<{ base64: string; name: string; preview: string } | null>(null);
+  const proofRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     setForm((f) => ({ ...f, customer_email: user?.email ?? f.customer_email }));
   }, [user]);
+
+  async function handleProof(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return toast.error("Please upload an image");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Max screenshot size is 5MB");
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = String(reader.result || "");
+      setProof({ base64, name: file.name, preview: base64 });
+    };
+    reader.readAsDataURL(file);
+  }
 
   if (items.length === 0) {
     return (
