@@ -315,3 +315,38 @@ function Field({ label, children, className = "" }: { label: string; children: R
 function Row({ label, value }: { label: string; value: string }) {
   return <div className="flex justify-between"><span className="text-muted-foreground">{label}</span><span>{value}</span></div>;
 }
+
+function PaymentDetails({ account }: { account: { title: string; number: string; extra?: string[] } }) {
+  const copy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Copied");
+    } catch {
+      toast.error("Copy failed");
+    }
+  };
+  return (
+    <div className="space-y-1.5">
+      {account.title && (
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-muted-foreground text-xs">Account title</span>
+          <span className="font-medium">{account.title}</span>
+        </div>
+      )}
+      {account.number && (
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-muted-foreground text-xs">Account number</span>
+          <button type="button" onClick={() => copy(account.number)} className="inline-flex items-center gap-1.5 font-mono font-medium text-gold hover:underline">
+            {account.number} <Copy size={12} />
+          </button>
+        </div>
+      )}
+      {account.extra?.map((line, i) => (
+        <div key={i} className="flex items-center justify-between gap-3">
+          <span className="text-muted-foreground text-xs">{i === 0 ? "Bank" : "IBAN"}</span>
+          <span className="font-medium">{line}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
