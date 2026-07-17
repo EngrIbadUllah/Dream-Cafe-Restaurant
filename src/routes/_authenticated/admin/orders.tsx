@@ -219,7 +219,7 @@ function OrdersPage() {
                 const isOpen = !!expanded[o.id];
                 const items = (o.order_items ?? []) as Array<{ id: string; food_name: string; quantity: number; unit_price: number; subtotal: number; notes?: string | null }>;
                 return (
-                <>
+                <Fragment key={o.id}>
                 <tr key={o.id} className="hover:bg-white/5 cursor-pointer" onClick={() => setExpanded((s) => ({ ...s, [o.id]: !s[o.id] }))}>
                   <td className="px-2 py-3 text-cream/60">
                     {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
