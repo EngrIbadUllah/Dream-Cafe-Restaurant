@@ -183,7 +183,7 @@ export const trackOrder = createServerFn({ method: "POST" })
     const { data: order, error } = await supabaseAdmin
       .from("orders")
       .select(
-        "id, order_number, status, payment_status, payment_method, order_type, customer_name, customer_phone, delivery_address, delivery_city, subtotal, discount, delivery_fee, tax, total, notes, created_at",
+        "id, order_number, status, payment_status, payment_method, payment_transaction_id, payment_screenshot_url, order_type, customer_name, customer_phone, delivery_address, delivery_city, subtotal, discount, delivery_fee, tax, total, notes, created_at",
       )
       .eq("order_number", data.order_number.trim())
       .maybeSingle();
