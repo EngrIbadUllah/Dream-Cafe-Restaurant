@@ -106,8 +106,7 @@ function OrdersPage() {
                   <Link
                     to="/order/$orderNumber"
                     params={{ orderNumber: o.order_number }}
-                    search={{}}
-                    onClick={() => { try { sessionStorage.setItem(`order-phone:${o.order_number}`, o.customer_phone); } catch { /* ignore */ } }}
+                    search={{ phone: o.customer_phone }}
                     className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 sm:p-5 hover:border-gold/60 transition"
                   >
                     <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gold/10 text-gold">

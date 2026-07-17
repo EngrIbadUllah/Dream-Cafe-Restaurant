@@ -79,8 +79,7 @@ function CheckoutPage() {
 
       toast.success(`Order placed! ${res.order_number}`);
       clear();
-      try { sessionStorage.setItem(`order-phone:${res.order_number}`, form.customer_phone); } catch { /* ignore */ }
-      navigate({ to: "/order/$orderNumber", params: { orderNumber: res.order_number }, search: {} });
+      navigate({ to: "/order/$orderNumber", params: { orderNumber: res.order_number }, search: { phone: form.customer_phone } });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Something went wrong";
       toast.error(msg);
@@ -119,7 +118,7 @@ function CheckoutPage() {
                   <input required value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} className="input-base" />
                 </Field>
                 <Field label="Phone *">
-                  <input required type="tel" value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} placeholder="0300 1234567" className="input-base" />
+                  <input required type="tel" value={form.customer_phone} onChange={(e) => setForm({ ...form, customer_phone: e.target.value })} placeholder="0300 *******" className="input-base" />
                 </Field>
                 <Field label="Email">
                   <input type="email" value={form.customer_email} onChange={(e) => setForm({ ...form, customer_email: e.target.value })} className="input-base" />

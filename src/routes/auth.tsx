@@ -175,7 +175,7 @@ function AuthPage() {
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="0300 1234567"
+                    placeholder="0300 *******"
                     className="input-base"
                   />
                 </Field>
