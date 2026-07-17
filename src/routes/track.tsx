@@ -171,11 +171,14 @@ function TrackPage() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (!orderNumber.trim() || !orderPhone.trim()) return;
+                  const n = orderNumber.trim();
+                  const p = orderPhone.trim();
+                  if (!n || !p) return;
+                  try { sessionStorage.setItem(`order-phone:${n}`, p); } catch { /* ignore */ }
                   navigate({
                     to: "/order/$orderNumber",
-                    params: { orderNumber: orderNumber.trim() },
-                    search: { phone: orderPhone.trim() },
+                    params: { orderNumber: n },
+                    search: {},
                   });
                 }}
                 className="space-y-4"
