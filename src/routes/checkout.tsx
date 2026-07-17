@@ -178,22 +178,79 @@ function CheckoutPage() {
 
             <Card title={`${form.order_type === "delivery" ? "4" : "3"} · Payment`}>
               <div className="grid gap-2 sm:grid-cols-2">
-                {(["cod", "bank_transfer"] as const).map((m) => (
+                {([
+                  { id: "cod" as const, label: "Cash on Delivery", desc: "Pay when your order arrives.", show: true },
+                  { id: "easypaisa" as const, label: "EasyPaisa", desc: "Transfer to our EasyPaisa account.", show: accounts.easypaisa.enabled },
+                  { id: "jazzcash" as const, label: "JazzCash", desc: "Transfer to our JazzCash account.", show: accounts.jazzcash.enabled },
+                  { id: "bank_transfer" as const, label: "Bank Transfer", desc: "Send to our bank account.", show: accounts.bank.enabled },
+                ]).filter((m) => m.show).map((m) => (
                   <button
-                    key={m}
+                    key={m.id}
                     type="button"
-                    onClick={() => setForm({ ...form, payment_method: m })}
+                    onClick={() => setForm({ ...form, payment_method: m.id })}
                     className={`rounded-xl border p-4 text-left transition ${
-                      form.payment_method === m ? "border-gold bg-gold/10" : "border-border hover:border-foreground/30"
+                      form.payment_method === m.id ? "border-gold bg-gold/10" : "border-border hover:border-foreground/30"
                     }`}
                   >
-                    <p className="font-medium">{m === "cod" ? "Cash on Delivery" : "Bank Transfer"}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {m === "cod" ? "Pay when your order arrives." : "We'll share account details on confirmation."}
-                    </p>
+                    <p className="font-medium">{m.label}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{m.desc}</p>
                   </button>
                 ))}
               </div>
+
+              {(form.payment_method === "easypaisa" || form.payment_method === "jazzcash" || form.payment_method === "bank_transfer") && (
+                <div className="mt-4 rounded-xl border border-gold/30 bg-gold/[0.06] p-4 text-sm">
+                  <p className="text-xs text-muted-foreground mb-2">{accounts.instructions}</p>
+                  <PaymentDetails
+                    account={
+                      form.payment_method === "easypaisa"
+                        ? { title: accounts.easypaisa.account_title, number: accounts.easypaisa.account_number }
+                        : form.payment_method === "jazzcash"
+                        ? { title: accounts.jazzcash.account_title, number: accounts.jazzcash.account_number }
+                        : { title: accounts.bank.account_title, number: accounts.bank.account_number, extra: [accounts.bank.bank_name, accounts.bank.iban || ""].filter(Boolean) }
+                    }
+                  />
+                  {(form.payment_method === "easypaisa" || form.payment_method === "jazzcash") && (
+                    <Field label="Transaction ID *" className="mt-3">
+                      <input
+                        required
+                        value={form.payment_transaction_id}
+                        onChange={(e) => setForm({ ...form, payment_transaction_id: e.target.value })}
+                        placeholder="e.g. 12345678901"
+                        className="input-base"
+                      />
+                    </Field>
+                  )}
+                  <div className="mt-3">
+                    <p className="text-xs text-muted-foreground mb-1.5">
+                      Payment screenshot {form.payment_method === "bank_transfer" ? "*" : "*"}
+                    </p>
+                    <input ref={proofRef} type="file" accept="image/*" onChange={handleProof} className="hidden" />
+                    {proof ? (
+                      <div className="relative inline-block">
+                        <img src={proof.preview} alt="proof" className="max-h-40 rounded-lg border border-border" />
+                        <button
+                          type="button"
+                          onClick={() => { setProof(null); if (proofRef.current) proofRef.current.value = ""; }}
+                          className="absolute -top-2 -right-2 rounded-full bg-background border border-border p-1"
+                          aria-label="Remove"
+                        >
+                          <X size={12} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => proofRef.current?.click()}
+                        className="inline-flex items-center gap-2 rounded-lg border border-dashed border-gold/50 px-4 py-2 text-sm hover:bg-gold/10"
+                      >
+                        <Upload size={14} /> Upload screenshot
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <Field label="Order notes (optional)" className="mt-3">
                 <textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className="input-base" placeholder="Allergies, preferences…" />
               </Field>
