@@ -7,7 +7,7 @@ type PlaceOrderInput = {
   customer_phone: string;
   customer_email?: string;
   order_type: "delivery" | "takeaway" | "dine_in";
-  payment_method: "cod" | "bank_transfer";
+  payment_method: "cod" | "bank_transfer" | "easypaisa" | "jazzcash";
   delivery_address?: string;
   delivery_city?: string;
   delivery_notes?: string;
@@ -15,6 +15,8 @@ type PlaceOrderInput = {
   notes?: string;
   coupon_code?: string;
   user_id?: string | null;
+  payment_transaction_id?: string;
+  payment_proof_base64?: string; // data URL: data:image/png;base64,....
   items: { food_id: string; food_name: string; unit_price: number; quantity: number; notes?: string }[];
 };
 
