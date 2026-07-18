@@ -187,9 +187,6 @@ export function Navbar() {
               </span>
               <span className="flex flex-col leading-none">
                 <span className="font-display text-base">Demo Restaurant</span>
-                <span className="text-[10px] uppercase tracking-[0.28em] text-gold">
-                  & Restaurant
-                </span>
               </span>
             </Link>
             <button
