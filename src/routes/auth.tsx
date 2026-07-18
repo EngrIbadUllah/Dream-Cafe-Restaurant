@@ -103,7 +103,6 @@ function AuthPage() {
           <span className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">D</span>
           <div className="leading-tight">
             <div className="font-display text-lg">Demo Restaurant</div>
-            <div className="text-[10px] uppercase tracking-[0.28em] text-gold">& Restaurant</div>
           </div>
         </Link>
         <div className="relative z-10 space-y-4">
