@@ -81,9 +81,6 @@ export function Navbar() {
             </span>
             <span className="flex flex-col leading-none">
               <span className="font-display text-base sm:text-lg tracking-tight">Demo Restaurant</span>
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-gold">
-                & Restaurant
-              </span>
             </span>
           </Link>
 
