@@ -33,10 +33,7 @@ export function Footer() {
                 )}
               </span>
               <div className="leading-tight">
-                <div className="font-display text-xl">Demo Restaurant</div>
-                <div className="text-[10px] uppercase tracking-[0.28em] text-gold">
-                  & Restaurant
-                </div>
+                <div className="font-display text-xl">{s.name}</div>
               </div>
             </div>
             <p className="mt-5 max-w-xs text-sm text-cream/70">
