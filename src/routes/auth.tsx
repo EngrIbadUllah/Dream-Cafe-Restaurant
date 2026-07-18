@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Loader2, Mail, Lock, User as UserIcon, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { site } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "signup", "forgot"]).optional(),

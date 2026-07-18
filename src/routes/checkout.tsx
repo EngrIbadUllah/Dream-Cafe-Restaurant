@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { placeOrder } from "@/lib/orders.functions";
 import { toast } from "sonner";
 import { site } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { usePaymentAccounts } from "@/hooks/use-payment-accounts";
 
 export const Route = createFileRoute("/checkout")({

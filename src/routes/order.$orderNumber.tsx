@@ -8,6 +8,7 @@ import { SiteShell } from "@/components/site/site-shell";
 import { trackOrder } from "@/lib/orders.functions";
 import { formatPKR } from "@/hooks/use-cart";
 import { site, whatsappLink } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 
 const searchSchema = z.object({ phone: z.string().optional().catch(undefined) });
 
