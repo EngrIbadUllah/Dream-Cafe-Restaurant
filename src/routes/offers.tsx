@@ -7,9 +7,9 @@ import { Tag, Sparkles, Clock } from "lucide-react";
 export const Route = createFileRoute("/offers")({
   head: () => ({
     meta: [
-      { title: "Offers & Deals — Dream Cafe & Restaurant Shakargarh" },
-      { name: "description", content: "Current promotions, seasonal deals and combos at Dream Cafe & Restaurant, Shakargarh." },
-      { property: "og:title", content: "Offers — Dream Cafe" },
+      { title: "Offers & Deals — Demo Restaurant Shakargarh" },
+      { name: "description", content: "Current promotions, seasonal deals and combos at Demo Restaurant, Shakargarh." },
+      { property: "og:title", content: "Offers — Demo Restaurant" },
       { property: "og:description", content: "Save on your favourite dishes with our current offers." },
     ],
   }),
@@ -42,7 +42,7 @@ function OffersPage() {
             Tasty deals, <span className="italic text-gold">every day.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Seasonal combos, weekday specials and family bundles — all at Dream Cafe pricing.
+            Seasonal combos, weekday specials and family bundles — all at Demo Restaurant pricing.
           </p>
         </div>
       </section>

@@ -11,10 +11,10 @@ import { z } from "zod";
 export const Route = createFileRoute("/reviews")({
   head: () => ({
     meta: [
-      { title: "Reviews — Dream Cafe & Restaurant Shakargarh" },
-      { name: "description", content: "Read what guests are saying about Dream Cafe & Restaurant, Shakargarh — and share your own experience." },
-      { property: "og:title", content: "Guest Reviews — Dream Cafe" },
-      { property: "og:description", content: "Real guest stories from Dream Cafe." },
+      { title: "Reviews — Demo Restaurant Shakargarh" },
+      { name: "description", content: "Read what guests are saying about Demo Restaurant, Shakargarh — and share your own experience." },
+      { property: "og:title", content: "Guest Reviews — Demo Restaurant" },
+      { property: "og:description", content: "Real guest stories from Demo Restaurant." },
     ],
   }),
   component: ReviewsPage,

@@ -7,8 +7,8 @@ import { ArrowLeft } from "lucide-react";
 export const Route = createFileRoute("/blog/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.slug.replace(/-/g, " ")} — Dream Cafe Blog` },
-      { name: "description", content: "A story from Dream Cafe & Restaurant, Shakargarh." },
+      { title: `${params.slug.replace(/-/g, " ")} — Demo Restaurant Blog` },
+      { name: "description", content: "A story from Demo Restaurant, Shakargarh." },
     ],
   }),
   component: BlogPost,

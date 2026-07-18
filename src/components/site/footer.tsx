@@ -33,7 +33,7 @@ export function Footer() {
                 )}
               </span>
               <div className="leading-tight">
-                <div className="font-display text-xl">Dream Cafe</div>
+                <div className="font-display text-xl">Demo Restaurant</div>
                 <div className="text-[10px] uppercase tracking-[0.28em] text-gold">
                   & Restaurant
                 </div>
@@ -131,7 +131,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-cream/50 md:flex-row">
-          <p>© {year} Dream Cafe & Restaurant. All rights reserved.</p>
+          <p>© {year} Demo Restaurant. All rights reserved.</p>
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-cream/60">
             <Link to="/faq" className="hover:text-gold transition-colors">FAQ</Link>
             <Link to="/privacy" className="hover:text-gold transition-colors">Privacy</Link>

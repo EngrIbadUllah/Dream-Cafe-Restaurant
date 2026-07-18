@@ -16,7 +16,7 @@ export const Route = createFileRoute("/order/$orderNumber")({
   validateSearch: (s) => searchSchema.parse(s),
   head: ({ params }) => ({
     meta: [
-      { title: `Order ${params.orderNumber} — Dream Cafe` },
+      { title: `Order ${params.orderNumber} — Demo Restaurant` },
       { name: "robots", content: "noindex" },
     ],
   }),

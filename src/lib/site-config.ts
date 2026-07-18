@@ -2,11 +2,11 @@
 // Update these values here and they propagate everywhere.
 
 export const site = {
-  name: "Dream Cafe & Restaurant",
-  shortName: "Dream Cafe",
+  name: "Demo Restaurant",
+  shortName: "Demo Restaurant",
   tagline: "Where every bite feels like home",
   description:
-    "Dream Cafe & Restaurant in Shakargarh serves premium BBQ, Chinese, Continental and authentic Pakistani cuisine. Dine-in, takeaway and delivery on Noor Kot Road.",
+    "Demo Restaurant in Shakargarh serves premium BBQ, Chinese, Continental and authentic Pakistani cuisine. Dine-in, takeaway and delivery on Noor Kot Road.",
   address: {
     line1: "Noor Kot Road, Gamtala Chowk",
     city: "Shakargarh",
@@ -20,17 +20,17 @@ export const site = {
     { label: "Orders", number: "0300 1212928", tel: "+923001212928" },
   ],
   whatsapp: "+923001212790",
-  whatsappMessage: "Hi Dream Cafe, I'd like to place an order.",
-  email: "hello@dreamcafeskg.com",
+  whatsappMessage: "Hi Demo Restaurant, I'd like to place an order.",
+  email: "hello@demorestaurant.com",
   hours: [
     { day: "Monday – Thursday", time: "11:00 AM – 12:00 AM" },
     { day: "Friday", time: "2:00 PM – 12:00 AM" },
     { day: "Saturday – Sunday", time: "11:00 AM – 1:00 AM" },
   ],
   social: {
-    facebook: { url: "https://facebook.com/dreamcafeskg", enabled: true },
-    instagram: { url: "https://instagram.com/dreamcafeskg", enabled: true },
-    tiktok: { url: "https://tiktok.com/@dreamcafeskg", enabled: false },
+    facebook: { url: "https://facebook.com/demorestaurant", enabled: true },
+    instagram: { url: "https://instagram.com/demorestaurant", enabled: true },
+    tiktok: { url: "https://tiktok.com/@demorestaurant", enabled: false },
     youtube: { url: "", enabled: false },
   },
   mapEmbed:

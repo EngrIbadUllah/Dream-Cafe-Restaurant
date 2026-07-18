@@ -12,9 +12,9 @@ import { z } from "zod";
 export const Route = createFileRoute("/reservations")({
   head: () => ({
     meta: [
-      { title: "Reservations — Dream Cafe & Restaurant Shakargarh" },
-      { name: "description", content: "Reserve a table at Dream Cafe & Restaurant, Shakargarh. Family-friendly, private events, and celebrations welcome." },
-      { property: "og:title", content: "Reserve a Table — Dream Cafe" },
+      { title: "Reservations — Demo Restaurant Shakargarh" },
+      { name: "description", content: "Reserve a table at Demo Restaurant, Shakargarh. Family-friendly, private events, and celebrations welcome." },
+      { property: "og:title", content: "Reserve a Table — Demo Restaurant" },
       { property: "og:description", content: "Book your table in seconds. Family dining, birthdays, and private events." },
     ],
   }),

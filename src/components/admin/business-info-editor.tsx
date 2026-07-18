@@ -111,7 +111,7 @@ export function BusinessInfoEditor({
             onChange={(e) => setField("whatsapp", e.target.value as any)} />
         </Field>
         <Field label="WhatsApp auto message (pre-filled when a customer taps the WhatsApp button)" full>
-          <textarea className="input-base min-h-[70px]" placeholder="Hi Dream Cafe, I'd like to place an order."
+          <textarea className="input-base min-h-[70px]" placeholder="Hi Demo Restaurant, I'd like to place an order."
             value={form.whatsappMessage ?? ""}
             onChange={(e) => setField("whatsappMessage", e.target.value as any)} />
         </Field>

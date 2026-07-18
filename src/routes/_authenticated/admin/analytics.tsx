@@ -61,7 +61,7 @@ function AnalyticsPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `dream-cafe-orders_${from}_to_${to}.csv`;
+    a.download = `demo-restaurant-orders_${from}_to_${to}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   }

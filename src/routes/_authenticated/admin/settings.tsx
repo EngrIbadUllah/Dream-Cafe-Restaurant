@@ -17,12 +17,12 @@ export const Route = createFileRoute("/_authenticated/admin/settings")({
 });
 
 const PRESETS: { key: string; hint: string; sample: string }[] = [
-  { key: "restaurant_name", hint: "Displayed across the site", sample: '"Dream Cafe & Restaurant"' },
+  { key: "restaurant_name", hint: "Displayed across the site", sample: '"Demo Restaurant"' },
   { key: "hero_tagline", hint: "Home page tagline", sample: '"Where every meal is a dream"' },
   { key: "delivery_fee", hint: "Flat delivery fee (PKR)", sample: "150" },
   { key: "min_order", hint: "Minimum order amount", sample: "500" },
   { key: "opening_hours", hint: "Weekly hours", sample: '{"mon_thu":"11am–11pm","fri_sun":"11am–1am"}' },
-  { key: "bank_details", hint: "Bank transfer instructions", sample: '{"bank":"HBL","account":"1234-5678","title":"Dream Cafe"}' },
+  { key: "bank_details", hint: "Bank transfer instructions", sample: '{"bank":"HBL","account":"1234-5678","title":"Demo Restaurant"}' },
 ];
 
 function SettingsPage() {
@@ -124,7 +124,7 @@ function SettingsPage() {
           />
           <input
             className="input-base font-mono text-sm"
-            placeholder='value (JSON or string, e.g. "Dream Cafe")'
+            placeholder='value (JSON or string, e.g. "Demo Restaurant")'
             value={newValue}
             onChange={(e) => setNewValue(e.target.value)}
           />

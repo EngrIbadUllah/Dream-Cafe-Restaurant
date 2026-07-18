@@ -8,10 +8,10 @@ import { ImageIcon } from "lucide-react";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Dream Cafe & Restaurant Shakargarh" },
-      { name: "description", content: "See our dishes, ambience and moments at Dream Cafe & Restaurant, Shakargarh." },
-      { property: "og:title", content: "Gallery — Dream Cafe" },
-      { property: "og:description", content: "Food, ambience and moments captured at Dream Cafe." },
+      { title: "Gallery — Demo Restaurant Shakargarh" },
+      { name: "description", content: "See our dishes, ambience and moments at Demo Restaurant, Shakargarh." },
+      { property: "og:title", content: "Gallery — Demo Restaurant" },
+      { property: "og:description", content: "Food, ambience and moments captured at Demo Restaurant." },
     ],
   }),
   component: GalleryPage,
@@ -44,7 +44,7 @@ function GalleryPage() {
             A taste of our <span className="italic text-gold">world.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Dishes fresh out of the kitchen, the warmth of our dining room, and the moments that make Dream Cafe home.
+            Dishes fresh out of the kitchen, the warmth of our dining room, and the moments that make Demo Restaurant home.
           </p>
         </div>
       </section>
