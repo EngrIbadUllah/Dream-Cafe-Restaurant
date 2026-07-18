@@ -12,9 +12,9 @@ import { z } from "zod";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Dream Cafe & Restaurant Shakargarh" },
-      { name: "description", content: `Reach Dream Cafe & Restaurant on Noor Kot Road, Shakargarh. Call ${site.phones[0].number}, WhatsApp us, or send a message.` },
-      { property: "og:title", content: "Contact — Dream Cafe & Restaurant" },
+      { title: "Contact — Demo Restaurant Shakargarh" },
+      { name: "description", content: `Reach Demo Restaurant on Noor Kot Road, Shakargarh. Call ${site.phones[0].number}, WhatsApp us, or send a message.` },
+      { property: "og:title", content: "Contact — Demo Restaurant" },
       { property: "og:description", content: "Address, phone, WhatsApp, hours and directions." },
     ],
   }),
@@ -118,7 +118,7 @@ function Contact() {
               </div>
             </div>
             <div className="min-h-[320px] overflow-hidden rounded-[2rem] border border-border">
-              <iframe title="Dream Cafe & Restaurant on Google Maps" src={site.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full w-full" />
+              <iframe title="Demo Restaurant on Google Maps" src={site.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full w-full" />
 
             </div>
           </div>

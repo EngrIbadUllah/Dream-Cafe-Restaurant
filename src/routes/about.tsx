@@ -7,13 +7,13 @@ import chefImg from "@/assets/chef.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Our Story — Dream Cafe & Restaurant Shakargarh" },
+      { title: "Our Story — Demo Restaurant Shakargarh" },
       {
         name: "description",
         content:
-          "The story, mission and team behind Dream Cafe & Restaurant on Noor Kot Road, Shakargarh — Pakistani, BBQ, Chinese and continental cuisine.",
+          "The story, mission and team behind Demo Restaurant on Noor Kot Road, Shakargarh — Pakistani, BBQ, Chinese and continental cuisine.",
       },
-      { property: "og:title", content: "Our Story — Dream Cafe & Restaurant" },
+      { property: "og:title", content: "Our Story — Demo Restaurant" },
       {
         property: "og:description",
         content:
@@ -41,7 +41,7 @@ function About() {
             <span className="italic text-gold">Shakargarh's dining table.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-cream/80">
-            Dream Cafe & Restaurant began with one belief: that great food
+            Demo Restaurant began with one belief: that great food
             deserves a room worthy of it. Today we serve BBQ, handi, pizza,
             Chinese and continental — all under one roof on Noor Kot Road.
           </p>

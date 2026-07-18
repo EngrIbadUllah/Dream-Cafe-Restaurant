@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/track")({
   head: () => ({
     meta: [
-      { title: "Track Your Order — Dream Cafe & Restaurant" },
+      { title: "Track Your Order — Demo Restaurant" },
       {
         name: "description",
         content:
-          "Track your Dream Cafe order using your phone number or order number. Live status updates for delivery, takeaway and dine-in orders.",
+          "Track your Demo Restaurant order using your phone number or order number. Live status updates for delivery, takeaway and dine-in orders.",
       },
-      { property: "og:title", content: "Track Your Order — Dream Cafe" },
+      { property: "og:title", content: "Track Your Order — Demo Restaurant" },
       {
         property: "og:description",
         content: "Look up your order status by phone number or order number.",

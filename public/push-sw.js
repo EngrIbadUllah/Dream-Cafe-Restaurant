@@ -1,4 +1,4 @@
-/* Dream Cafe push service worker
+/* Demo Restaurant push service worker
  * Handles background push notifications for admins.
  */
 self.addEventListener("install", (event) => {
@@ -10,7 +10,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("push", (event) => {
-  let payload = { title: "Dream Cafe", body: "New notification", url: "/admin/orders", tag: "dream-cafe" };
+  let payload = { title: "Demo Restaurant", body: "New notification", url: "/admin/orders", tag: "demo-restaurant" };
   try {
     if (event.data) {
       const parsed = event.data.json();
@@ -27,7 +27,7 @@ self.addEventListener("push", (event) => {
       body: payload.body,
       icon: "/favicon.ico",
       badge: "/favicon.ico",
-      tag: payload.tag || "dream-cafe",
+      tag: payload.tag || "demo-restaurant",
       renotify: true,
       requireInteraction: false,
       vibrate: [180, 60, 180],

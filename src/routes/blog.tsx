@@ -7,10 +7,10 @@ import { BookOpen, ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Blog — Dream Cafe & Restaurant Shakargarh" },
-      { name: "description", content: "Recipes, stories, and updates from the kitchens of Dream Cafe & Restaurant, Shakargarh." },
-      { property: "og:title", content: "Blog — Dream Cafe" },
-      { property: "og:description", content: "Recipes, stories and updates from Dream Cafe." },
+      { title: "Blog — Demo Restaurant Shakargarh" },
+      { name: "description", content: "Recipes, stories, and updates from the kitchens of Demo Restaurant, Shakargarh." },
+      { property: "og:title", content: "Blog — Demo Restaurant" },
+      { property: "og:description", content: "Recipes, stories and updates from Demo Restaurant." },
     ],
   }),
   component: BlogListPage,

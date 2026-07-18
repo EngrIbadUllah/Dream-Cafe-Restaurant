@@ -14,8 +14,8 @@ import { usePaymentAccounts } from "@/hooks/use-payment-accounts";
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
-      { title: "Checkout — Dream Cafe & Restaurant" },
-      { name: "description", content: "Complete your order for delivery or takeaway from Dream Cafe Shakargarh." },
+      { title: "Checkout — Demo Restaurant" },
+      { name: "description", content: "Complete your order for delivery or takeaway from Demo Restaurant Shakargarh." },
       { name: "robots", content: "noindex" },
     ],
   }),

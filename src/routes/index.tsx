@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
     meta: [
       {
         title:
-          "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh",
+          "Demo Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh",
       },
       {
         name: "description",
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:title",
         content:
-          "Dream Cafe & Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh",
+          "Demo Restaurant — BBQ · Chinese · Continental · Pakistani · Shakargarh",
       },
       {
         property: "og:description",
@@ -732,7 +732,7 @@ function ReservationCTA() {
           <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
             <div>
               <h2 className="mt-3 max-w-xl font-display text-4xl sm:text-5xl">
-                Your table at Dream Cafe,
+                Your table at Demo Restaurant,
                 <br />
                 <span className="italic text-gold">held with a tap.</span>
               </h2>
@@ -804,7 +804,7 @@ function ContactStrip() {
 
         <div className="min-h-[360px] overflow-hidden rounded-[2rem] border border-border">
           <iframe
-            title="Dream Cafe & Restaurant on Google Maps"
+            title="Demo Restaurant on Google Maps"
             src={site.mapEmbed}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

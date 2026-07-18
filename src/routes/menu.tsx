@@ -37,9 +37,9 @@ const menuQuery = queryOptions({
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "Menu — Dream Cafe & Restaurant Shakargarh" },
+      { title: "Menu — Demo Restaurant Shakargarh" },
       { name: "description", content: "Browse our menu: BBQ, Pakistani, Chinese, Continental, pizza, burgers, rice, soups, drinks and desserts. Order online in Shakargarh." },
-      { property: "og:title", content: "Order Online — Dream Cafe & Restaurant" },
+      { property: "og:title", content: "Order Online — Demo Restaurant" },
       { property: "og:description", content: "Freshly cooked BBQ, handi, pizza, biryani and more — delivered in Shakargarh." },
     ],
   }),

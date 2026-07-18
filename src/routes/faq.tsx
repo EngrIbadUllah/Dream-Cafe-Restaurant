@@ -15,7 +15,7 @@ export const Route = createFileRoute("/faq")({
       {
         name: "description",
         content:
-          "Answers to common questions about ordering, delivery, reservations, payments and dining at Dream Cafe & Restaurant Shakargarh.",
+          "Answers to common questions about ordering, delivery, reservations, payments and dining at Demo Restaurant Shakargarh.",
       },
       { property: "og:title", content: `FAQ — ${site.name}` },
       {
@@ -60,7 +60,7 @@ const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Is the restaurant halal?",
-    a: "Yes. All meat served at Dream Cafe & Restaurant is 100% halal.",
+    a: "Yes. All meat served at Demo Restaurant is 100% halal.",
   },
   {
     q: "Can I cancel or change my order?",

@@ -17,7 +17,7 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: `Sign in — ${site.name}` },
-      { name: "description", content: "Sign in or create your Dream Cafe account to track orders, save favourites and book tables faster." },
+      { name: "description", content: "Sign in or create your Demo Restaurant account to track orders, save favourites and book tables faster." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -102,7 +102,7 @@ function AuthPage() {
         <Link to="/" className="relative flex items-center gap-3 z-10">
           <span className="grid h-11 w-11 place-items-center rounded-full gradient-gold text-primary-foreground font-display text-lg font-bold">D</span>
           <div className="leading-tight">
-            <div className="font-display text-lg">Dream Cafe</div>
+            <div className="font-display text-lg">Demo Restaurant</div>
             <div className="text-[10px] uppercase tracking-[0.28em] text-gold">& Restaurant</div>
           </div>
         </Link>
@@ -126,7 +126,7 @@ function AuthPage() {
           <div className="mb-8 lg:hidden text-center">
             <Link to="/" className="inline-flex items-center gap-2">
               <span className="grid h-10 w-10 place-items-center rounded-full gradient-gold text-primary-foreground font-display font-bold">D</span>
-              <span className="font-display text-xl">Dream Cafe</span>
+              <span className="font-display text-xl">Demo Restaurant</span>
             </Link>
           </div>
 
@@ -137,7 +137,7 @@ function AuthPage() {
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {mode === "signin" && "Sign in to continue to your account."}
-            {mode === "signup" && "Join Dream Cafe for faster ordering and rewards."}
+            {mode === "signup" && "Join Demo Restaurant for faster ordering and rewards."}
             {mode === "forgot" && "Enter your email and we'll send a reset link."}
           </p>
 
