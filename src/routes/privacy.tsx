@@ -20,6 +20,7 @@ export const Route = createFileRoute("/privacy")({
 });
 
 function PrivacyPage() {
+  const site = useBusinessInfo();
   const updated = "July 11, 2026";
   return (
     <SiteShell>

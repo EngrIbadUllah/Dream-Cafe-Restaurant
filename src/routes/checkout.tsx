@@ -25,6 +25,7 @@ export const Route = createFileRoute("/checkout")({
 const DELIVERY_FEE = 150;
 
 function CheckoutPage() {
+  const site = useBusinessInfo();
   const { items, subtotal, clear } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();

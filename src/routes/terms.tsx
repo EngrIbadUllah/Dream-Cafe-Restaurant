@@ -20,6 +20,7 @@ export const Route = createFileRoute("/terms")({
 });
 
 function TermsPage() {
+  const site = useBusinessInfo();
   const updated = "July 11, 2026";
   return (
     <SiteShell>

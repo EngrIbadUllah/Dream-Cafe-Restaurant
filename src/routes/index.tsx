@@ -723,6 +723,7 @@ function Reviews() {
 /* -------------------------------------------------------------------------- */
 
 function ReservationCTA() {
+  const site = useBusinessInfo();
   return (
     <section className="section-y">
       <div className="container-page">
@@ -764,6 +765,7 @@ function ReservationCTA() {
 /* -------------------------------------------------------------------------- */
 
 function ContactStrip() {
+  const site = useBusinessInfo();
   return (
     <section className="section-y">
       <div className="container-page grid gap-8 lg:grid-cols-[1.05fr_1fr]">

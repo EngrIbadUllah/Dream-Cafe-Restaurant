@@ -33,6 +33,7 @@ const schema = z.object({
 });
 
 function ReservationsPage() {
+  const site = useBusinessInfo();
   const { user } = useAuth();
   const [form, setForm] = useState({
     customer_name: "",

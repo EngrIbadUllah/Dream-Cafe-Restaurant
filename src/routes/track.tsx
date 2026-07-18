@@ -31,6 +31,7 @@ export const Route = createFileRoute("/track")({
 type Mode = "phone" | "order";
 
 function TrackPage() {
+  const site = useBusinessInfo();
   const [mode, setMode] = useState<Mode>("phone");
   const findByPhone = useServerFn(findOrdersByPhone);
   const navigate = useNavigate();

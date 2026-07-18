@@ -48,6 +48,7 @@ const nav = [
 ] as const;
 
 function AdminLayout() {
+  const site = useBusinessInfo();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => setOpen(false), [pathname]);

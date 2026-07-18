@@ -27,6 +27,7 @@ export const Route = createFileRoute("/auth")({
 type Mode = "signin" | "signup" | "forgot";
 
 function AuthPage() {
+  const site = useBusinessInfo();
   const search = useSearch({ from: "/auth" });
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>(search.mode ?? "signin");

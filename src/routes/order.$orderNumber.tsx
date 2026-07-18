@@ -31,6 +31,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 function OrderTrackPage() {
+  const site = useBusinessInfo();
   const { orderNumber } = Route.useParams();
   const search = Route.useSearch();
   const track = useServerFn(trackOrder);
