@@ -8,6 +8,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   ssr: false,
@@ -47,6 +48,7 @@ const nav = [
 ] as const;
 
 function AdminLayout() {
+  const site = useBusinessInfo();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => setOpen(false), [pathname]);

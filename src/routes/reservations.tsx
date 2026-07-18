@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CalendarCheck, Clock, Users, PartyPopper } from "lucide-react";
 import { SiteShell } from "@/components/site/site-shell";
 import { site } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
@@ -32,6 +33,7 @@ const schema = z.object({
 });
 
 function ReservationsPage() {
+  const site = useBusinessInfo();
   const { user } = useAuth();
   const [form, setForm] = useState({
     customer_name: "",

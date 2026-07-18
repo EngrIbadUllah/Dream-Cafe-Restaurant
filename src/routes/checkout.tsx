@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { placeOrder } from "@/lib/orders.functions";
 import { toast } from "sonner";
 import { site } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { usePaymentAccounts } from "@/hooks/use-payment-accounts";
 
 export const Route = createFileRoute("/checkout")({
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/checkout")({
 const DELIVERY_FEE = 150;
 
 function CheckoutPage() {
+  const site = useBusinessInfo();
   const { items, subtotal, clear } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();

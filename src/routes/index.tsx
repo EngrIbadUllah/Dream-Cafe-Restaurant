@@ -23,6 +23,7 @@ import interiorImg from "@/assets/interior.jpg";
 import chefImg from "@/assets/chef.jpg";
 import { SiteShell } from "@/components/site/site-shell";
 import { site, whatsappLink } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 import { supabase } from "@/integrations/supabase/client";
 import { useCart } from "@/hooks/use-cart";
 
@@ -722,6 +723,7 @@ function Reviews() {
 /* -------------------------------------------------------------------------- */
 
 function ReservationCTA() {
+  const site = useBusinessInfo();
   return (
     <section className="section-y">
       <div className="container-page">
@@ -763,6 +765,7 @@ function ReservationCTA() {
 /* -------------------------------------------------------------------------- */
 
 function ContactStrip() {
+  const site = useBusinessInfo();
   return (
     <section className="section-y">
       <div className="container-page grid gap-8 lg:grid-cols-[1.05fr_1fr]">

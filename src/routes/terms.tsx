@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/site-shell";
 import { site } from "@/lib/site-config";
+import { useBusinessInfo } from "@/hooks/use-business-info";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/terms")({
 });
 
 function TermsPage() {
+  const site = useBusinessInfo();
   const updated = "July 11, 2026";
   return (
     <SiteShell>
